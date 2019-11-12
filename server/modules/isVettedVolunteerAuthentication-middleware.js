@@ -1,6 +1,6 @@
-const rejectNonAdmin = (req, res, next) => {
+const rejectNonVetted = (req, res, next) => {
     //check if user access level is equal with Admin
-    if (req.user.authorization == 4) {
+    if (req.user.authorization == 0 ) {
         //they were authenticated!  User may do the next thing
         //Note!  Admin can do anything!!
         next();
@@ -9,4 +9,4 @@ const rejectNonAdmin = (req, res, next) => {
     }
 };
 
-module.exports = { rejectNonAdmin };
+module.exports = { rejectNonVetted };
