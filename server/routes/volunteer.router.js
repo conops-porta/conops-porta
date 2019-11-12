@@ -12,11 +12,11 @@ router.get('/shifts', (req, res) => {
     let queryText = ``
     pool.query(queryText, [req.body.AttendeeID])
         .then((result) => {
-            console.log('in volunteer/shifts GET router:', result);
+            console.log('in volunteer/shifts GET router:', result.rows);
             // res.send(result.rows);
         })
         .catch((error) => {
-            // console.log('error in sponsors GET router:', error)
+            console.log('error in volunteer/shifts GET router:', error)
             res.sendStatus(500)
         })
 });
