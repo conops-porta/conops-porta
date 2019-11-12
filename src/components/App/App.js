@@ -24,6 +24,7 @@ import EditTag from '../V1/Tags/EditTag';
 import CreateTag from '../V1/Tags/CreateTag';
 
 import Conventions from '../V1/Conventions/Conventions';
+import VolunteerSchedule from '../VolunteerSchedule/VolunteerScheduleInitial';
 import GameLibrary from '../V1/GameLibrary/GameLibrary';
 import News from '../V1/News/News';
 
@@ -113,7 +114,12 @@ class App extends Component {
               exact
               path="/conventions"
               component={Conventions}
-            />  
+            />
+            <ProtectedRoute
+              exact
+              path="/volunteer-schedule"
+              component={VolunteerSchedule}
+            /> 
             <ProtectedRoute
               exact
               path="/gamelibrary"
