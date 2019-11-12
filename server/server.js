@@ -9,6 +9,7 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 
 // Route includes
+const volunteerRouter = require('./routes/volunteer.router');
 const userRouter = require('./routes/user.router');
 const attendeeRouter = require('./routes/attendee.router');
 const conventionRouter = require('./routes/convention.router');
@@ -38,6 +39,7 @@ app.use('/api/location', locationRouter);
 app.use('/api/tag', tagRouter);
 app.use('/api/sponsor', sponsorRouter);
 app.use('/api/home', homeRouter);
+app.use('/api/volunteer', volunteerRouter);
 
 // Serve static files
 app.use(express.static('build'));

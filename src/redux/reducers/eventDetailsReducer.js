@@ -31,10 +31,6 @@ const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '
             return { ...state, TagName: action.payload }
         case 'EDIT_EVENT_TAGS':
             return { ...state, TagObjects: [...state.TagObjects, action.payload]}
-        case 'EDIT_EVENT_LOCATION':
-            return { ...state, LocationID: action.payload}
-        case 'EDIT_EVENT_SPONSOR':
-            return { ...state, SponsorID: action.payload}
         case 'EDIT_EVENT_MODIFIED_NOTES':
             return { ...state, EventModifiedNotes: action.payload}
         case 'REMOVE_TAG_FROM_EVENT':
