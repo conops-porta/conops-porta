@@ -36,6 +36,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import VolunteerSchedule from '../VolunteerSchedule/Initial';
 import VolunteerScheduleCreate from '../VolunteerSchedule/Create';
 import VolunteerScheduleManage from '../VolunteerSchedule/Manage';
+import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
 
 import './App.css';
 
@@ -95,6 +96,13 @@ class App extends Component {
               exact
               path="/locations"
               component={Locations}
+            />
+
+            {/* VolunteerWalkUp */}
+            <Route
+              exact
+              path="/volunteer-walk-up"
+              component={VolunteerWalkUp}
             />
 
             {/* Admin */}
