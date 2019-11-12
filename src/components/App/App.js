@@ -24,7 +24,6 @@ import EditTag from '../V1/Tags/EditTag';
 import CreateTag from '../V1/Tags/CreateTag';
 
 import Conventions from '../V1/Conventions/Conventions';
-import VolunteerSchedule from '../VolunteerSchedule/VolunteerScheduleInitial';
 import GameLibrary from '../V1/GameLibrary/GameLibrary';
 import News from '../V1/News/News';
 
@@ -33,6 +32,10 @@ import SponsorDetails from '../V1/Sponsors/SponsorDetails';
 import CreateSponsor from  '../V1/Sponsors/CreateSponsor';
 
 import RegisterPage from '../RegisterPage/RegisterPage';
+
+import VolunteerSchedule from '../VolunteerSchedule/Initial';
+import VolunteerScheduleCreate from '../VolunteerSchedule/Create';
+import VolunteerScheduleManage from '../VolunteerSchedule/Manage';
 
 import './App.css';
 
@@ -119,6 +122,16 @@ class App extends Component {
               exact
               path="/volunteer-schedule"
               component={VolunteerSchedule}
+            /> 
+            <ProtectedRoute
+              exact
+              path="/volunteer-schedule/create"
+              component={VolunteerScheduleCreate}
+            /> 
+            <ProtectedRoute
+              exact
+              path="/volunteer-schedule/manage"
+              component={VolunteerScheduleManage}
             /> 
             <ProtectedRoute
               exact
