@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import CSVReader from 'react-csv-reader';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,13 +18,13 @@ class CreateNewSchedule extends Component {
 
     submitSchedule = () => {
         if (this.state.data) {
-            console.log(this.state.data)
-            // axios.post('/api/voluteer/schedule', this.state.data)
-            //     .then(response => {
-            //         console.log(response.data)
-            //     }).catch(error => {
-            //         console.log(error)
-            //     })
+            // console.log(this.state.data)
+            axios.post('/api/volunteer/schedule', {data: this.state.data})
+                .then(response => {
+                    console.log(response.data)
+                }).catch(error => {
+                    console.log(error)
+                })
         }
     }
     buildDataStructure = (csvAsArr) => {
