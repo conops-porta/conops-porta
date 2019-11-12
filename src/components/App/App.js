@@ -33,6 +33,9 @@ import CreateSponsor from  '../V1/Sponsors/CreateSponsor';
 
 import RegisterPage from '../RegisterPage/RegisterPage';
 
+import VolunteerSchedule from '../VolunteerSchedule/Initial';
+import VolunteerScheduleCreate from '../VolunteerSchedule/Create';
+import VolunteerScheduleManage from '../VolunteerSchedule/Manage';
 import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
 
 import './App.css';
@@ -122,7 +125,22 @@ class App extends Component {
               exact
               path="/conventions"
               component={Conventions}
-            />  
+            />
+            <ProtectedRoute
+              exact
+              path="/volunteer-schedule"
+              component={VolunteerSchedule}
+            /> 
+            <ProtectedRoute
+              exact
+              path="/volunteer-schedule/create"
+              component={VolunteerScheduleCreate}
+            /> 
+            <ProtectedRoute
+              exact
+              path="/volunteer-schedule/manage"
+              component={VolunteerScheduleManage}
+            /> 
             <ProtectedRoute
               exact
               path="/gamelibrary"

@@ -55,6 +55,9 @@ class AdminNav extends Component {
         } else if (propertyName === 'sponsors') {
             this.props.history.push('/sponsors')
             this.setState({ open: false });
+        } else if (propertyName === 'volunteer-schedule') {
+          this.props.history.push('/volunteer-schedule')
+          this.setState({ open: false });
         }
     }
 
@@ -106,6 +109,14 @@ class AdminNav extends Component {
                             }
                           >
                             CONVENTIONS
+                          </MenuItem>
+                          <MenuItem
+                            className="onTop"
+                            onClick={event =>
+                              this.handleClick("volunteer-schedule", event)
+                            }
+                          >
+                            VOLUNTEER SCHEDULE
                           </MenuItem>
                           <MenuItem
                             className="onTop"
