@@ -8,18 +8,23 @@ import TableRow from '@material-ui/core/TableRow';
 import { objectTypeSpreadProperty } from '@babel/types';
 
 class CreateNewSchedule extends Component {
-    state = {
-        // papaparseOptions: {
-        //   header: true,
-        //   dynamicTyping: true,
-        //   skipEmptyLines: false,
-        //   transformHeader: header => header.toLowerCase().replace(/\W/g, "_")
-        // }
-    };
+    state = {};
     splat = (data) => {
         this.setState({
             data: this.buildDataStructure(data)
         })
+    }
+
+    submitSchedule = () => {
+        if (this.state.data) {
+            console.log(this.state.data)
+            // axios.post('/api/voluteer/schedule', this.state.data)
+            //     .then(response => {
+            //         console.log(response.data)
+            //     }).catch(error => {
+            //         console.log(error)
+            //     })
+        }
     }
     buildDataStructure = (csvAsArr) => {
         let data = [];
@@ -48,6 +53,7 @@ class CreateNewSchedule extends Component {
                     onFileLoaded={data => this.splat(data)}
                 // parserOptions={this.state.papaparseOptions}
                 />
+                <button onClick={this.submitSchedule}>SUBMIT</button>
 
                 {this.state.data ?
                     <div>
