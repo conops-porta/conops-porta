@@ -9,7 +9,8 @@ const router = express.Router();
  * GET route for all walkups
  */
 router.get('/badgeNumber', (req, res) => {
-    let queryText = ``
+    let queryText = `SELECT "BadgeNumber" FROM "Attendee"
+        WHERE "Attendee"."AttendeeID" = $1;`;
     pool.query(queryText, [req.body.BadgeNumber])
         .then((result) => {
             console.log('in api/walkUp/badgeNumber GET router:', result.rows);

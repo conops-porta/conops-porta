@@ -30,7 +30,7 @@ class VolunteerWalkUp extends Component {
   render() {
     return (
       <div>
-        {JSON.stringify(mapStateToProps.attendeeDetailsReducer)}
+        {/* {JSON.stringify(this.props.mapStateToProps.volunteerWalkUpSaga)} */}
         <h1>Walk-Up Volunteer</h1>
           <h2>Sign In</h2>
             <form onSubmit={this.registeredUsers}>
