@@ -3,41 +3,42 @@ import {connect} from 'react-redux';
 
 class VolunteerWalkUp extends Component {
   state = {
-    username: '',
-    password: '',
+    badgeNum: '',
   };
 
-  registerUser = (event) => {
+  registeredUser = (event) => {
+    console.log('btn click')
     event.preventDefault();
 
-    if (this.state.username && this.state.password) {
-      this.props.dispatch({
-        type: 'REGISTER',
-        payload: {
-          username: this.state.username,
-          password: this.state.password,
-        },
-      });
-    } else {
-      this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
-    }
+    // if (this.state.badgeNum) {
+    //   this.props.dispatch({
+    //     type: 'REGISTER',
+    //     payload: {
+    //       badgeNum: this.state.badgeNum,
+    //     },
+    //   });
+    // } 
+    // else {
+    //   this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
+    // }
   } // end registerUser
 
-  handleInputChangeFor = propertyName => (event) => {
+  handleInputChange = propertyName => (event) => {
+      console.log('happening')
     this.setState({
       [propertyName]: event.target.value,
     });
-  }
+  } // end handleInputChange
 
   render() {
     return (
       <div>
         <h1>Walk-Up Volunteer</h1>
         <h2>Sign In</h2>
-        <form>
+        <form onSubmit={this.registeredUser}>
             <p>Badge #
                 <br/>
-        <input placeholder="badge number"></input>
+        <input type="number" placeholder="badge number" value={this.state.badgeNum} onChange={this.handleInputChange('badgeNum')}></input>
         <button>Go</button>
             </p>
         </form>
