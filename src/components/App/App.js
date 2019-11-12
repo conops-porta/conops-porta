@@ -5,33 +5,35 @@ import Nav from '../Nav/Nav';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import Home from '../Home/Home';
 
-import CheckIn from '../CheckIn/CheckIn';
-import Details from '../Details/Details';
+import CheckIn from '../V1/CheckIn/CheckIn';
+import Details from '../V1/Details/Details';
 
-import OrderId from '../OrderId/OrderId';
-import PreRegister from '../PreRegister/PreRegister';
+import OrderId from '../V1/OrderId/OrderId';
+import PreRegister from '../V1/PreRegister/PreRegister';
 
-import Events from '../Events/Events';
-import EventDetails from '../EventDetails/EventDetails';
-import CreateEvent from '../Events/CreateEvent';
+import Events from '../V1/Events/Events';
+import EventDetails from '../V1/EventDetails/EventDetails';
+import CreateEvent from '../V1/Events/CreateEvent';
 
-import Locations from '../Locations/Locations';
-import LocationDetails from '../LocationDetails/LocationDetails';
-import CreateLocation from '../Locations/CreateLocation';
+import Locations from '../V1/Locations/Locations';
+import LocationDetails from '../V1/LocationDetails/LocationDetails';
+import CreateLocation from '../V1/Locations/CreateLocation';
 
-import Tags from '../Tags/Tags';
-import EditTag from '../Tags/EditTag';
-import CreateTag from '../Tags/CreateTag';
+import Tags from '../V1/Tags/Tags';
+import EditTag from '../V1/Tags/EditTag';
+import CreateTag from '../V1/Tags/CreateTag';
 
-import Conventions from '../Conventions/Conventions';
-import GameLibrary from '../GameLibrary/GameLibrary';
-import News from '../News/News';
+import Conventions from '../V1/Conventions/Conventions';
+import GameLibrary from '../V1/GameLibrary/GameLibrary';
+import News from '../V1/News/News';
 
-import Sponsors from '../Sponsors/Sponsors';
-import SponsorDetails from '../Sponsors/SponsorDetails';
-import CreateSponsor from  '../Sponsors/CreateSponsor';
+import Sponsors from '../V1/Sponsors/Sponsors';
+import SponsorDetails from '../V1/Sponsors/SponsorDetails';
+import CreateSponsor from  '../V1/Sponsors/CreateSponsor';
 
 import RegisterPage from '../RegisterPage/RegisterPage';
+
+import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
 
 import './App.css';
 
@@ -91,6 +93,13 @@ class App extends Component {
               exact
               path="/locations"
               component={Locations}
+            />
+
+            {/* VolunteerWalkUp */}
+            <Route
+              exact
+              path="/volunteer-walk-up"
+              component={VolunteerWalkUp}
             />
 
             {/* Admin */}
