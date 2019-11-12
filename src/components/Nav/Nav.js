@@ -35,7 +35,6 @@ const Nav = (props) => (
       {props.user.id && (
         <>
           <AttendessNav className="nav-link"/>
-          {/* <VolunteerWalkUp className="nav-link"/> */}
           <EventsNav className="button"/>
           <AdminNav className="button"/>
           <LogOutButton />

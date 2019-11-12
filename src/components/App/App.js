@@ -33,6 +33,8 @@ import CreateSponsor from  '../V1/Sponsors/CreateSponsor';
 
 import RegisterPage from '../RegisterPage/RegisterPage';
 
+import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
+
 import './App.css';
 
 class App extends Component {
@@ -91,6 +93,13 @@ class App extends Component {
               exact
               path="/locations"
               component={Locations}
+            />
+
+            {/* VolunteerWalkUp */}
+            <Route
+              exact
+              path="/volunteer-walk-up"
+              component={VolunteerWalkUp}
             />
 
             {/* Admin */}
