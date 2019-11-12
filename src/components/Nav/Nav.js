@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import AttendessNav from './AttendessNav';
 import EventsNav from './EventsNav';
 import AdminNav from './AdminNav';
+// import VolunteerWalkUp from './VolunteerWalkUp';
 
 const Nav = (props) => (
   <div className="nav">
@@ -21,6 +22,15 @@ const Nav = (props) => (
         and call this link 'Login / Register' if they are not */}
         {props.user.id ? <Button style={{ color: 'white', padding: '12px', fontSize: '20px' }}>Home</Button> : <Button style= {{color: 'white', padding: '12px', fontSize: '20px'}}></Button>}
       </Link>
+
+      
+        {/* Show this link if they are logged in or not,
+        but call this link 'Home' if they are logged in,
+        and call this link 'Login / Register' if they are not */}
+        {props.user.id ? '' : <Link className="nav-link" to="/volunteer-walk-up">
+          <Button style={{ color: 'white', padding: '12px', fontSize: '20px' }}>volunteer</Button></Link> }
+      
+
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && (
         <>
