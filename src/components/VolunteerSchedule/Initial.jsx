@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Contacts from './Contacts'
+import { Link } from 'react-router-dom'
 
 class Initial extends Component {
 
@@ -11,10 +11,10 @@ class Initial extends Component {
         return (
             <div className="Initial">
                 <h1>Volunteer Schedules</h1>
-                <button onClick={()=> {
-                    this.props.history.push('/volunteer-schedule/create')
-                }}>CREATE A NEW SCHEDULE</button>
-                <Contacts/>
+                <Link to='/volunteer-schedule/create'>
+                    <button>Create New Schedule</button>
+                </Link>
+
             </div>
         );
     }
