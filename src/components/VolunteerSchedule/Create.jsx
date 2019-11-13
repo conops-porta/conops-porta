@@ -6,7 +6,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { objectTypeSpreadProperty } from '@babel/types';
 
 class CreateNewSchedule extends Component {
     state = {};
