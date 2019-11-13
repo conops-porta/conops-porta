@@ -12,6 +12,7 @@ router.get('/badgenumber/:id', (req, res) => {
     console.log('req.param', req.params);
     
     let queryText = 
+    // Just for testing badge number
     `SELECT "BadgeNumber" FROM "Attendee"
     WHERE "Attendee"."BadgeNumber" = $1;`;
 
