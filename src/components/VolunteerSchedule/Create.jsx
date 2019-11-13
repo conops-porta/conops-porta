@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { objectTypeSpreadProperty } from '@babel/types';
+import {Link} from 'react-router-dom'
 
 class CreateNewSchedule extends Component {
     state = {};
@@ -55,6 +55,10 @@ class CreateNewSchedule extends Component {
                 // parserOptions={this.state.papaparseOptions}
                 />
                 <button onClick={this.submitSchedule}>SUBMIT</button>
+                <Link to='/volunteer-schedule'>                
+                    <button>Cancel</button>
+                </Link>
+                <button onClick={this.clearState}>CLEAR</button>
 
                 {this.state.data ?
                     <div>
