@@ -10,14 +10,17 @@ class VolunteerWalkUp extends Component {
     console.log('btn click')
     event.preventDefault();
 
-    if (this.state.badgeNumber) {
+    // if (this.state.badgeNumber) {
       this.props.dispatch({
         type: 'FETCH_WALKUP_BADGE_NUMBER',
         payload: {
           badgeNumber: this.state.badgeNumber,
         },
       });
-    }
+      if(this.props.reduxStore.VolunteerWalkUpReducer === this.state.badgeNumber){
+        return window.confirm("hello")
+      };
+    // }
   } // end registeredUsers
 
   handleInputChange = propertyName => (event) => {
@@ -30,7 +33,7 @@ class VolunteerWalkUp extends Component {
   render() {
     return (
       <div>
-        {/* {JSON.stringify(this.props.mapStateToProps.volunteerWalkUpSaga)} */}
+        {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)}
         <h1>Walk-Up Volunteer</h1>
           <h2>Sign In</h2>
             <form onSubmit={this.registeredUsers}>
