@@ -14,9 +14,12 @@ import axios from 'axios'
 class Manage extends Component {
 
     componentDidMount() {
-        axios.get('/api/volunteer/schedule')
+        axios.get('/api/volunteer/shifts')
         .then(response => {
             console.log(response.data)
+            this.setState({
+                data: response.data
+            })
         }).catch(error => {
             console.log(error)
         })

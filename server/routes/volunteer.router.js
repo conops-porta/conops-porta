@@ -9,11 +9,21 @@ const router = express.Router();
  * GET route for all open shifts
  */
 router.get('/shifts', (req, res) => {
-    let queryText = ``
-    pool.query(queryText, [req.body.AttendeeID])
+    let queryText = `SELECT 
+"Role"."RoleID",
+"Department"."DepartmentName" AS department,
+"Role"."RoleName" AS role,
+"Role"."RoleForWalkUps" AS okForWalkUps,
+json_agg("Shift") AS shifts
+FROM "Shift"
+JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
+JOIN "Department" ON "Department"."DepartmentID" = "Role"."DepartmentID"
+GROUP BY "Department"."DepartmentName", "Role"."RoleID", "Role"."RoleName"
+ORDER BY "Role"."RoleID";`
+    pool.query(queryText)
         .then((result) => {
             console.log('in volunteer/shifts GET router:', result.rows);
-            // res.send(result.rows);
+            res.send(result.rows);
         })
         .catch((error) => {
             console.log('error in volunteer/shifts GET router:', error)
