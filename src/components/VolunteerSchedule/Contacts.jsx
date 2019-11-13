@@ -1,40 +1,64 @@
 import React, { Component } from 'react';
-import MaterialTable from 'material-table'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import axios from 'axios'
+import './VolunteerSchedule.css'
 
 class Contacts extends Component {
     state = {};
-   
+    componentDidMount() {
+        axios.get('/volunteer-contacts')
+            .then(response => {
+                console.log(response.data)
+                // this.setState({
+                //     data: response.data
+                // })
+            }).catch(error => {
+                console.log(error)
+            })
+    }
+
     render() {
         return (
             <div className="Contacts">
-                <MaterialTable
-                    title="Editable Example"
-                    columns={2}
-                    options={{
-                        columnsButton: true,
-                        // headerStyle: { backgroundColor: 'blue', color: 'white' },
-                        pageSize: 10,
-                        pageSizeOptions: [10, 20, 50],
-                        toolbarButtonAlignment: "right",
-                        searchFieldAlignment: "left",
-                        showTitle: false
-                    }}
-                    data={2}
-                    actions={[
-                        {
-                            icon: "accessibility",
-                            tooltip: "Find this person`s personal info",
-                            onClick: {}
-                        },
-                        rowData => ({
-                            icon: "group",
-                            tooltip: "Find all members of this group",
-                            onClick: {},
-                            disabled: rowData.orderID == null
-                        }),
-                    ]}
-                    editable={{}}
-                />
+                < Table size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Discord</TableCell>
+                            <TableCell>Total Hours</TableCell>
+                            <TableCell>Phone Number</TableCell>
+                            <TableCell>Email</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+
+                        {this.state.data ?
+                            this.state.data.map(vol => {
+                                return <TableRow key={vol.id}>
+                                    <TableCell>
+                                        {vol.name}
+                                    </TableCell>
+                                    <TableCell>
+                                        {vol.discord}
+                                    </TableCell>
+                                    <TableCell>
+                                        {vol.totalhours}
+                                    </TableCell>
+                                    <TableCell>
+                                        {vol.phone}
+                                    </TableCell>
+                                    <TableCell>
+                                        {vol.email}
+                                    </TableCell>
+                                </TableRow>
+                            })
+                            : ''}
+                    </TableBody>
+                </Table>
             </div>
         );
     }
