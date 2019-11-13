@@ -156,7 +156,7 @@ CREATE TABLE "Event"
 );
 
 
--- a joint table between events and tags -- 
+    -- a joint table between events and tags -- 
     CREATE TABLE "EventTags"
 
     (
@@ -178,7 +178,7 @@ CREATE TABLE "Event"
 );
 
 
--- holds all the tags information -- 
+    -- holds all the tags information -- 
     CREATE TABLE "Tags"
 
     (
@@ -200,7 +200,7 @@ CREATE TABLE "Event"
 );
 
 
--- holds all  the badge type info--
+    -- holds all  the badge type info--
     CREATE TABLE "BadgeType"
 
     (
@@ -222,7 +222,7 @@ CREATE TABLE "Event"
 );
 
 
--- holds all  the location information -- 
+    -- holds all  the location information -- 
     CREATE TABLE "Location"
 
     (
@@ -268,7 +268,7 @@ CREATE TABLE "Event"
 );
 
 
--- holds all sponsor information-- 
+    -- holds all sponsor information-- 
     CREATE TABLE "Sponsor"
 
     (
@@ -296,7 +296,7 @@ CREATE TABLE "Event"
 );
 
 
--- holds the order id probably connects to one of there existing database tables that hold important attendee info--
+    -- holds the order id probably connects to one of there existing database tables that hold important attendee info--
     CREATE TABLE "Order"
 
     (
@@ -306,7 +306,7 @@ CREATE TABLE "Event"
     );
 
 
--- Organization table holds all information regarding Organizations--
+    -- Organization table holds all information regarding Organizations--
     CREATE TABLE "Organization"
 
     (
@@ -325,7 +325,7 @@ CREATE TABLE "Event"
 
 );
 
--- all the commands to connect all tables that need to be connected--
+    -- all the commands to connect all tables that need to be connected--
 
     ALTER TABLE "Attendee" ADD CONSTRAINT "Attendee_fk0" FOREIGN KEY ("ConventionID") REFERENCES "Convention"("ConventionID");
 
@@ -567,3 +567,69 @@ CREATE TABLE "Event"
         ('10', '5'),
         ('9', '1'),
         ('12', '1');
+
+    -- Table Definition ----------------------------------------------
+
+    CREATE TABLE "Department"
+    (
+        "DepartmentID" integer DEFAULT nextval('"Department_DepartmentID_seq"'
+        ::regclass) PRIMARY KEY,
+    "DepartmentName" character varying
+        (255) NOT NULL UNIQUE,
+    "DepartmentDescription" character varying
+        (255),
+    "LocationID" integer REFERENCES "Location"
+        ("LocationID"),
+    "ContactPersonBadge" character varying
+        (255) REFERENCES "Attendee"
+        ("BadgeNumber")
+);
+
+        -- Table Definition ----------------------------------------------
+
+        CREATE TABLE "Shift"
+        (
+            "ShiftID" integer DEFAULT nextval('"Shift_ShiftID_seq"'
+            ::regclass) PRIMARY KEY,
+    "ShiftDate" date NOT NULL,
+    "ShiftTime" time without time zone NOT NULL,
+    "RoleID" integer NOT NULL REFERENCES "Role"
+            ("RoleID") ON
+            DELETE CASCADE,
+    "BadgeNumber" character
+            varying
+            (255) REFERENCES "Attendee"
+            ("BadgeNumber")
+);
+
+            -- Table Definition ----------------------------------------------
+
+            CREATE TABLE "Role"
+            (
+                "RoleID" integer DEFAULT nextval('"Role_RoleID_seq"'
+                ::regclass) PRIMARY KEY,
+    "DepartmentID" integer NOT NULL REFERENCES "Department"
+                ("DepartmentID") ON
+                DELETE CASCADE,
+    "RoleName" character
+                varying
+                (255) NOT NULL,
+    "RoleDescription" character varying
+                (255),
+    "RoleForWalkUps" boolean NOT NULL DEFAULT false,
+    "RoleAdminNotes" character varying
+                (255)
+);
+
+CREATE TABLE "VolunteerContact" (
+    "VolunteerID" integer DEFAULT nextval('"VolunteerContact_VolunteerID_seq"'::regclass) PRIMARY KEY,
+    "VolunteerName" character varying(255) NOT NULL UNIQUE,
+    "VolunteerDiscord" character varying(255),
+    "VolunteerEmail" character varying(255) NOT NULL,
+    "VolunteerPhone" character varying(255) NOT NULL,
+    "MainDepartmentID" integer REFERENCES "Department"("DepartmentID"),
+    "SecondaryDepartmentID" integer REFERENCES "Department"("DepartmentID"),
+    "VolunteerNotes" text,
+    "VolunteerHours" integer,
+    "VolunteerShirtSize" character varying(255)
+);
