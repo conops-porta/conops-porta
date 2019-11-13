@@ -45,10 +45,10 @@ const postRole = (departments, data) => {
     let queryText = `INSERT INTO "Role" ("DepartmentID", "RoleName", "RoleForWalkUps") VALUES `
     for (let i = 0; i < rolesToPost.length; i++) {
         if (i == rolesToPost.length - 1) {
-                queryText += `(${rolesToPost[i].departmentID}, $${i + 1}, ${rolesToPost[i].okForWalkUp}) RETURNING "RoleID", "RoleName";`
-            } else {
-                queryText += `(${rolesToPost[i].departmentID}, $${i + 1}, ${rolesToPost[i].okForWalkUp}),`
-            }
+            queryText += `(${rolesToPost[i].departmentID}, $${i + 1}, ${rolesToPost[i].okForWalkUp}) RETURNING "RoleID", "RoleName", "DepartmentID";`
+        } else {
+            queryText += `(${rolesToPost[i].departmentID}, $${i + 1}, ${rolesToPost[i].okForWalkUp}),`
+        }
     }
     return {
         queryText: queryText,
@@ -57,15 +57,21 @@ const postRole = (departments, data) => {
 }
 
 // create query and data for shift post
-const postShift = (roles, data) => {
+const postShift = (departments, roles, data) => {
     let shifts = []
     data.forEach(row => {
         let id = 0;
-        roles.forEach(role => {
-            if (role.RoleName === row.role) {
-                id = role.RoleID
+        departments.forEach(dept => {
+            if (dept.DepartmentName === row.department){
+                roles.forEach(role => {
+                    // if (role.RoleName === row.role && dept.DepartmentName === row.department) {
+                    if (role.DepartmentID == dept.DepartmentID && role.RoleName === row.role) {
+                        id = role.RoleID
+                    }
+                })
             }
         })
+        console.log('ID', id)
         row.shifts.forEach(shift => {
             for (let i = 0; shift.numOfVolunteers > i; i++) {
                 shifts.push({
@@ -93,7 +99,7 @@ const postShift = (roles, data) => {
  * POST route for new schedule
  */
 router.post('/schedule', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
-    console.log(req.body.data);
+    // console.log(req.body.data);
     let totalDepartmentList = []
     req.body.data.map(role => {
         totalDepartmentList.push(role.department)
@@ -116,7 +122,7 @@ router.post('/schedule', rejectUnauthenticated, rejectNonAdmin, async (req, res)
         // console.log('ROLE STUFF', postRoles)
         const roles = await connection.query(postRoles.queryText, postRoles.data);
         // console.log('ROLE IDs', roles.rows)
-        const postShiftQuery = postShift(roles.rows, req.body.data);
+        const postShiftQuery = postShift(departments.rows, roles.rows, req.body.data);
         // console.log('SHIFT STUFF', postShiftQuery)
         await connection.query(postShiftQuery);
         await connection.query('COMMIT');
