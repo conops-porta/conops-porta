@@ -25,7 +25,45 @@ router.get('/shifts', (req, res) => {
  * POST route for new schedule
  */
 router.post('/schedule', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
-    console.log('in new schedule POST route', req.body);
+    let totalDepartmentList = []
+
+    req.body.data.map(role => {
+        totalDepartmentList.push(role.department)
+    })
+    let uniqueDepartmentList = [...new Set(totalDepartmentList)]
+    console.log(uniqueDepartmentList);
+    let postDeptQuery = `INSERT INTO "department" ("DepartmentName") VALUES `
+    for (let i = 0; i < uniqueDepartmentList.length; i++) {
+        if (i == uniqueDepartmentList.length - 1) {
+            postDeptQuery += `($${i + 1}) RETURNING "DepartmentID", "DepartmentName";`
+        } else {
+            postDeptQuery += `($${i + 1}),`
+        }
+    }
+    console.log('Dept', postDeptQuery);
+
+    let postRoleQuery = `INSERT INTO "role" ("DepartmentID", "RoleName") VALUES `
+    for (let i = 0; i < req.body.data.length; i++) {
+        if (i == req.body.data.length - 1) {
+            postRoleQuery += `(${i + 1}, $${i + 1}) RETURNING "RoleID", "RoleName";`
+        } else {
+            postRoleQuery += `(${i + 1}, $${i + 1}),`
+        }
+    }
+    console.log('Role', postRoleQuery);
+
+    let postShiftQuery = `INSERT INTO "shift" ("RoleID", "ShiftDate", "ShiftTime") VALUES `
+    for (let i = 0; i < req.body.data.length; i++) {
+        for (let j = 0; j < req.body.data[i].shifts.length; j++) {
+            let shift = req.body.data[i].shifts[j];
+            for (let k=0; k< shift.numOfVolunteers; k++){
+                postShiftQuery += `(RoleID, shift.date, shift.time);`;
+            }
+        }
+    }
+    console.log('Shift', postShiftQuery);
+
+    // })
     // const connection = await pool.connect();
     // try {
     //     await connection.query('BEGIN');
