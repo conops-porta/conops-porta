@@ -7,10 +7,10 @@ function* volunteerWalkUp(action) {  //
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload, config);
+        console.log(action.payload.badgeNumber, config);
 
-        yield axios.get('/api/walkUp/badgeNumber', action.payload, config)
-        yield put({ type: 'SET_WALKUP_BADGE_NUMBER' })
+        const response = yield axios.get(`/api/walkup/badgenumber/${action.payload.badgeNumber}`)
+        yield put({ type: 'SET_WALKUP_BADGE_NUMBER', payload: response.data})
     } catch (error) {
         console.log('error in volunteer walkup saga', error);
     }
