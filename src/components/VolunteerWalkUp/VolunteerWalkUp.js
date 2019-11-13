@@ -6,28 +6,50 @@ class VolunteerWalkUp extends Component {
     badgeNumber: ''
   };
 
-  handleInputChangeFor = propertyName => (event) => {
+  registeredUsers = (event) => {
+    console.log('btn click')
+    event.preventDefault();
+
+    if (this.state.badgeNumber) {
+      this.props.dispatch({
+        type: 'FETCH_WALKUP_BADGE_NUMBER',
+        payload: {
+          badgeNumber: this.state.badgeNumber,
+        },
+      });
+    }
+  } // end registeredUsers
+
+  handleInputChange = propertyName => (event) => {
+    console.log('happening')
     this.setState({
       [propertyName]: event.target.value,
     });
-  }
+  } // end handleInputChange
 
   render() {
     return (
       <div>
+        {/* {JSON.stringify(this.props.mapStateToProps.volunteerWalkUpSaga)} */}
         <h1>Walk-Up Volunteer</h1>
-        <h2>Sign Up</h2>
-        <form>
-          <p>Badge #
-            <br />
-            <input placeholder="badge number"></input>
-            <button>Go</button>
-          </p>
-        </form>
+          <h2>Sign In</h2>
+            <form onSubmit={this.registeredUsers}>
+              <p>Badge #
+              <br/>
+                <input type="number" placeholder="badge number" value={this.state.badgeNumber} onChange={this.handleInputChange('badgeNumber')}></input>
+                <button>Go</button>
+              </p>
+            </form>
       </div>
     );
   }
 }
 
-export default connect()(VolunteerWalkUp);
+const mapStateToProps = reduxStore => {
+  return {
+    reduxStore
+  };
+};
+
+export default connect(mapStateToProps)(VolunteerWalkUp);
 
