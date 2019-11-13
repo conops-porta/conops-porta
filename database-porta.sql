@@ -72,8 +72,8 @@ CREATE TABLE "Attendee"
   "PreRegSortNumber" INTEGER,
   "orderID" INTEGER
     REFERENCES "Order"("OrderID"),
-	"FlaggedNoVolunter" BOOLEAN DEFAULT false,
-	"VolunteerID" INTEGER
+  "FlaggedNoVolunter" BOOLEAN DEFAULT false,
+  "VolunteerID" INTEGER
 );
 
 -- holds all the location information -- 
@@ -174,8 +174,7 @@ CREATE TABLE "VolunteerContact" (
 -- attaches VolunteerContact records to Attendee table, where appropriate
 ALTER TABLE "Attendee"
   ADD CONSTRAINT "Attendee_fk_VolunteerID"
-  FOREIGN KEY ("VolunteerID") REFERENCES "Volunteer"("VolunteerID");
-
+  FOREIGN KEY ("VolunteerID") REFERENCES "VolunteerContact"("VolunteerID");
 
 -- holds information about volunteer roles
 CREATE TABLE "Role"
@@ -252,9 +251,15 @@ VALUES
   (3, 'Smith', 'Alex', 'Smitty', '456 notreal lane', 'apartment 2', 'Minnetonka', 'MN', '55345', 'UNITED STATES', 'rodrigo321$gmail.com', '555-555-555', '10/13/1991', 'pottytrained', '08/22/2019', '08/22/2019', 1, '0005', true, true, '3', '1'),
   (3, 'Dustin', 'Fedie', 'guy', '4545 notrealave', 'basmenet', 'Saint Paul', 'MN', '55401', 'United STates', 'dustinisgreat@gamil.com', '555-555-55555', '11/22/1986', 'verysmart', '06/19/2020', '06/19/2020', 1, '0006', true, true, '3', '2');
 
+--VOLUNTEER--
+INSERT INTO "VolunteerContact"
+  ("VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", "VolunteerHours")
+VALUES
+  ('Dane Smith', 'primestuff', 'DainBSmith@gmail.com', '555-555-5555', 10);
+
 --preregistered attendees who have checked in--
 INSERT INTO "Attendee"
-  ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "CheckInDate", "PaymentDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID", "VolunteerId")
+  ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "CheckInDate", "PaymentDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID", "VolunteerID")
 VALUES
   (3, 'Dubois', 'Andrew', 'Jamal', '123 fakestreet', 'apartment 2', 'Savage', 'MN', '55378', 'United States', 'doobers@gmail.com', '612-555-5555', '09/30/1989', 'dorkstuff', '04/23/2020', '08/23/2020', '04/23/2020', 1, '0007', true, false, '7', '1', null),
   (3, 'Dane', 'Smith', 'Donald', '2020 pretendplace', 'apt 3', 'NorthEast', 'MN', '55403', 'United States', 'DainBSmith@gmail.com', '555-555-5555', '05/05/1984', 'primestuff', '06/01/2020', '08/20/202', '06/01/2020', 1, '0008', true, true, '8', '3', 1);
@@ -344,9 +349,3 @@ VALUES
   ('2', '5'),
   ('1', '1'),
   ('4', '1');
-
---VOLUNTEER--
-INSERT INTO "VolunteerContact"
-  ("VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", "VolunteerHours")
-VALUES
-  ('Dane Smith', 'primestuff', 'DainBSmith@gmail.com', '555-555-5555', 10);
