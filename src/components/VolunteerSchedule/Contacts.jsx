@@ -10,7 +10,7 @@ import './VolunteerSchedule.css'
 class Contacts extends Component {
     state = {};
     componentDidMount() {
-        axios.get('/volunteer-contacts')
+        axios.get('/api/volunteer/contacts')
             .then(response => {
                 console.log(response.data)
                 // this.setState({

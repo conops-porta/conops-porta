@@ -89,4 +89,21 @@ router.put('/', (req, res) => {
 
 });
 
+
+
+router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
+    let queryText = `SELECT "VolunteerID", "VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", count("shift") 
+                    FROM "volunteer" 
+                    JOIN "shift" ON "volunteer"."VolunteerID" = "shift"."VolunteerID"
+                    GROUP BY "VolunteerID";`
+    pool.query(queryText)
+        .then((result) => {
+            console.log('in volunteer/contacts GET router:', result.rows);
+            // res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in volunteer/contacts GET router:', error)
+            res.sendStatus(500)
+        })
+})
 module.exports = router;
