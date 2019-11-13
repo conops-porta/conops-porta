@@ -8,13 +8,17 @@ const router = express.Router();
 /**
  * GET route for all walkups
  */
-router.get('/badgeNumber', (req, res) => {
-    let queryText = `SELECT * FROM "Attendee"
-        WHERE "Attendee"."AttendeeID" = $1;`;
-    pool.query(queryText, [req.body.BadgeNumber])
+router.get('/badgenumber/:id', (req, res) => {
+    console.log('req.param', req.params);
+    
+    let queryText = 
+    `SELECT "BadgeNumber" FROM "Attendee"
+    WHERE "Attendee"."BadgeNumber" = $1;`;
+
+    pool.query(queryText, [req.params.id])
         .then((result) => {
             console.log('in api/walkUp/badgeNumber GET router:', result.rows);
-            // res.send(result.rows);
+            res.send(result.rows);
         })
         .catch((error) => {
             console.log('error in api/walkUp/badgeNumber GET router:', error)

@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class VolunteerWalkUp extends Component {
+  // componentDidMount = () => {
+  //   this.props.dispatch({ type: 'FETCH_WALKUP_BADGE_NUMBER' });
+  // }
+
   state = {
     badgeNumber: ''
   };
 
-  registeredUsers = (event) => {
+  walkUpBadgeNumberSubmit = (event) => {
     console.log('btn click')
     event.preventDefault();
 
     // if (this.state.badgeNumber) {
       this.props.dispatch({
         type: 'FETCH_WALKUP_BADGE_NUMBER',
-        payload: {
-          badgeNumber: this.state.badgeNumber,
-        },
+        payload: this.state
       });
-      if(this.props.reduxStore.VolunteerWalkUpReducer === this.state.badgeNumber){
-        return window.confirm("hello")
-      };
+      // if(this.props.reduxStore.VolunteerWalkUpReducer === this.state.badgeNumber){
+      //   return window.confirm("hello")
+      // };
     // }
   } // end registeredUsers
 
@@ -36,7 +38,7 @@ class VolunteerWalkUp extends Component {
         {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)}
         <h1>Walk-Up Volunteer</h1>
           <h2>Sign In</h2>
-            <form onSubmit={this.registeredUsers}>
+            <form onSubmit={this.walkUpBadgeNumberSubmit}>
               <p>Badge #
               <br/>
                 <input type="number" placeholder="badge number" value={this.state.badgeNumber} onChange={this.handleInputChange('badgeNumber')}></input>
