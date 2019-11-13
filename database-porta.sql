@@ -156,19 +156,6 @@ CREATE TABLE "Department"
     REFERENCES "Attendee"("BadgeNumber")
 );
 
--- holds information about volunteer roles
-CREATE TABLE "Role"
-(
-  "RoleID" SERIAL PRIMARY KEY,
-  "DepartmentID" integer NOT NULL
-    REFERENCES "Department"("DepartmentID")
-    ON DELETE CASCADE,
-  "RoleName" VARCHAR(255) NOT NULL,
-  "RoleDescription" VARCHAR(255),
-  "RoleForWalkUps" boolean NOT NULL DEFAULT false,
-  "RoleAdminNotes" VARCHAR(255)
-);
-
 -- holds information about volunteers
 CREATE TABLE "VolunteerContact" (
   "VolunteerID" SERIAL PRIMARY KEY,
@@ -183,6 +170,24 @@ CREATE TABLE "VolunteerContact" (
   "VolunteerNotes" text,
   "VolunteerHours" integer,
   "VolunteerShirtSize" VARCHAR(255)
+);
+-- attaches VolunteerContact records to Attendee table, where appropriate
+ALTER TABLE "Attendee"
+  ADD CONSTRAINT "Attendee_fk_VolunteerID"
+  FOREIGN KEY ("VolunteerID") REFERENCES "Volunteer"("VolunteerID");
+
+
+-- holds information about volunteer roles
+CREATE TABLE "Role"
+(
+  "RoleID" SERIAL PRIMARY KEY,
+  "DepartmentID" integer NOT NULL
+    REFERENCES "Department"("DepartmentID")
+    ON DELETE CASCADE,
+  "RoleName" VARCHAR(255) NOT NULL,
+  "RoleDescription" VARCHAR(255),
+  "RoleForWalkUps" boolean NOT NULL DEFAULT false,
+  "RoleAdminNotes" VARCHAR(255)
 );
 
 -- holds details about volunteer shifts and the attendees filling them (if any) --
@@ -249,10 +254,10 @@ VALUES
 
 --preregistered attendees who have checked in--
 INSERT INTO "Attendee"
-  ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "CheckInDate", "PaymentDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID")
+  ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "CheckInDate", "PaymentDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID", "VolunteerId")
 VALUES
-  (3, 'Dubois', 'Andrew', 'Jamal', '123 fakestreet', 'apartment 2', 'Savage', 'MN', '55378', 'United States', 'doobers@gmail.com', '612-555-5555', '09/30/1989', 'dorkstuff', '04/23/2020', '08/23/2020', '04/23/2020', 1, '0007', true, false, '7', '1'),
-  (3, 'Dane', 'Smith', 'Donald', '2020 pretendplace', 'apt 3', 'NorthEast', 'MN', '55403', 'United States', 'DainBSmith@gmail.com', '555-555-5555', '05/05/1984', 'primestuff', '06/01/2020', '08/20/202', '06/01/2020', 1, '0008', true, true, '8', '3');
+  (3, 'Dubois', 'Andrew', 'Jamal', '123 fakestreet', 'apartment 2', 'Savage', 'MN', '55378', 'United States', 'doobers@gmail.com', '612-555-5555', '09/30/1989', 'dorkstuff', '04/23/2020', '08/23/2020', '04/23/2020', 1, '0007', true, false, '7', '1', null),
+  (3, 'Dane', 'Smith', 'Donald', '2020 pretendplace', 'apt 3', 'NorthEast', 'MN', '55403', 'United States', 'DainBSmith@gmail.com', '555-555-5555', '05/05/1984', 'primestuff', '06/01/2020', '08/20/202', '06/01/2020', 1, '0008', true, true, '8', '3', 1);
 
 --LOCATIONS--
 INSERT INTO "Location"
@@ -340,3 +345,8 @@ VALUES
   ('1', '1'),
   ('4', '1');
 
+--VOLUNTEER--
+INSERT INTO "VolunteerContact"
+  ("VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", "VolunteerHours")
+VALUES
+  ('Dane Smith', 'primestuff', 'DainBSmith@gmail.com', '555-555-5555', 10);
