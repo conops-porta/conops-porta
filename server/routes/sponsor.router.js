@@ -7,7 +7,7 @@ const router = express.Router();
 // router for sponsor information
 
 // GET route for all
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `SELECT * FROM "Sponsor"`
     pool.query(queryText)
         .then((result) => {
@@ -21,7 +21,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 })
 
 // GET route for specific event
-router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+router.get('/details/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     // console.log('in sponsor details get id:', id);
     const queryText = `SELECT * FROM "Sponsor" WHERE "SponsorID" = $1;`;
