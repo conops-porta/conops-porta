@@ -33,7 +33,7 @@ router.get('/shifts', rejectUnauthenticated, rejectNonVetted, (req, res) => {
 "Role"."RoleID",
 "Department"."DepartmentName" AS department,
 "Role"."RoleName" AS role,
-"Role"."RoleForWalkUps" AS okForWalkUps,
+"Role"."RoleForWalkUps" AS ok_for_walk_ups,
 json_agg("Shift") AS shifts
 FROM "Shift"
 JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
