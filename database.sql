@@ -572,8 +572,7 @@ CREATE TABLE "Event"
 
     CREATE TABLE "Department"
     (
-        "DepartmentID" integer DEFAULT nextval('"Department_DepartmentID_seq"'
-        ::regclass) PRIMARY KEY,
+        "DepartmentID" SERIAL PRIMARY KEY,
     "DepartmentName" character varying
         (255) NOT NULL UNIQUE,
     "DepartmentDescription" character varying
@@ -589,8 +588,7 @@ CREATE TABLE "Event"
 
         CREATE TABLE "Shift"
         (
-            "ShiftID" integer DEFAULT nextval('"Shift_ShiftID_seq"'
-            ::regclass) PRIMARY KEY,
+            "ShiftID" SERIAL PRIMARY KEY,
     "ShiftDate" date NOT NULL,
     "ShiftTime" time without time zone NOT NULL,
     "RoleID" integer NOT NULL REFERENCES "Role"
@@ -606,8 +604,7 @@ CREATE TABLE "Event"
 
             CREATE TABLE "Role"
             (
-                "RoleID" integer DEFAULT nextval('"Role_RoleID_seq"'
-                ::regclass) PRIMARY KEY,
+                "RoleID" SERIAL PRIMARY KEY,
     "DepartmentID" integer NOT NULL REFERENCES "Department"
                 ("DepartmentID") ON
                 DELETE CASCADE,
@@ -622,7 +619,7 @@ CREATE TABLE "Event"
 );
 
 CREATE TABLE "VolunteerContact" (
-    "VolunteerID" integer DEFAULT nextval('"VolunteerContact_VolunteerID_seq"'::regclass) PRIMARY KEY,
+    "VolunteerID" SERIAL PRIMARY KEY,
     "VolunteerName" character varying(255) NOT NULL UNIQUE,
     "VolunteerDiscord" character varying(255),
     "VolunteerEmail" character varying(255) NOT NULL,
