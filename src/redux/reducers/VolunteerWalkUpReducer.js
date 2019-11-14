@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const VolunteerWalkUpReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_WALKUP_SHIFTS':

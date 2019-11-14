@@ -6,7 +6,6 @@ const router = express.Router();
  * GET route for showing available shifts to walkups
  */
 router.get('/shifts/:id', async (req, res) => {
-    console.log('req.param', req.params);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -50,7 +49,7 @@ router.put('/shifts', async (req, res) => {
         res.sendStatus(200);
     } catch (error) {
         await connection.query('ROLLBACK');
-        // console.log('error in walkup shifts PUT route', error);
+        console.log('error in walkup shifts PUT route', error);
         res.sendStatus(500);
     } finally {
         connection.release();

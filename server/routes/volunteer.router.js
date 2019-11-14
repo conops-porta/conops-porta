@@ -42,7 +42,7 @@ GROUP BY "Department"."DepartmentName", "Role"."RoleID", "Role"."RoleName"
 ORDER BY "Role"."RoleID";`
     pool.query(queryText)
         .then((result) => {
-            console.log('in volunteer/shifts GET router:', result.rows);
+            // console.log('in volunteer/shifts GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
