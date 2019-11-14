@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import AttendessNav from './AttendessNav';
 import EventsNav from './EventsNav';
 import AdminNav from './AdminNav';
+import VolunteersNav from'./VolunteersNav'
 // import VolunteerWalkUp from './VolunteerWalkUp';
 
 const Nav = (props) => (
@@ -37,6 +38,7 @@ const Nav = (props) => (
           <AttendessNav className="nav-link"/>
           <EventsNav className="button"/>
           <AdminNav className="button"/>
+          <VolunteersNav className="button" />
           <LogOutButton />
         </>
       )}
