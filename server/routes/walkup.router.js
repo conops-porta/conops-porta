@@ -11,7 +11,10 @@ const router = express.Router();
 router.get('/shifts/:id', async (req, res) => {
     console.log('req.param', req.params);
     
-    let queryText = ``;
+    let queryText = 
+    `select exists (select true from "Attendee" where "BadgeNumber"=$1);`
+    // `SELECT "BadgeNumber" FROM "Attendee"
+    // WHERE "BadgeNumber" = $1;`;
 
     pool.query(queryText, [req.params.id])
         .then((result) => {
