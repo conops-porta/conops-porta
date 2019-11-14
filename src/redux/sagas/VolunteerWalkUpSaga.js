@@ -7,13 +7,11 @@ function* getWalkUpShifts(action) {  //
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload.badgeNumber, config);
-
+        console.log(action.payload.badgeNumber);
         const response = yield axios.get(`/api/walkup/shifts/${action.payload.badgeNumber}`)
         yield put({ type: 'SET_WALKUP_SHIFTS', payload: response.data})
     } catch (error) {
         console.log('error in walkup shifts saga', error);
-        // yield put({type: 'BADGE_ERROR'});
     }
 }
 

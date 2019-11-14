@@ -1,7 +1,4 @@
 const express = require('express');
-const { rejectUnauthenticated } = require('../modules/authentication-middleware');
-const { rejectNonVetted } = require('../modules/isVettedVolunteerAuthentication-middleware');
-const { rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -10,21 +7,31 @@ const router = express.Router();
  */
 router.get('/shifts/:id', async (req, res) => {
     console.log('req.param', req.params);
-    
-    let queryText = 
-    `select exists (select true from "Attendee" where "BadgeNumber"=$1);`
-    // `SELECT "BadgeNumber" FROM "Attendee"
-    // WHERE "BadgeNumber" = $1;`;
-
-    pool.query(queryText, [req.params.id])
-        .then((result) => {
-            // console.log('in api/walkUp/shifts GET router:', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('error in api/walkUp/badgeNumber GET router:', error)
-            res.sendStatus(500)
-        })
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const getShiftsQuery = `SELECT 
+        "Shift"."ShiftDate",
+        "Shift"."ShiftTime",
+        "Shift"."ShiftID",
+        "Role"."RoleName",
+        "Department"."DepartmentName",
+        "Department"."DepartmentDescription"
+        FROM "Shift"
+        JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
+        JOIN "Department" ON "Department"."DepartmentID" = "Role"."DepartmentID"
+        WHERE "Role"."RoleForWalkUps" = true AND "Shift"."BadgeNumber" IS NULL
+        ORDER BY "Shift"."ShiftDate", "Shift"."ShiftTime";`;
+        const shiftResults = await connection.query(getShiftsQuery);
+        await connection.query('COMMIT');
+        res.send(shiftResults.rows);
+    } catch (error) {
+        await connection.query('ROLLBACK');
+        console.log('error in walkup shifts GET route', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
 });
 
 module.exports = router;
@@ -33,17 +40,12 @@ module.exports = router;
  * PUT route for walkups to sign up for shifts
  */
 router.put('/shifts', async (req, res) => {
-    // console.log('in attendee checkInAndPay PUT route');
+    // console.log('in shifts PUT route', req.body);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
-        // console.log(req.body);
-        
-
         const queryText = ``;
-        
         await connection.query(queryText, [])
-
         await connection.query('COMMIT');
         res.sendStatus(200);
     } catch (error) {
