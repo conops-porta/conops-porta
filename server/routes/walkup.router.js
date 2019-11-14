@@ -9,7 +9,7 @@ const router = express.Router();
  * GET route for all walkups
  */
 router.get('/badgenumber/:id', (req, res) => {
-    console.log('req.param', req.params);
+    console.log('req.params', req.params.id);
     
     let queryText = 
     // Just for testing badge number
@@ -26,5 +26,16 @@ router.get('/badgenumber/:id', (req, res) => {
             res.sendStatus(500)
         })
 });
+
+// router.get('/badgenumber', (req, res) => {
+//     pool.query(`SELECT "BadgeNumber" FROM "Attendee";`)
+//         .then((result) => {
+//             console.log('Result', result)
+//         res.send(result.rows);
+//     }).catch((error) => {
+//         console.log('Error', error)
+//         res.sendStatus(500);
+//     });
+// });
 
 module.exports = router;
