@@ -13,6 +13,7 @@ function* getWalkUpShifts(action) {  //
         yield put({ type: 'SET_WALKUP_SHIFTS', payload: response.data})
     } catch (error) {
         console.log('error in walkup shifts saga', error);
+        // yield put({type: 'BADGE_ERROR'});
     }
 }
 
