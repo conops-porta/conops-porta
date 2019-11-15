@@ -61,6 +61,7 @@ class WalkUpShifts extends Component {
             type: 'SET_SELECTED_SHIFTS',
             payload: this.state.data
         })
+        this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
     }
 
     render() {

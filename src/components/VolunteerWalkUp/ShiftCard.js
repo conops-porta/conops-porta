@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
-import swal from 'sweetalert';
+import { Checkbox } from '@material-ui/core';
 
 class ShiftCard extends Component {
 
