@@ -14,19 +14,10 @@ class VolunteerWalkUp extends Component {
       buttons: ['Cancel', 'Yes!']
     }).then((value) => {
       if (value === true) {
-        this.walkUpBadgeNumberSubmit();
+        this.props.history.push(`/volunteer-walk-up/${this.state.badgeNumber}`)
       }
     })
   }
-
-  walkUpBadgeNumberSubmit = async (event) => {
-    this.props.dispatch({
-      type: 'FETCH_WALKUP_SHIFTS',
-      payload: {
-        badgeNumber: this.state.badgeNumber
-      }
-    });
-  } // end registeredUsers
 
   handleInputChange = propertyName => (event) => {
     this.setState({
@@ -50,7 +41,6 @@ class VolunteerWalkUp extends Component {
             </input>
             <button>Go</button>
             <br />
-            {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)}
           </p>
         </form>
       </div>
