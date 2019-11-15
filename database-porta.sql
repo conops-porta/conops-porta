@@ -199,6 +199,7 @@ CREATE TABLE "Shift"
   "RoleID" integer NOT NULL
     REFERENCES "Role"("RoleID")
     ON DELETE CASCADE,
+  "NoShow" boolean NOT NULL DEFAULT false,
   "BadgeNumber" VARCHAR(255)
     REFERENCES "Attendee"("BadgeNumber")
 );
