@@ -37,6 +37,7 @@ import VolunteerSchedule from '../VolunteerSchedule/Initial';
 import VolunteerScheduleCreate from '../VolunteerSchedule/Create';
 import VolunteerScheduleManage from '../VolunteerSchedule/Manage';
 import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
+import WalkUpShifts from '../VolunteerWalkUp/WalkUpShifts';
 
 import VolunteerPortal from '../VolunteerPortal/VolunteerPortal'
 import VolunteerHours from '../VolunteerPortal/VolunteerHours'
@@ -90,6 +91,7 @@ class App extends Component {
               exact path ="/register"
               component = {RegisterPage}
               />
+              
             {/* Events Tab */}
             <ProtectedRoute
               exact
@@ -107,6 +109,11 @@ class App extends Component {
               exact
               path="/volunteer-walk-up"
               component={VolunteerWalkUp}
+            />
+            <Route
+              exact
+              path="/volunteer-walk-up/:badgenumber"
+              component={WalkUpShifts}
             />
 
             {/* Admin */}
