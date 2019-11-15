@@ -51,6 +51,28 @@ ORDER BY "Role"."RoleID";`
         })
 });
 
+/**
+ * GET route to get all shifts of a particular time slot 
+ * written as a post to allow sending req.body with time slot info
+ */
+router.post('/time-slot-shifts', rejectUnauthenticated, rejectNonVetted, (req, res) => {
+    let queryText = `SELECT 
+"Shift"."ShiftID",
+"Shift"."BadgeNumber"
+FROM "Shift"
+JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
+WHERE "Role"."RoleID" = $1 AND "Shift"."ShiftDate" = $2 AND "Shift"."ShiftTime" = $3
+GROUP BY "Shift"."ShiftID";`
+    pool.query(queryText, [req.body.RoleID, req.body.date, req.body.time])
+        .then((result) => {
+            // console.log('in volunteer/time-slot-shifts GET router:', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in volunteer/time-slot-shifts GET router:', error)
+            res.sendStatus(500)
+        })
+});
 // Functions for new schedule POST
 // create query and data for role post
 const postRole = (departments, data) => {
@@ -172,11 +194,11 @@ router.post('/schedule', rejectUnauthenticated, rejectNonAdmin, async (req, res)
  * POST route for new shifts
  */
 router.post('/shifts', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
-    let postShiftQuery = ``
+    let postShiftQuery = `INSERT INTO "Shift" ("ShiftDate", "ShiftTime", "RoleID") VALUES ($1, $2, $3);`
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
-        await connection.query(postShiftQuery);
+        await connection.query(postShiftQuery, [req.body.date, req.body.time, req.body.roleID]);
         await connection.query('COMMIT');
         res.sendStatus(200);
     } catch (error) {

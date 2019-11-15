@@ -71,7 +71,7 @@ class Accordion extends Component {
                                                 numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).count}
                                                 uniqueShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).uniqueShifts}
                                                 shiftInfo={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).shiftInfo}
-                                                roleInfo={{ department: this.props.data.department, role: this.props.data.role }}
+                                                roleInfo={{ department: this.props.data.department, role: this.props.data.role, RoleID: this.props.data.RoleID }}
                                             />
                                         </TableCell>
                                     ))}
