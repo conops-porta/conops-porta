@@ -24,10 +24,10 @@ class Manage extends Component {
         axios.post('/api/volunteer-admin/time-slot-shifts', dataToSend)
         .then(response => {
             console.log(response.data)
-            // this.setState({
-            //     ...this.state,
-            //     shifts: response.data
-            // })
+            this.setState({
+                ...this.state,
+                shifts: response.data
+            })
         }).catch(error => {
             console.log(error)
         })
