@@ -170,7 +170,7 @@ CREATE TABLE "VolunteerContact" (
   "VolunteerNotes" text,
   "VolunteerHours" integer,
   "VolunteerShirtSize" VARCHAR(255),
-  "VolunteerVetted" boolean default false,
+  "VolunteerVetted" boolean default false
 );
 -- attaches VolunteerContact records to Attendee table, where appropriate
 ALTER TABLE "Attendee"
