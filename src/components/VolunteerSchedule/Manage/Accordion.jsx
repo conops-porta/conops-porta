@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios'
 import moment from 'moment'
+import EditShiftsModal from './EditShiftsModal'
 
 
 class Accordion extends Component {
@@ -55,7 +56,7 @@ class Accordion extends Component {
                                     <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
-                                            <button>{this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime)}</button>
+                                            <EditShiftsModal numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime)}/>
                                         </TableCell>
                                     ))}
                                 </TableRow>
