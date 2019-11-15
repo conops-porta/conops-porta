@@ -67,7 +67,6 @@ class WalkUpShifts extends Component {
         return (
             <div className="WalkUpShifts">
                 <h1>Available shifts:</h1>
-                {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)}
                 <button onClick={this.sendSelectedShifts}>Submit</button>
                 {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
                     <ShiftCard shift={shift} handleChange={this.handleChange} data={this.state.data} key={shift.ShiftID} />
