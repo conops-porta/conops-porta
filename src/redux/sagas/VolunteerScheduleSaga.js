@@ -7,7 +7,7 @@ function* getSchedule() {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        const response = yield axios.get('/api/volunteer/schedule', config);
+        const response = yield axios.get('/api/volunteer-admin/schedule', config);
         yield put({ type: 'SET_VOLUNTEER_SCHEDULE', payload: response.data })
     } catch (error) {
         console.log('error in getSchedule', error);

@@ -6,7 +6,7 @@ import axios from 'axios'
 class Manage extends Component {
     state = {}
     componentDidMount() {
-        axios.get('/api/volunteer/shifts')
+        axios.get('/api/volunteer-admin/shifts')
             .then(response => {
                 // console.log(response.data)
                 this.setState({
