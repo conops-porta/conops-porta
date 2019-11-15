@@ -15,8 +15,9 @@ import TagDetailReducer from './TagDetailReducer';
 import LocationReducer from './LocationReducer'
 import locationDetailsReducer from './locationDetailsReducer';
 import sponsorReducer from './sponsorReducer';
-import sponsorDetailsReducer from './sponsorDetailsReducer'
-import VolunteerWalkUpReducer from './VolunteerWalkUpReducer'
+import sponsorDetailsReducer from './sponsorDetailsReducer';
+import VolunteerWalkUpReducer from './VolunteerWalkUpReducer';
+import SelectedShiftsReducer from './SelectedShiftsReducer';
 
 
 
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
   sponsorReducer,
   sponsorDetailsReducer,
   VolunteerWalkUpReducer,
+  SelectedShiftsReducer,
 });
 
 export default rootReducer;

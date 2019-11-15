@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
 
@@ -12,10 +11,14 @@ class WalkUpShifts extends Component {
         this.validateBadgeNumber();
     }
 
+    state = {
+        data: []
+    }
+
     validateBadgeNumber = () => {
         axios.get(`/api/walkup/validatebadge/${this.props.match.params.badgenumber}`)
             .then(response => {
-                // check to see if attendee is over 16 years old
+                // calculate age of attendee
                 let today = new Date();
                 let birthDate = new Date(response.data.DateOfBirth);
                 let age = today.getFullYear() - birthDate.getFullYear();
@@ -23,10 +26,8 @@ class WalkUpShifts extends Component {
                 if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
                     age--;
                 }
-                console.log(age);
-                
                 // make sure attendee is over 16 and NOT flagged as no volunteer
-                if (response.data.FlaggedNoVolunteer === false && age >= 16 ) {
+                if (response.data.FlaggedNoVolunteer === false && age >= 16) {
                     this.walkUpBadgeNumberSubmit();
                 } else {
                     swal({
@@ -52,14 +53,28 @@ class WalkUpShifts extends Component {
         });
     } // end registeredUsers
 
+
+    handleChange = (checked, id) => {
+        this.setState({
+            data: [...this.state.data, { id: id, checked: checked }]
+        })
+        console.log(id, checked)
+    }
+
+    sendSelectedShifts = () => {
+        this.props.dispatch({
+            type: 'SET_SELECTED_SHIFTS',
+            payload: this.state.data
+        })
+    }
+
     render() {
         return (
             <div className="WalkUpShifts">
                 <h1>Available shifts:</h1>
-                {/* {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)} */}
-                <button onClick={this.verifyInfo}>Next</button>
+                <button onClick={this.sendSelectedShifts}>Submit</button>
                 {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
-                    <ShiftCard shift={shift} />
+                    <ShiftCard shift={shift} handleChange={this.handleChange} data={this.state.data} key={shift.ShiftID} />
                 ))}
             </div>
         )
