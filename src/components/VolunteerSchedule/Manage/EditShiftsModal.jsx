@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
+import moment from 'moment'
 
 
 class Manage extends Component {
-    state ={ open: false }
+    state ={ 
+        open: false
+    }
+    //modal control
     handleClickOpen = () => { this.setOpen(true); };
     handleClose = () => { this.setOpen(false); };
     setOpen = (bool) => {
-        this.setState({ open: bool })
+        this.setState({ ...this.state, open: bool })
     }
-
+    handleAddShift = () => {
+        console.log('click')
+    }
+    handleDeleteShift = (id) => {
+        console.log('click', id)
+    }
     render() {
         return (
             <div className="Manage">
@@ -17,27 +26,27 @@ class Manage extends Component {
                     {this.props.numOfShifts}
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogTitle id="form-dialog-title">
+                        {this.props.roleInfo.department} Department: {this.props.roleInfo.role} <br/>
+                        {moment(this.props.shiftInfo.date).format('dddd')} at {this.props.shiftInfo.time}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            To subscribe to this website, please enter your email address here. We will send updates
-                            occasionally.
+                            Manage Shifts
                         </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
+                        <ul>
+                            {this.props.uniqueShifts.map(shift => (
+                                <li>
+                                    {shift.BadgeNumber ? shift.BadgeNumber : 'Unfilled'}
+                                    {/* {JSON.stringify(shift)} */}
+                                    <Button onClick={() => this.handleDeleteShift(shift.ShiftID)}>X</Button>
+                                </li>
+                            ))}
+                        </ul>
+                        <Button onClick={this.handleAddShift} variant="outlined">Add Shift</Button>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleClose} color="primary">
-                            Subscribe
+                        <Button onClick={this.handleClose} variant="contained" color="primary">
+                            Close
                         </Button>
                     </DialogActions>
                 </Dialog>

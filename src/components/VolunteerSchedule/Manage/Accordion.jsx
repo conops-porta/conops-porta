@@ -19,12 +19,23 @@ class Accordion extends Component {
 
     numberOfShiftsAt = (date, time) => {
         let count = 0;
+        let uniqueShifts = [];
+        let shiftInfo = {}
         this.props.data.allShifts.forEach(shift => {
             if (shift.ShiftTime == time + ':00' && shift.ShiftDate == date) {
                 count++;
+                uniqueShifts.push(shift);
+                shiftInfo = {
+                    date: date,
+                    time: time
+                }
             }
         })
-        return count;
+        return {
+            count: count,
+            uniqueShifts: uniqueShifts,
+            shiftInfo: shiftInfo
+        };
     }
     render() {
         return (
@@ -56,7 +67,12 @@ class Accordion extends Component {
                                     <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
-                                            <EditShiftsModal numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime)}/>
+                                            <EditShiftsModal 
+                                                numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).count}
+                                                uniqueShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).uniqueShifts}
+                                                shiftInfo={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).shiftInfo}
+                                                roleInfo={{ department: this.props.data.department, role: this.props.data.role }}
+                                            />
                                         </TableCell>
                                     ))}
                                 </TableRow>
