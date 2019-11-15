@@ -33,9 +33,9 @@ import CreateSponsor from  '../V1/Sponsors/CreateSponsor';
 
 import RegisterPage from '../RegisterPage/RegisterPage';
 
-import VolunteerSchedule from '../VolunteerSchedule/Initial';
-import VolunteerScheduleCreate from '../VolunteerSchedule/Create';
-import VolunteerScheduleManage from '../VolunteerSchedule/Manage';
+import VolunteerSchedule from '../VolunteerSchedule/Initial/Initial';
+import VolunteerScheduleCreate from '../VolunteerSchedule/Create/Create';
+import VolunteerScheduleManage from '../VolunteerSchedule/Manage/Manage';
 import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
 import WalkUpShifts from '../VolunteerWalkUp/WalkUpShifts';
 import WalkUpConfirm from '../VolunteerWalkUp/WalkUpConfirm';
