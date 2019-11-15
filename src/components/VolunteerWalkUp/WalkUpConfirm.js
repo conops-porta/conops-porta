@@ -8,7 +8,6 @@ class WalkUpConfirm extends Component {
 
     state = {
         volunteerFirstName: '',
-        volunteerLastName: '',
         discordName: '',
         phoneNumber: ''
       }
@@ -20,29 +19,24 @@ class WalkUpConfirm extends Component {
       } // end handleInputChange
 
       verifyInfo = () => {
-          console.log('confirm btn click')
-        // swal({
-        //   title: `Your badge # is ${this.state.badgeNumber}`,
-        //   text: 'Proceed to shifts?',
-        //   buttons: ['Cancel', 'Yes!']
-        // }).then((value) => {
-        //   if (value === true) {
-        //     this.props.history.push(`/volunteer-walk-up/${this.state.badgeNumber}`)
-        //   }
-        // })
+        console.log('confirm btn click')
+        
+        swal({
+          title: `Thank You`,
+          text: 'You sign up for:',
+          icon: "success",
+          // text: `Please write this down so you don't forget!`,
+        })
+        .then((value) => {
+          if (value === true) {
+            this.props.history.push(`/volunteer-walk-up`)
+          }
+        })
       }
 
       cancelButton = () => {
         console.log('cancel btn click')
-      // swal({
-      //   title: `Your badge # is ${this.state.badgeNumber}`,
-      //   text: 'Proceed to shifts?',
-      //   buttons: ['Cancel', 'Yes!']
-      // }).then((value) => {
-      //   if (value === true) {
-      //     this.props.history.push(`/volunteer-walk-up/${this.state.badgeNumber}`)
-      //   }
-      // })
+        this.props.history.push(`/volunteer-walk-up/${this.props.match.params.id}`)
     }
 
     render() {
@@ -52,7 +46,6 @@ class WalkUpConfirm extends Component {
                 <br />
         {/* <h1>{this.props.badgeNumber}</h1> */}
         {/* <h2>{this.props.match.params.id}</h2> */}
-        {/* {JSON.stringify(this.props.match.params.id)} */}
 
         <form>
         <p>Badge #{this.props.match.params.id}</p>
@@ -63,15 +56,6 @@ class WalkUpConfirm extends Component {
               placeholder="First name"
               value={this.state.volunteerFirstName}
               onChange={this.handleInputChange('volunteerFirstName')}>
-            </input> 
-            </p>
-            <p>Last Name
-            <br/>
-              <input
-              type="text"
-              placeholder="Last name"
-              value={this.state.volunteerLastName}
-              onChange={this.handleInputChange('volunteerLastName')}>
             </input> 
             </p>
             <p>Discord Name
@@ -86,10 +70,8 @@ class WalkUpConfirm extends Component {
             <p>Phone Number
             <br/>     
              <input
-              type="tel"
-              name="phone"
+              type="number"
               placeholder="Phone number"
-            //   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"required
               value={this.state.phoneNumber}
               onChange={this.handleInputChange('phoneNumber')}>
             </input>
