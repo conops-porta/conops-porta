@@ -10,7 +10,8 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const walkupRouter = require('./routes/walkup.router');
-const volunteerRouter = require('./routes/volunteer.router');
+const volunteerAdminRouter = require('./routes/volunteerAdmin.router');
+const volunteerPortalRouter = require('./routes/volunteerPortal.router');
 const userRouter = require('./routes/user.router');
 const attendeeRouter = require('./routes/attendee.router');
 const conventionRouter = require('./routes/convention.router');
@@ -40,7 +41,8 @@ app.use('/api/location', locationRouter);
 app.use('/api/tag', tagRouter);
 app.use('/api/sponsor', sponsorRouter);
 app.use('/api/home', homeRouter);
-app.use('/api/volunteer', volunteerRouter);
+app.use('/api/volunteer-admin', volunteerAdminRouter);
+app.use('/api/volunteer-portal', volunteerPortalRouter);
 app.use('/api/walkup', walkupRouter);
 
 // Serve static files
