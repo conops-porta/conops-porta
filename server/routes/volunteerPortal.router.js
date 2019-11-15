@@ -38,9 +38,9 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
                 WHERE "BadgeNumber" IS NOT NULL
                 AND "NoShow" IS false
                 AND (
-                    "Shift"."ShiftDate" < '2020-08-28' --CURRENT_DATE
+                    "Shift"."ShiftDate" < CURRENT_DATE
                     OR (
-                        "Shift"."ShiftDate" = '2020-08-28' --CURRENT_DATE
+                        "Shift"."ShiftDate" = CURRENT_DATE
                         AND "Shift"."ShiftTime" < CURRENT_TIME
                     )
                 )
