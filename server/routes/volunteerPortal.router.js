@@ -20,37 +20,35 @@ router.get('/', rejectUnauthenticated, rejectNonVetted, (req, res) => {
 
 router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     let queryText = `
-        SELECT "Attendee"."BadgeNumber", "Attendee"."FirstName", "Attendee"."LastName", "VolunteerContact"."VolunteerDiscord",
-            (
-                "VolunteerContact"."VolunteerHours"
-                + (
-                    SELECT COUNT(*) FROM "Shift"
-                    JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-                    WHERE "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-                    AND "Shift"."NoShow" = false
-                    AND "Shift"."ShiftDate" < CURRENT_DATE
-                    GROUP BY "Shift"."BadgeNumber"
-                )
-                + (
-                    SELECT COUNT(*) FROM "Shift"
-                    JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-                    WHERE "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-                    AND "Shift"."NoShow" = false
-                    AND "Shift"."ShiftDate" = CURRENT_DATE
-                    AND "Shift"."ShiftTime" < CURRENT_TIME
-                    GROUP BY "Shift"."BadgeNumber"
-                )
-            ) AS "HoursWorked",
-            (
-                SELECT COUNT(*) FROM "Shift"
-                JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-                WHERE "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-                GROUP BY "Shift"."BadgeNumber"
-            ) AS "HoursScheduled"
+        SELECT
+            "Shift"."BadgeNumber",
+            "Attendee"."FirstName",
+            "Attendee"."LastName",
+            "VolunteerContact"."VolunteerDiscord",
+            "ShiftsScheduled"."TotalScheduled" AS "HoursScheduled",
+            COALESCE("ShiftsWorked"."TotalWorked" + COALESCE("VolunteerContact"."VolunteerHours", 0), 0) AS "HoursWorked"
         FROM "Shift"
+        LEFT OUTER JOIN LATERAL (
+                SELECT "BadgeNumber", COUNT("ShiftID") AS "TotalScheduled" FROM "Shift"
+                WHERE "BadgeNumber" IS NOT NULL
+                GROUP BY "BadgeNumber"
+            ) AS "ShiftsScheduled" ON "Shift"."BadgeNumber" = "ShiftsScheduled"."BadgeNumber"
+        LEFT OUTER JOIN LATERAL (
+                SELECT "BadgeNumber", COUNT("ShiftID") AS "TotalWorked" FROM "Shift"
+                WHERE "BadgeNumber" IS NOT NULL
+                AND "NoShow" IS false
+                AND (
+                    "Shift"."ShiftDate" < '2020-08-28' --CURRENT_DATE
+                    OR (
+                        "Shift"."ShiftDate" = '2020-08-28' --CURRENT_DATE
+                        AND "Shift"."ShiftTime" < CURRENT_TIME
+                    )
+                )
+                GROUP BY "BadgeNumber"
+            ) AS "ShiftsWorked" ON "Shift"."BadgeNumber" = "ShiftsWorked"."BadgeNumber"
         JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
         JOIN "VolunteerContact" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
-        GROUP BY "Shift"."BadgeNumber";
+        GROUP BY "Shift"."BadgeNumber", "Attendee"."FirstName", "Attendee"."LastName", "VolunteerContact"."VolunteerDiscord", "VolunteerContact"."VolunteerHours", "ShiftsScheduled"."TotalScheduled", "ShiftsWorked"."TotalWorked";
     `;
     pool.query(queryText)
         .then((result) => {
