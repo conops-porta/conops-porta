@@ -41,6 +41,11 @@ class WalkUpShifts extends Component {
             })
     }
 
+    verifyInfo = () => {
+        console.log(this.props.match.params.badgenumber)
+        this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
+    }
+
     walkUpBadgeNumberSubmit = () => {
         this.props.dispatch({
             type: 'FETCH_WALKUP_SHIFTS',
