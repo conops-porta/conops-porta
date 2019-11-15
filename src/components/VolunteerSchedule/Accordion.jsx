@@ -34,14 +34,14 @@ class Accordion extends Component {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography >{this.props.data.department}</Typography>
+                        <Typography >{this.props.data.department} – {this.props.data.role}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>{this.props.data.role}</TableCell>
-                                    <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
+                                    <TableCell>Role: </TableCell>
+                                    <TableCell>Walk Ups?</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
                                             {moment(shift.ShiftDate).format('dddd')}, {shift.ShiftTime}
@@ -51,8 +51,8 @@ class Accordion extends Component {
                             </TableHead>
                             <TableBody>
                                 <TableRow >
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell>{this.props.data.role}</TableCell>
+                                    <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
                                             <button>{this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime)}</button>

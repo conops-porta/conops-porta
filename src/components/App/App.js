@@ -38,6 +38,10 @@ import VolunteerScheduleCreate from '../VolunteerSchedule/Create';
 import VolunteerScheduleManage from '../VolunteerSchedule/Manage';
 import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
 
+import VolunteerPortal from '../VolunteerPortal/VolunteerPortal'
+import VolunteerHours from '../VolunteerPortal/VolunteerHours'
+
+
 import './App.css';
 
 class App extends Component {
@@ -195,6 +199,16 @@ class App extends Component {
               exact
               path="/sponsors/create"
               component={CreateSponsor}
+            />
+            <ProtectedRoute
+              exact
+              path="/volunteer-portal"
+              component={VolunteerPortal}
+            />
+            <ProtectedRoute
+              exact
+              path="/volunteer-portal/hours"
+              component={VolunteerHours}
             /> 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
