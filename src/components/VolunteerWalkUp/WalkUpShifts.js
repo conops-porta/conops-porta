@@ -4,6 +4,8 @@ import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+import ShiftCard from './ShiftCard';
+
 class WalkUpShifts extends Component {
 
     componentDidMount() {
@@ -48,10 +50,11 @@ class WalkUpShifts extends Component {
     render() {
         return (
             <div className="WalkUpShifts">
-                Walk up shifts
-                <button onClick={this.validateBadgeNumber}>Test</button>
-                <br />
-                {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)}
+                <h1>Available shifts:</h1>
+                {/* {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)} */}
+                {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
+                    <ShiftCard shift={shift} />
+                ))}
             </div>
         )
     }
