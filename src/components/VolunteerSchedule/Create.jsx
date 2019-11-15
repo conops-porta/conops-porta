@@ -19,7 +19,7 @@ class CreateNewSchedule extends Component {
     submitSchedule = () => {
         if (this.state.data) {
             // console.log(this.state.data)
-            axios.post('/api/volunteer/schedule', {data: this.state.data})
+            axios.post('/api/volunteer-admin/schedule', {data: this.state.data})
                 .then(response => {
                     console.log(response.data)
                 }).catch(error => {
