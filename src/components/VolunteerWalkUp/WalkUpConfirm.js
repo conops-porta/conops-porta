@@ -21,17 +21,21 @@ class WalkUpConfirm extends Component {
       verifyInfo = () => {
         console.log('confirm btn click')
         
-        swal({
-          title: `Thank You`,
-          text: 'You sign up for:',
-          icon: "success",
-          // text: `Please write this down so you don't forget!`,
-        })
-        .then((value) => {
-          if (value === true) {
-            this.props.history.push(`/volunteer-walk-up`)
-          }
-        })
+        // swal({
+        //   title: `Thank You`,
+        //   text: 'You sign up for:',
+        //   icon: "success",
+        //   // text: `Please write this down so you don't forget!`,
+        // })
+        // .then((value) => {
+        //   if (value === true) {
+        //     this.props.history.push(`/volunteer-walk-up`)
+        //   }
+        // })
+      //   this.props.dispatch({
+      //     type: 'POST_WALKUP_INFO',
+      //     payload: this.props.match.params
+      // });
       }
 
       cancelButton = () => {
