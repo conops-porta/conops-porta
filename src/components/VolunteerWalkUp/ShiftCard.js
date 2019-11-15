@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
-import Checkbox from '@material-ui/core/Checkbox';
-import swal from 'sweetalert';
+import { Checkbox } from '@material-ui/core';
 
 class ShiftCard extends Component {
 
@@ -10,22 +8,26 @@ class ShiftCard extends Component {
         checked: false
     }
 
-    handleChange = event => {
-        this.setState({ checked: !this.state.checked });
-    };
+    checkBox = () => {
+        this.setState({
+            checked: !this.state.checked
+        })
+        this.props.handleChange(!this.state.checked, this.props.shift.ShiftID)
+    }
 
     render() {
         return (
             <div className="ShiftCard" style={{ border: "1px solid black" }}>
-                <h3>{moment(this.props.shift.ShiftDate).format('dddd')}@{this.props.shift.ShiftTime}</h3>
+                <h3>{moment(this.props.shift.ShiftDate).format('dddd')}@{(this.props.shift.ShiftTime).slice(0, -3)}</h3>
                 <h3>Department: {this.props.shift.DepartmentName}</h3>
                 <h3>Role: {this.props.shift.RoleName}</h3>
-                <Checkbox
+                {<Checkbox
                     checked={this.state.checked}
-                    onChange={() => this.handleChange('checked')}
+                    onChange={this.checkBox}
                     value="checked"
                     color="primary"
-                />
+                />}
+                <button onClick={() => console.log(this.props.shift.ShiftID)}>test</button>
             </div>
         )
     }
