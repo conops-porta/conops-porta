@@ -72,7 +72,7 @@ CREATE TABLE "Attendee"
   "PreRegSortNumber" INTEGER,
   "orderID" INTEGER
     REFERENCES "Order"("OrderID"),
-  "FlaggedNoVolunter" BOOLEAN DEFAULT false,
+  "FlaggedNoVolunteer" BOOLEAN DEFAULT false,
   "VolunteerID" INTEGER
 );
 
