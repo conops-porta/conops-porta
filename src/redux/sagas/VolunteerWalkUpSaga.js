@@ -7,7 +7,7 @@ function* getWalkUpShifts(action) {  //
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload.badgeNumber);
+        console.log(action.payload.badgeNumber, config);
         const response = yield axios.get(`/api/walkup/shifts/${action.payload.badgeNumber}`)
         yield put({ type: 'SET_WALKUP_SHIFTS', payload: response.data})
     } catch (error) {

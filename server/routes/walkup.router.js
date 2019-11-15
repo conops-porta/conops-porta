@@ -5,8 +5,28 @@ const router = express.Router();
 /**
  * GET route for showing available shifts to walkups
  */
+router.get('/validatebadge/:id', async (req, res) => {
+    // console.log(req.params.id);
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const validateQuery = `SELECT "DateOfBirth", "FlaggedNoVolunteer" FROM "Attendee" WHERE "BadgeNumber" = $1;`
+        const validateBadge = await connection.query(validateQuery, [req.params.id]);
+        await connection.query('COMMIT');
+        res.send(validateBadge.rows[0]);
+    } catch(error) {
+        await connection.query('ROLLBACK');
+        console.log('error in validate walkup GET route', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+})
+
+/**
+ * GET route for showing available shifts to walkups
+ */
 router.get('/shifts/:id', async (req, res) => {
-    console.log('req.param', req.params);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -34,8 +54,6 @@ router.get('/shifts/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
-
 /**
  * PUT route for walkups to sign up for shifts
  */
@@ -50,9 +68,11 @@ router.put('/shifts', async (req, res) => {
         res.sendStatus(200);
     } catch (error) {
         await connection.query('ROLLBACK');
-        // console.log('error in walkup shifts PUT route', error);
+        console.log('error in walkup shifts PUT route', error);
         res.sendStatus(500);
     } finally {
         connection.release();
     }
 });
+
+module.exports = router;

@@ -169,7 +169,8 @@ CREATE TABLE "VolunteerContact" (
     REFERENCES "Department"("DepartmentID"),
   "VolunteerNotes" text,
   "VolunteerHours" integer,
-  "VolunteerShirtSize" VARCHAR(255)
+  "VolunteerShirtSize" VARCHAR(255),
+  "VolunteerVetted" boolean default false,
 );
 -- attaches VolunteerContact records to Attendee table, where appropriate
 ALTER TABLE "Attendee"

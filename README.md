@@ -33,7 +33,7 @@ You might have to npm install some specific material-ui pieces to get the applic
 ## This app was created by: 
 
 
-Thank you Shanna again for the opprotunity to work on this application for 2D Con we hope this app helps! Best of luck!
+Thank you Shanna again for the opportunity to work on this application for 2D Con. We hope this app helps! Best of luck!
 
 - Team Con Ops -- Porta
 

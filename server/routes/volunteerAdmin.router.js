@@ -10,9 +10,9 @@ const router = express.Router();
  * GET route for contacts
  */
 router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
-    let queryText = `SELECT "VolunteerID", "VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", count("shift") 
-                    FROM "volunteer" 
-                    JOIN "shift" ON "volunteer"."VolunteerID" = "shift"."VolunteerID"
+    let queryText = `SELECT "VolunteerID", "VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", count("Shift"."ShiftID") 
+                    FROM "VolunteerContact" 
+                    JOIN "Shift" ON "VolunteerContact"."BadgeNumber" = "Shift"."BadgeNumber"
                     GROUP BY "VolunteerID";`
     pool.query(queryText)
         .then((result) => {
@@ -42,7 +42,7 @@ GROUP BY "Department"."DepartmentName", "Role"."RoleID", "Role"."RoleName"
 ORDER BY "Role"."RoleID";`
     pool.query(queryText)
         .then((result) => {
-            console.log('in volunteer/shifts GET router:', result.rows);
+            // console.log('in volunteer/shifts GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
