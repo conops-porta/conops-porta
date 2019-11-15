@@ -10,8 +10,8 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const walkupRouter = require('./routes/walkup.router');
-const volunteerAdminRouter = require('./routes/volunteerAdmin.router');
-const volunteerPortalRouter = require('./routes/volunteerPortal.router');
+const volunteerAdminRouter = require('./routes/volunteer-admin.router');
+const volunteerPortalRouter = require('./routes/volunteer-portal.router');
 const userRouter = require('./routes/user.router');
 const attendeeRouter = require('./routes/attendee.router');
 const conventionRouter = require('./routes/convention.router');
