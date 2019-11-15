@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
+// import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
 
@@ -40,6 +40,11 @@ class WalkUpShifts extends Component {
             })
     }
 
+    verifyInfo = () => {
+        console.log(this.props.match.params.badgenumber)
+        this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
+    }
+
     walkUpBadgeNumberSubmit = () => {
         this.props.dispatch({
             type: 'FETCH_WALKUP_SHIFTS',
@@ -52,6 +57,7 @@ class WalkUpShifts extends Component {
             <div className="WalkUpShifts">
                 <h1>Available shifts:</h1>
                 {/* {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)} */}
+                <button onClick={this.verifyInfo}>Next</button>
                 {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
                     <ShiftCard shift={shift} />
                 ))}
