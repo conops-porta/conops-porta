@@ -38,6 +38,7 @@ import VolunteerScheduleCreate from '../VolunteerSchedule/Create/Create';
 import VolunteerScheduleManage from '../VolunteerSchedule/Manage/Manage';
 import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
 import WalkUpShifts from '../VolunteerWalkUp/WalkUpShifts';
+import WalkUpConfirm from '../VolunteerWalkUp/WalkUpConfirm';
 
 import VolunteerPortal from '../VolunteerPortal/VolunteerPortal'
 import VolunteerHours from '../VolunteerPortal/VolunteerHours'
@@ -115,6 +116,11 @@ class App extends Component {
               path="/volunteer-walk-up/:badgenumber"
               component={WalkUpShifts}
             />
+            <Route
+            exact
+            path="/volunteer-walk-up/verify/:id"
+            component={WalkUpConfirm}
+          />
 
             {/* Admin */}
             <ProtectedRoute
