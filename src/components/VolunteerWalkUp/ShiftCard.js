@@ -9,10 +9,14 @@ class ShiftCard extends Component {
     }
 
     checkBox = () => {
+        if (this.state.checked === false) {
+            this.props.handleSelect(this.props.shift.ShiftID)
+        } else if (this.state.checked === true) {
+            this.props.handleRemove(this.props.shift.ShiftID)
+        }
         this.setState({
             checked: !this.state.checked
         })
-        this.props.handleChange(!this.state.checked, this.props.shift.ShiftID)
     }
 
     render() {
@@ -27,7 +31,6 @@ class ShiftCard extends Component {
                     value="checked"
                     color="primary"
                 />}
-                <button onClick={() => console.log(this.props.shift.ShiftID)}>test</button>
             </div>
         )
     }
