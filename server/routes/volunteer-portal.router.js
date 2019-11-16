@@ -28,7 +28,7 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
         -- the ShiftsScheduled and ShiftsWorked tables are aliases created by the joins below
             "ShiftsScheduled"."TotalScheduled" AS "HoursScheduled",
         -- coalesce to make sure NULL values are converted to zero --
-            COALESCE("ShiftsWorked"."TotalWorked" + COALESCE("VolunteerContact"."VolunteerHours", 0), 0) AS "HoursWorked"
+            COALESCE("ShiftsWorked"."TotalWorked", 0) + COALESCE("VolunteerContact"."VolunteerHours", 0) AS "HoursWorked"
         FROM "Shift"
         -- create a table from a subquery with the counts of total shifts containing distinct badge numbers --
         INNER JOIN (
@@ -58,7 +58,7 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
         INNER JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
         -- bring in volunteer data for everyone in the volunteer table
         -- (outer join in case so nobody who isn't in there yet)
-        FULL OUTER JOIN "VolunteerContact" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
+        LEFT OUTER JOIN "VolunteerContact" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
         GROUP BY "Shift"."BadgeNumber", "Attendee"."FirstName", "Attendee"."LastName", "VolunteerContact"."VolunteerDiscord", "VolunteerContact"."VolunteerHours", "ShiftsScheduled"."TotalScheduled", "ShiftsWorked"."TotalWorked";
     `;
     pool.query(queryText)
