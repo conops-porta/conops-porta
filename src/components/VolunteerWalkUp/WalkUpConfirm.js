@@ -15,17 +15,34 @@ class WalkUpConfirm extends Component {
     //   }
 
       render() {
-        let infoDetails = this.props.reduxStore.SelectedShiftsReducer.map((details, id) => {
-            if( id == 0){
-        info = <p key={details.id}>{details.id}</p>
-            }
-            })
+        // let infoDetails = this.props.reduxStore.SelectedShiftsReducer.map((details, id) => {
+        //     if( id == 0){
+        // info = <p >{details.id}</p>
+        //     }
+        //     })
         return (
             <div className="WalkUpConfirm">
                 Confirm
                 <br />
-                {info}
-                {infoDetails}
+                <table>
+        <thead>
+          <tr>
+            <th>
+            </th>
+          </tr>
+        </thead>
+    <tbody>
+      {this.props.reduxStore.SelectedShiftsReducer.map((info) =>(
+        <tr key={info.id}>
+          <td>{info.id}</td>
+            <td>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+                {/* {info}
+                {infoDetails} */}
 
         {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)}
         
