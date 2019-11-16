@@ -8,43 +8,40 @@ let info;
 
 class WalkUpConfirm extends Component {
 
-    // state = {
-    //     volunteerFirstName: '',
-    //     discordName: '',
-    //     phoneNumber: ''
-    //   }
+    confirm = () => {
+        console.log('btn click')
+        this.props.history.push(`/volunteer-walk-up/`)
+    }
 
       render() {
-        // let infoDetails = this.props.reduxStore.SelectedShiftsReducer.map((details, id) => {
-        //     if( id == 0){
-        // info = <p >{details.id}</p>
-        //     }
-        //     })
+
         return (
             <div className="WalkUpConfirm">
                 Confirm
                 <br />
-                <table>
-        <thead>
-          <tr>
-            <th>
-            </th>
-          </tr>
-        </thead>
-    <tbody>
-      {this.props.reduxStore.SelectedShiftsReducer.map((info) =>(
-        <tr key={info.id}>
-          <td>{info.id}</td>
-            <td>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-                {/* {info}
-                {infoDetails} */}
 
-        {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)}
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.reduxStore.SelectedShiftsReducer.map((info) =>(
+                    <tr>
+                        <td>{info}</td>
+                    </tr>
+                    ))}
+                </tbody>
+            </table>
+
+
+{/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer.id.checked)} */}
+{/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer.checked)} */}
+{JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)}
+{JSON.stringify(this.props.reduxStore)}
+{/* {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)} */}
+{JSON.stringify(this.props.shift)}
         
             <button onClick={this.confirm}>Confirm</button>
             </div>

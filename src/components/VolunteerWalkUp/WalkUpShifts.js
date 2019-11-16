@@ -11,9 +11,7 @@ class WalkUpShifts extends Component {
         this.validateBadgeNumber();
     }
 
-    state = {
-        data: []
-    }
+    currentSelection = []
 
     validateBadgeNumber = () => {
         axios.get(`/api/walkup/validatebadge/${this.props.match.params.badgenumber}`)
@@ -53,20 +51,32 @@ class WalkUpShifts extends Component {
         });
     } // end registeredUsers
 
-
-    handleChange = (checked, id) => {
-        this.setState({
-            data: [...this.state.data, { id: id, checked: checked }]
-        })
-        console.log(id, checked)
+    // removes the shift ID from array of selected shifts
+    handleRemove = (id) => {
+        for(let i = 0; i < this.currentSelection.length; i++){
+            if(this.currentSelection[i] === id){
+                this.currentSelection.splice(i, 1)
+            }
+        }
     }
+
+    handleSelect = (id) => {
+        this.currentSelection.push(id)
+    }
+
+    // handleChange = (checked, id) => {
+    //     this.setState({
+    //         data: [...this.state.data, { id: id, checked: checked }]
+    //     })
+    //     console.log(id, checked)
+    // }
 
     sendSelectedShifts = () => {
         this.props.dispatch({
             type: 'SET_SELECTED_SHIFTS',
-            payload: this.state.data
+            payload: this.currentSelection
         })
-        console.log(this.state.data)
+        // console.log(this.state.data)
         this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
     }
 
@@ -76,7 +86,7 @@ class WalkUpShifts extends Component {
                 <h1>Available shifts:</h1>
                 <button onClick={this.sendSelectedShifts}>Submit</button>
                 {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
-                    <ShiftCard shift={shift} handleChange={this.handleChange} data={this.state.data} key={shift.ShiftID} />
+                    <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
                 ))}
             </div>
         )
