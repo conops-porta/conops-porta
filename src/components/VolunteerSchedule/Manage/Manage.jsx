@@ -39,7 +39,8 @@ class Manage extends Component {
                 role: row.role,
                 okForWalkUps: row.ok_for_walk_ups, 
                 allShifts: row.shifts,
-                uniqueShifts: this.findUniqueShifts(row.shifts)
+                uniqueShifts: this.findUniqueShifts(row.shifts),
+                RoleID: row.RoleID
             })
         })
         // console.log(dataToSend)
