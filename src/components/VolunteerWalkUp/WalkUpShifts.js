@@ -40,7 +40,6 @@ class WalkUpShifts extends Component {
     }
 
     verifyInfo = () => {
-        console.log(this.props.match.params.badgenumber)
         this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
     }
 
@@ -60,17 +59,12 @@ class WalkUpShifts extends Component {
         }
     }
 
+    // adds selected shift ID to array of shifts
     handleSelect = (id) => {
         this.currentSelection.push(id)
     }
 
-    // handleChange = (checked, id) => {
-    //     this.setState({
-    //         data: [...this.state.data, { id: id, checked: checked }]
-    //     })
-    //     console.log(id, checked)
-    // }
-
+    // sends current selection of shift ID's to SelectedShiftsReducer
     sendSelectedShifts = () => {
         this.props.dispatch({
             type: 'SET_SELECTED_SHIFTS',
