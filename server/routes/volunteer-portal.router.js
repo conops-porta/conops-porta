@@ -25,15 +25,22 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
             "Attendee"."FirstName",
             "Attendee"."LastName",
             "VolunteerContact"."VolunteerDiscord",
+        -- the ShiftsScheduled and ShiftsWorked tables are aliases created by the joins below
             "ShiftsScheduled"."TotalScheduled" AS "HoursScheduled",
+        -- coalesce to make sure NULL values are converted to zero --
             COALESCE("ShiftsWorked"."TotalWorked" + COALESCE("VolunteerContact"."VolunteerHours", 0), 0) AS "HoursWorked"
         FROM "Shift"
-        LEFT OUTER JOIN LATERAL (
+        -- create a table from a subquery with the counts of total shifts containing distinct badge numbers --
+        INNER JOIN (
                 SELECT "BadgeNumber", COUNT("ShiftID") AS "TotalScheduled" FROM "Shift"
                 WHERE "BadgeNumber" IS NOT NULL
                 GROUP BY "BadgeNumber"
-            ) AS "ShiftsScheduled" ON "Shift"."BadgeNumber" = "ShiftsScheduled"."BadgeNumber"
-        LEFT OUTER JOIN LATERAL (
+            ) AS "ShiftsScheduled"
+            ON "Shift"."BadgeNumber" = "ShiftsScheduled"."BadgeNumber"
+        -- create another table counting only shifts that have already happened (or at least started)
+        -- where the user has not been flagged as a no-show
+        -- (outer join in case all someone's shifts are in the future)
+        LEFT OUTER JOIN (
                 SELECT "BadgeNumber", COUNT("ShiftID") AS "TotalWorked" FROM "Shift"
                 WHERE "BadgeNumber" IS NOT NULL
                 AND "NoShow" IS false
@@ -45,9 +52,13 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
                     )
                 )
                 GROUP BY "BadgeNumber"
-            ) AS "ShiftsWorked" ON "Shift"."BadgeNumber" = "ShiftsWorked"."BadgeNumber"
-        JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
-        JOIN "VolunteerContact" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
+            ) AS "ShiftsWorked"
+            ON "Shift"."BadgeNumber" = "ShiftsWorked"."BadgeNumber"
+        -- bring in attendee data for all shift volunteers
+        INNER JOIN "Attendee" ON "Shift"."BadgeNumber" = "Attendee"."BadgeNumber"
+        -- bring in volunteer data for everyone in the volunteer table
+        -- (outer join in case so nobody who isn't in there yet)
+        FULL OUTER JOIN "VolunteerContact" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
         GROUP BY "Shift"."BadgeNumber", "Attendee"."FirstName", "Attendee"."LastName", "VolunteerContact"."VolunteerDiscord", "VolunteerContact"."VolunteerHours", "ShiftsScheduled"."TotalScheduled", "ShiftsWorked"."TotalWorked";
     `;
     pool.query(queryText)
