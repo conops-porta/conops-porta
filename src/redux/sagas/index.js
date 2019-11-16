@@ -11,6 +11,7 @@ import eventDetailsSaga from './eventDetailsSaga';
 import HomePageSaga from './HomePageSaga';
 import LocationSaga from './LocationSaga';
 import locationDetailsSaga from './locationDetailsSaga';
+import VolunteerHoursSaga from './VolunteerHoursSaga';
 import VolunteerScheduleSaga from './VolunteerScheduleSaga';
 import VolunteerWalkUpSaga from './VolunteerWalkUpSaga';
 
@@ -43,6 +44,7 @@ export default function* rootSaga() {
     TagsSaga(),
     sponsorSaga(),
     sponsorDetailsSaga(),
+    VolunteerHoursSaga(),
     VolunteerScheduleSaga(),
     VolunteerWalkUpSaga(),
   ]);
