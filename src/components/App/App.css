@@ -1,3 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis:500,700|Roboto+Condensed:400,700&display=swap&subset=latin-ext');
+
+/* Typography */
+
+#react-root,
+#react-root * {
+    font-family: 'Roboto Condensed', system-ui, -apple-system, sans-serif;
+}
+#react-root h1,
+#react-root h2,
+#react-root h3,
+#react-root h4,
+#react-root h5,
+#react-root h6 {
+    font-family: 'Dosis', system-ui, -apple-system, sans-serif;
+}
+#react-root .material-icons {
+    font-family: 'Material Icons';
+}
+
+/* basic padding, etc */
+
+div.nav {
+    padding: 0 5px;
+}
+div.nav + div {
+    padding: 0 10px
+}
+
+/* Polybius styles */
+
 .onTop {
     position: fixed;
     z-index: 100000000 !important;
@@ -39,9 +70,7 @@
     
 }
 
-@import url(https://fonts.googleapis.com/css?family=Dosis:200,300,regular,500,600,700,800);
 body {
-    font-family: Dosis;
     margin: 0px;
 }
 
