@@ -4,7 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
 
-let info;
+// let info;
 
 class WalkUpConfirm extends Component {
 
@@ -35,14 +35,8 @@ class WalkUpConfirm extends Component {
                 </tbody>
             </table>
 
+{/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)} */}
 
-{/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer.id.checked)} */}
-{/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer.checked)} */}
-{JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)}
-{JSON.stringify(this.props.reduxStore)}
-{/* {JSON.stringify(this.props.reduxStore.VolunteerWalkUpReducer)} */}
-{JSON.stringify(this.props.shift)}
-        
             <button onClick={this.confirm}>Confirm</button>
             </div>
         )
