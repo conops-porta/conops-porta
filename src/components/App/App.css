@@ -1,3 +1,38 @@
+/* Typography */
+@import url('https://fonts.googleapis.com/css?family=Dosis:500,700|Roboto+Condensed:400,700&display=swap&subset=latin-ext');
+
+:root {
+    --heading-family: 'Dosis', system-ui, -apple-system, sans-serif;
+    --body-family: 'Roboto Condensed', system-ui, -apple-system, sans-serif;
+}
+
+#react-root,
+#react-root * {
+    font-family: var(--body-family);
+}
+#react-root h1,
+#react-root h2,
+#react-root h3,
+#react-root h4,
+#react-root h5,
+#react-root h6 {
+    font-family: var(--heading-family);
+}
+#react-root .material-icons {
+    font-family: 'Material Icons' !important;
+}
+
+/* basic padding, etc */
+
+div.nav {
+    padding: 0 5px;
+}
+div.nav + div {
+    padding: 0 10px
+}
+
+/* Polybius styles */
+
 .onTop {
     position: fixed;
     z-index: 100000000 !important;
@@ -39,9 +74,7 @@
     
 }
 
-@import url(https://fonts.googleapis.com/css?family=Dosis:200,300,regular,500,600,700,800);
 body {
-    font-family: Dosis;
     margin: 0px;
 }
 
@@ -71,7 +104,7 @@ body {
 
 
 .log-in, .log-out, .register {
-    font-family: Dosis;
+    font-family: var(--heading-family) !important;
 
   background-color: #00acb0;
   border-radius: 4px;
@@ -84,7 +117,7 @@ body {
 
 .log-in:hover, .log-out:hover, .register:hover {
   background-color: #008183;
-  font-family: Dosis;
+  font-family: var(--heading-family) !important;
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */
@@ -97,10 +130,29 @@ body {
     outline:0;
     border-bottom:1px solid #444; 
     cursor: pointer;
-    font-family: Dosis;
+    font-family: var(--heading-family) !important;
 
 }
 
 .eventsForNonAdmins {
     margin-top: 8%;
+}
+
+/* Table improvements on narrow screens */
+
+#react-root table,
+#react-root .MuiTable-root {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+#react-root table th,
+#react-root .MuiTable-root th {
+    font-weight: 700;
+    line-height: 1;
+    word-wrap: none;
+    white-space: nowrap;
+}
+#react-root table td,
+#react-root .MuiTable-root td {
+    line-height: 1.2;
 }
