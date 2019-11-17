@@ -72,5 +72,23 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
         })
 })
 
+/**
+ * GET route volunteers for filtering shifts
+ */
+router.get('/volunteer-names', rejectUnauthenticated, (req, res) => {
+    let queryText = `SELECT "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName"
+  FROM "VolunteerContact" 
+  JOIN "Attendee" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
+ GROUP BY "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName";`
+    pool.query(queryText)
+        .then((result) => {
+            console.log('in volunteer/contacts GET router:', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in volunteer/contacts GET router:', error)
+            res.sendStatus(500)
+        })
+})
 
 module.exports = router;

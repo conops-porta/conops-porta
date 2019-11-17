@@ -3,29 +3,60 @@ import { Card, CardActions, CardContent, Button, Typography } from '@material-ui
 import Dropdown from './Dropdown'
 import NameSearch from './NameSearch'
 import './VolunteerPortal.css'
+import Axios from 'axios';
 
 class VolunteerPortal extends Component {
-    
-
+    state={
+        nameSuggestions: []
+    }
+    componentDidMount(){
+        this.getVolunteerNames();
+    }
+    getVolunteerNames = () => {
+        Axios.get('./api/volunteer-portal/volunteer-names')
+        .then(response => {
+            this.setState({
+                ...this.state,
+                nameSuggestions: response.data
+            })
+            console.log(response.data)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+    filterByBadgeNumber = (badgeNumber) => {
+        //
+    }
+    filterDepartment = (department) => {
+        //
+    }
+    filterByShift = (shift) => {
+        //
+    }
     render() {
         return (
             <div className="VolunteerPortal">
                 <Dropdown
                     title='Department'
                     options={['Games', 'Tear Down']}
+                    filterByDropdown={this.filterByDepartment}
                 />
-                <Dropdown 
+                <Dropdown
                     title="Shift Time"
                     options={['10AM Monday', '5pm Tuesday']}
+                    filterByDropdown={this.filterByShift}
                 />
-                <NameSearch />
+                <NameSearch 
+                    nameSuggestions={this.state.nameSuggestions}
+                    filterByBadgeNumber={this.filterByBadgeNumber}
+                />
                 <Card >
                     <CardContent>
-                        <Typography  color="textSecondary" gutterBottom>
+                        <Typography color="textSecondary" gutterBottom>
                             Word of the Day
                         </Typography>
                         <Typography variant="h5" component="h2">
-                           Edith
+                            Edith
                         </Typography>
                         <Typography color="textSecondary">
                             adjective
@@ -39,7 +70,7 @@ class VolunteerPortal extends Component {
                     <CardActions>
                         <Button size="small">Learn More</Button>
                     </CardActions>
-                </Card>            
+                </Card>
             </div>
         );
     }

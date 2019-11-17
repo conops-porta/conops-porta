@@ -3,48 +3,9 @@ import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import Downshift from 'downshift';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Popper from '@material-ui/core/Popper';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
+import {TextField, Paper, MenuItem} from '@material-ui/core';
 
-const suggestions = [
-    { label: 'Afghanistan' },
-    { label: 'Aland Islands' },
-    { label: 'Albania' },
-    { label: 'Algeria' },
-    { label: 'American Samoa' },
-    { label: 'Andorra' },
-    { label: 'Angola' },
-    { label: 'Anguilla' },
-    { label: 'Antarctica' },
-    { label: 'Antigua and Barbuda' },
-    { label: 'Argentina' },
-    { label: 'Armenia' },
-    { label: 'Aruba' },
-    { label: 'Australia' },
-    { label: 'Austria' },
-    { label: 'Azerbaijan' },
-    { label: 'Bahamas' },
-    { label: 'Bahrain' },
-    { label: 'Bangladesh' },
-    { label: 'Barbados' },
-    { label: 'Belarus' },
-    { label: 'Belgium' },
-    { label: 'Belize' },
-    { label: 'Benin' },
-    { label: 'Bermuda' },
-    { label: 'Bhutan' },
-    { label: 'Bolivia, Plurinational State of' },
-    { label: 'Bonaire, Sint Eustatius and Saba' },
-    { label: 'Bosnia and Herzegovina' },
-    { label: 'Botswana' },
-    { label: 'Bouvet Island' },
-    { label: 'Brazil' },
-    { label: 'British Indian Ocean Territory' },
-    { label: 'Brunei Darussalam' },
-];
+
 
 function renderInput(inputProps) {
     const { InputProps, classes, ref, ...other } = inputProps;
@@ -73,21 +34,22 @@ renderInput.propTypes = {
 };
 
 function renderSuggestion(suggestionProps) {
-    const { suggestion, index, itemProps, highlightedIndex, selectedItem } = suggestionProps;
+    const { suggestion, index, itemProps, highlightedIndex, selectedItem, filterByBadgeNumber } = suggestionProps;
     const isHighlighted = highlightedIndex === index;
-    const isSelected = (selectedItem || '').indexOf(suggestion.label) > -1;
+    const isSelected = (selectedItem || '').indexOf(suggestion.VolunteerName) > -1;
 
     return (
         <MenuItem
             {...itemProps}
-            key={suggestion.label}
+            key={suggestion.VolunteerName}
             selected={isHighlighted}
             component="div"
             style={{
                 fontWeight: isSelected ? 500 : 400,
             }}
+            onClick={() => filterByBadgeNumber(suggestion.BadgeNumber)}
         >
-            {suggestion.label}
+            {suggestion.VolunteerName}
         </MenuItem>
     );
 }
@@ -102,16 +64,16 @@ renderSuggestion.propTypes = {
     }).isRequired,
 };
 
-function getSuggestions(value, { showEmpty = false } = {}) {
+function getSuggestions(value, { showEmpty = false } = {}, suggestions) {
     const inputValue = deburr(value.trim()).toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
-
+    
     return inputLength === 0 && !showEmpty
         ? []
         : suggestions.filter(suggestion => {
             const keep =
-                count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+                count < 5 && suggestion.VolunteerName.slice(0, inputLength).toLowerCase() === inputValue;
 
             if (keep) {
                 count += 1;
@@ -120,108 +82,6 @@ function getSuggestions(value, { showEmpty = false } = {}) {
             return keep;
         });
 }
-
-function DownshiftMultiple(props) {
-    const { classes } = props;
-    const [inputValue, setInputValue] = React.useState('');
-    const [selectedItem, setSelectedItem] = React.useState([]);
-
-    const handleKeyDown = event => {
-        if (selectedItem.length && !inputValue.length && event.key === 'Backspace') {
-            setSelectedItem(selectedItem.slice(0, selectedItem.length - 1));
-        }
-    };
-
-    const handleInputChange = event => {
-        setInputValue(event.target.value);
-    };
-
-    const handleChange = item => {
-        let newSelectedItem = [...selectedItem];
-        if (newSelectedItem.indexOf(item) === -1) {
-            newSelectedItem = [...newSelectedItem, item];
-        }
-        setInputValue('');
-        setSelectedItem(newSelectedItem);
-    };
-
-    const handleDelete = item => () => {
-        const newSelectedItem = [...selectedItem];
-        newSelectedItem.splice(newSelectedItem.indexOf(item), 1);
-        setSelectedItem(newSelectedItem);
-    };
-
-    return (
-        <Downshift
-            id="downshift-multiple"
-            inputValue={inputValue}
-            onChange={handleChange}
-            selectedItem={selectedItem}
-        >
-            {({
-                getInputProps,
-                getItemProps,
-                getLabelProps,
-                isOpen,
-                inputValue: inputValue2,
-                selectedItem: selectedItem2,
-                highlightedIndex,
-            }) => {
-                const { onBlur, onChange, onFocus, ...inputProps } = getInputProps({
-                    onKeyDown: handleKeyDown,
-                    placeholder: 'Select multiple countries',
-                });
-
-                return (
-                    <div className={classes.container}>
-                        {renderInput({
-                            fullWidth: true,
-                            classes,
-                            label: 'Countries',
-                            InputLabelProps: getLabelProps(),
-                            InputProps: {
-                                startAdornment: selectedItem.map(item => (
-                                    <Chip
-                                        key={item}
-                                        tabIndex={-1}
-                                        label={item}
-                                        className={classes.chip}
-                                        onDelete={handleDelete(item)}
-                                    />
-                                )),
-                                onBlur,
-                                onChange: event => {
-                                    handleInputChange(event);
-                                    onChange(event);
-                                },
-                                onFocus,
-                            },
-                            inputProps,
-                        })}
-
-                        {isOpen ? (
-                            <Paper className={classes.paper} square>
-                                {getSuggestions(inputValue2).map((suggestion, index) =>
-                                    renderSuggestion({
-                                        suggestion,
-                                        index,
-                                        itemProps: getItemProps({ item: suggestion.label }),
-                                        highlightedIndex,
-                                        selectedItem: selectedItem2,
-                                    }),
-                                )}
-                            </Paper>
-                        ) : null}
-                    </div>
-                );
-            }}
-        </Downshift>
-    );
-}
-
-DownshiftMultiple.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -254,13 +114,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function IntegrationDownshift() {
+export default function IntegrationDownshift(props) {
     const classes = useStyles();
-
+    let nameSuggestions = props.nameSuggestions;
+    
     return (
-        <div className='filter-shift'>
-            <Downshift id="downshift-simple">
+        <div className={classes.root} className='filter-shift'>
+            <Downshift id="downshift-options">
                 {({
+                    clearSelection,
                     getInputProps,
                     getItemProps,
                     getLabelProps,
@@ -268,10 +130,17 @@ export default function IntegrationDownshift() {
                     highlightedIndex,
                     inputValue,
                     isOpen,
+                    openMenu,
                     selectedItem,
                 }) => {
-                    const { onBlur, onFocus, ...inputProps } = getInputProps({
-                        placeholder: 'Search for a country (start with a)',
+                    const { onBlur, onChange, onFocus, ...inputProps } = getInputProps({
+                        onChange: event => {
+                            if (event.target.value === '') {
+                                clearSelection();
+                            }
+                        },
+                        onFocus: openMenu,
+                        placeholder: 'Search by Name',
                     });
 
                     return (
@@ -279,23 +148,24 @@ export default function IntegrationDownshift() {
                             {renderInput({
                                 fullWidth: true,
                                 classes,
-                                label: 'Country',
+                                label: 'Volunteer Name',
                                 InputLabelProps: getLabelProps({ shrink: true }),
-                                InputProps: { onBlur, onFocus },
-                                inputProps, 
-                                variant: "outlined"
+                                InputProps: { onBlur, onChange, onFocus },
+                                inputProps,
+                                variant: "outlined",
                             })}
 
                             <div {...getMenuProps()}>
                                 {isOpen ? (
                                     <Paper className={classes.paper} square>
-                                        {getSuggestions(inputValue).map((suggestion, index) =>
+                                        {getSuggestions(inputValue, { showEmpty: true }, nameSuggestions).map((suggestion, index) =>
                                             renderSuggestion({
                                                 suggestion,
                                                 index,
-                                                itemProps: getItemProps({ item: suggestion.label }),
+                                                itemProps: getItemProps({ item: suggestion.VolunteerName }),
                                                 highlightedIndex,
                                                 selectedItem,
+                                                filterByBadgeNumber: props.filterByBadgeNumber
                                             }),
                                         )}
                                     </Paper>
@@ -305,6 +175,6 @@ export default function IntegrationDownshift() {
                     );
                 }}
             </Downshift>
-           </div>
+        </div>
     );
 }
