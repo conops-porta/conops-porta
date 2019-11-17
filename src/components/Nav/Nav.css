@@ -40,5 +40,32 @@
   color: white;
 }
 
+/* make sure the menus cover other content */
+.nav-right button + div[role="tooltip"] {
+  z-index: 10;
+}
 
+@media screen and (max-width: 1079px) and (min-width: 768px) {
+  .nav-right > .nav-link {
+    display: none; /* redundant since the logo is also a home link */
+  }
+  .nav-right button {
+    margin: 30px 10px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nav-right {
+    flex-direction: column;
+    text-align: right;
+  }
+  .nav-right > .nav-link {
+    display: none; /* redundant since the logo is also a home link */
+  }
+  .nav-right button {
+    margin: 5px;
+    min-width: 150px;
+    text-align: center;
+  }
+}
 
