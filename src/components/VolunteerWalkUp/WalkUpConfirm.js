@@ -4,101 +4,49 @@ import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+// let info;
+
 class WalkUpConfirm extends Component {
 
-    state = {
-        volunteerFirstName: '',
-        volunteerLastName: '',
-        discordName: '',
-        phoneNumber: ''
-      }
-
-      handleInputChange = propertyName => (event) => {
-        this.setState({
-          [propertyName]: event.target.value,
-        });
-      } // end handleInputChange
-
-      verifyInfo = () => {
-          console.log('confirm btn click')
-        // swal({
-        //   title: `Your badge # is ${this.state.badgeNumber}`,
-        //   text: 'Proceed to shifts?',
-        //   buttons: ['Cancel', 'Yes!']
-        // }).then((value) => {
-        //   if (value === true) {
-        //     this.props.history.push(`/volunteer-walk-up/${this.state.badgeNumber}`)
-        //   }
-        // })
-      }
-
-      cancelButton = () => {
-        console.log('cancel btn click')
-      // swal({
-      //   title: `Your badge # is ${this.state.badgeNumber}`,
-      //   text: 'Proceed to shifts?',
-      //   buttons: ['Cancel', 'Yes!']
-      // }).then((value) => {
-      //   if (value === true) {
-      //     this.props.history.push(`/volunteer-walk-up/${this.state.badgeNumber}`)
-      //   }
-      // })
+    confirm = () => {
+        swal({
+            title: `Thank You`,
+            icon: "success"
+          }).then(() => {
+             {
+                this.props.history.push(`/volunteer-walk-up/`)
+            }
+        })
     }
 
-    render() {
+      render() {
+
         return (
             <div className="WalkUpConfirm">
-                Verify your info
+                {/* Confirm */}
                 <br />
-        {/* <h1>{this.props.badgeNumber}</h1> */}
-        {/* <h2>{this.props.match.params.id}</h2> */}
-        {/* {JSON.stringify(this.props.match.params.id)} */}
+                <h1>Thank You</h1>
+                <h2>You sign up for: </h2>
 
-        <form>
-        <p>Badge #{this.props.match.params.id}</p>
-            <p>First Name
-            <br />
-              <input
-              type="text"
-              placeholder="First name"
-              value={this.state.volunteerFirstName}
-              onChange={this.handleInputChange('volunteerFirstName')}>
-            </input> 
-            </p>
-            <p>Last Name
-            <br/>
-              <input
-              type="text"
-              placeholder="Last name"
-              value={this.state.volunteerLastName}
-              onChange={this.handleInputChange('volunteerLastName')}>
-            </input> 
-            </p>
-            <p>Discord Name
-              <br/>
-              <input
-              type="text"
-              placeholder="Discord name"
-              value={this.state.discordName}
-              onChange={this.handleInputChange('discordName')}>
-            </input>
-            </p>
-            <p>Phone Number
-            <br/>     
-             <input
-              type="tel"
-              name="phone"
-              placeholder="Phone number"
-            //   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"required
-              value={this.state.phoneNumber}
-              onChange={this.handleInputChange('phoneNumber')}>
-            </input>
-            </p>
-            <br/>
-            <br />
-        </form>
-            <button onClick={this.cancelButton}>Cancel</button>
-            <button onClick={this.verifyInfo}>Confirm</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.reduxStore.SelectedShiftsReducer.map((info) =>(
+                    <tr>
+                        <td>{info}</td>
+                    </tr>
+                    ))}
+                </tbody>
+            </table>
+            <h4>Please write this down so you won't forget!</h4>
+
+{/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)} */}
+
+            <button onClick={this.confirm}>OKAY</button>
             </div>
         )
     }
