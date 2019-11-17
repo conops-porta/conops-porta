@@ -54,12 +54,8 @@ class Manage extends Component {
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        // swal("Poof! Your imaginary file has been deleted!", {
-                        //     icon: "success",
-                        // });
                         this.deleteShift(id);
                     } else {
-                        // swal("Your imaginary file is safe!");
                         return;
                     }
                 });
