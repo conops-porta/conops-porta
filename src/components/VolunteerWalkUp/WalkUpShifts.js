@@ -9,6 +9,22 @@ class WalkUpShifts extends Component {
 
     componentDidMount() {
         this.validateBadgeNumber();
+        this.getExistingBadges();
+    }
+
+    state = {}
+
+    getExistingBadges = () => {
+        this.props.dispatch({
+            type: 'FETCH_EXISTING_BADGES'
+        })
+        this.props.reduxStore.ExistingBadgesReducer.map(badge => {
+            if ((badge.BadgeNumber) === this.props.match.params.badgenumber) {
+                this.setState({
+                    existingBadge: true
+                })
+            }
+        })
     }
 
     currentSelection = []
@@ -46,7 +62,7 @@ class WalkUpShifts extends Component {
             type: 'FETCH_WALKUP_SHIFTS',
             payload: this.props.match.params
         });
-    } 
+    }
 
     // removes the shift ID from array of selected shifts
     handleRemove = (id) => {
@@ -64,12 +80,16 @@ class WalkUpShifts extends Component {
 
     // sends current selection of shift ID's to SelectedShiftsReducer
     sendSelectedShifts = () => {
-        console.log(this.currentSelection);
         this.props.dispatch({
             type: 'SET_SELECTED_SHIFTS',
             payload: this.currentSelection
         })
-        this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
+        // console.log('In state: ', this.state);
+        if (this.state.existingBadge === true) {
+            this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.badgenumber}`)
+        } else {
+            this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
+        }
     }
 
     render() {
