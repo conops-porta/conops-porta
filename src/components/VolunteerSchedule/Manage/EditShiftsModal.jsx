@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
 import moment from 'moment'
 import axios from 'axios'
+import swal from 'sweetalert'
 
 
 class Manage extends Component {
@@ -42,15 +43,36 @@ class Manage extends Component {
             console.log(error)
         })
     }
-    handleDeleteShift = (id) => {
+    handleDeleteShift = (id, numOfShifts, department, role, day, time) => {
+        if (numOfShifts === 1){
+            swal({
+                title: "Are you sure you want to delete the last shift?",
+                text: `Once deleted, you will not be able to assign any more shifts to ${department}: ${role} on ${day} at ${time}`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.deleteShift(id);
+                    } else {
+                        return;
+                    }
+                });
+        } else {
+            this.deleteShift(id);
+        }
+        
+    }
+    deleteShift = (id) => {
         console.log('click', id)
         axios.delete(`./api/volunteer-admin/shifts/${id}`)
-        .then(response => {
-            console.log(response)
-            this.getShiftsByTimeSlot()
-        }).catch(error => {
-            console.log(error)
-        })
+            .then(response => {
+                console.log(response)
+                this.getShiftsByTimeSlot()
+            }).catch(error => {
+                console.log(error)
+            })
     }
     render() {
         return (
@@ -60,7 +82,7 @@ class Manage extends Component {
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">
-                        {this.props.roleInfo.department} Department: {this.props.roleInfo.role} <br />
+                        {this.props.roleInfo.department}: {this.props.roleInfo.role} <br />
                         {moment(this.props.shiftInfo.date).format('dddd')} at {this.props.shiftInfo.time}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -73,7 +95,7 @@ class Manage extends Component {
                                         <li>
                                             {shift.BadgeNumber ? shift.BadgeNumber : 'Unfilled'}
                                             {/* {JSON.stringify(this.state.shifts)} */}
-                                            <Button onClick={() => this.handleDeleteShift(shift.ShiftID)}>X</Button>
+                                            <Button onClick={() => this.handleDeleteShift( shift.ShiftID, this.state.shifts.length, this.props.roleInfo.department, this.props.roleInfo.role, moment(this.props.shiftInfo.date).format('dddd'), this.props.shiftInfo.time )}>X</Button>
                                         </li>
                                     ))}
                                 </div>
