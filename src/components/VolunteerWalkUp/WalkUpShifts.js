@@ -13,6 +13,7 @@ class WalkUpShifts extends Component {
 
     currentSelection = []
 
+    // validate attendee eligibility to pick up walk up shifts
     validateBadgeNumber = () => {
         axios.get(`/api/walkup/validatebadge/${this.props.match.params.badgenumber}`)
             .then(response => {
@@ -39,21 +40,18 @@ class WalkUpShifts extends Component {
             })
     }
 
-    verifyInfo = () => {
-        this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
-    }
-
+    // fetches walk up shifts once attendee is validated
     walkUpBadgeNumberSubmit = () => {
         this.props.dispatch({
             type: 'FETCH_WALKUP_SHIFTS',
             payload: this.props.match.params
         });
-    } // end registeredUsers
+    } 
 
     // removes the shift ID from array of selected shifts
     handleRemove = (id) => {
-        for(let i = 0; i < this.currentSelection.length; i++){
-            if(this.currentSelection[i] === id){
+        for (let i = 0; i < this.currentSelection.length; i++) {
+            if (this.currentSelection[i] === id) {
                 this.currentSelection.splice(i, 1)
             }
         }
@@ -66,11 +64,11 @@ class WalkUpShifts extends Component {
 
     // sends current selection of shift ID's to SelectedShiftsReducer
     sendSelectedShifts = () => {
+        console.log(this.currentSelection);
         this.props.dispatch({
             type: 'SET_SELECTED_SHIFTS',
             payload: this.currentSelection
         })
-        // console.log(this.state.data)
         this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
     }
 
