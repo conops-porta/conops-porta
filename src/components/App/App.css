@@ -137,3 +137,22 @@ body {
 .eventsForNonAdmins {
     margin-top: 8%;
 }
+
+/* Table improvements on narrow screens */
+
+#react-root table,
+#react-root .MuiTable-root {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+#react-root table th,
+#react-root .MuiTable-root th {
+    font-weight: 700;
+    line-height: 1;
+    word-wrap: none;
+    white-space: nowrap;
+}
+#react-root table td,
+#react-root .MuiTable-root td {
+    line-height: 1.2;
+}
