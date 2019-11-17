@@ -13,9 +13,10 @@ import axios from 'axios'
 import moment from 'moment'
 import EditShiftsModal from './EditShiftsModal'
 
-
 class Accordion extends Component {
-    state={}
+    state = {
+        expanded: false
+    }
 
     numberOfShiftsAt = (date, time) => {
         let count = 0;
@@ -37,10 +38,15 @@ class Accordion extends Component {
             shiftInfo: shiftInfo
         };
     }
+    handleExpand = () => {
+        this.setState({
+            expanded: !this.state.expanded
+        })
+    }
     render() {
         return (
             <div className="Accordion">
-                <ExpansionPanel>
+                <ExpansionPanel expanded={this.state.expanded} onChange={this.handleExpand}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -67,7 +73,7 @@ class Accordion extends Component {
                                     <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
-                                            <EditShiftsModal 
+                                            <EditShiftsModal
                                                 numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).count}
                                                 uniqueShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).uniqueShifts}
                                                 shiftInfo={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).shiftInfo}
