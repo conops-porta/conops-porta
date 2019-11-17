@@ -156,3 +156,16 @@ body {
 #react-root .MuiTable-root td {
     line-height: 1.2;
 }
+
+/* visual indicators of side-scrollable tables */
+#react-root .MuiPaper-root > div + div {
+    background: linear-gradient(to right, #e0e0e0 0%, transparent 2rem, transparent),
+                linear-gradient(to left,  #e0e0e0 0%, transparent 2rem, transparent);
+}
+#react-root .MuiTableRow-root {
+    background: linear-gradient(to right, #fff 0%, #fff 1rem, transparent 5rem, transparent),
+                linear-gradient(to left,  #fff 0%, #fff 1rem, transparent 5rem, transparent);
+}
+#react-root .MuiTableRow-root:empty {
+    display: none;
+}

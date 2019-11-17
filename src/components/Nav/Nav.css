@@ -63,7 +63,7 @@
     display: none; /* redundant since the logo is also a home link */
   }
   .nav-right button {
-    margin: 5px;
+    margin: 8px 0 9px;
     min-width: 150px;
     text-align: center;
   }
