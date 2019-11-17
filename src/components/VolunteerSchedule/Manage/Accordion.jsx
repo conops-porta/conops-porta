@@ -12,10 +12,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios'
 import moment from 'moment'
 import EditShiftsModal from './EditShiftsModal'
-
+import '../VolunteerSchedule.css'
 
 class Accordion extends Component {
-    state={}
+    state = {
+        expanded: false
+    }
 
     numberOfShiftsAt = (date, time) => {
         let count = 0;
@@ -37,10 +39,81 @@ class Accordion extends Component {
             shiftInfo: shiftInfo
         };
     }
+    handleExpand = () => {
+        this.setState({
+            expanded: !this.state.expanded
+        })
+    }
     render() {
         return (
             <div className="Accordion">
-                <ExpansionPanel>
+                {/* <div className="accordion-left">
+                    <ExpansionPanel expanded={this.state.expanded} onChange={this.handleExpand}>
+                        <ExpansionPanelSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >{this.props.data.department} – {this.props.data.role}</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Role: </TableCell>
+                                        <TableCell>Walk Ups?</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow >
+                                        <TableCell>{this.props.data.role}</TableCell>
+                                        <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                </div>
+                <div className="accordion-right">
+                    <ExpansionPanel expanded={this.state.expanded} onChange={this.handleExpand}>
+                        <ExpansionPanelSummary
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        {this.props.data.uniqueShifts.map(shift => (
+                                            <TableCell>
+                                                {moment(shift.ShiftDate).format('dddd')}, {shift.ShiftTime}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow >
+                                        {this.props.data.uniqueShifts.map(shift => (
+                                            <TableCell>
+                                                <EditShiftsModal
+                                                    numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).count}
+                                                    uniqueShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).uniqueShifts}
+                                                    shiftInfo={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).shiftInfo}
+                                                    roleInfo={{ department: this.props.data.department, role: this.props.data.role, RoleID: this.props.data.RoleID }}
+                                                />
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                </div> */}
+
+                <ExpansionPanel expanded={this.state.expanded} onChange={this.handleExpand}>
                     <ExpansionPanelSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -67,7 +140,7 @@ class Accordion extends Component {
                                     <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
-                                            <EditShiftsModal 
+                                            <EditShiftsModal
                                                 numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).count}
                                                 uniqueShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).uniqueShifts}
                                                 shiftInfo={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).shiftInfo}

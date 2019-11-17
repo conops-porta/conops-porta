@@ -1,3 +1,11 @@
 .Contacts {
     margin-top: 200px;
 }
+.accordion-left{
+    width: 20%;
+    display: inline-block;
+}
+.accordion-right{
+    display: inline-block;
+    
+}
