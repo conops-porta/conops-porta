@@ -9,16 +9,24 @@ import swal from 'sweetalert';
 class WalkUpConfirm extends Component {
 
     confirm = () => {
-        console.log('btn click')
-        this.props.history.push(`/volunteer-walk-up/`)
+        swal({
+            title: `Thank You`,
+            icon: "success"
+          }).then(() => {
+             {
+                this.props.history.push(`/volunteer-walk-up/`)
+            }
+        })
     }
 
       render() {
 
         return (
             <div className="WalkUpConfirm">
-                Confirm
+                {/* Confirm */}
                 <br />
+                <h1>Thank You</h1>
+                <h2>You sign up for: </h2>
 
             <table>
                 <thead>
@@ -34,10 +42,11 @@ class WalkUpConfirm extends Component {
                     ))}
                 </tbody>
             </table>
+            <h4>Please write this down so you won't forget!</h4>
 
 {/* {JSON.stringify(this.props.reduxStore.SelectedShiftsReducer)} */}
 
-            <button onClick={this.confirm}>Confirm</button>
+            <button onClick={this.confirm}>OKAY</button>
             </div>
         )
     }
