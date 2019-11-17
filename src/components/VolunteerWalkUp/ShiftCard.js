@@ -10,9 +10,7 @@ class ShiftCard extends Component {
 
     checkBox = () => {
         if (this.state.checked === false) {
-            // this.props.handleSelect(this.props.shift.ShiftID)
-            this.props.handleSelect(this.props.shift.DepartmentName)
-            this.props.handleSelect(this.props.shift.RoleName)
+            this.props.handleSelect(this.props.shift.ShiftID)
         } else if (this.state.checked === true) {
             this.props.handleRemove(this.props.shift.ShiftID)
         }
