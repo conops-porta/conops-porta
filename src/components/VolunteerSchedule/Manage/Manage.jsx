@@ -3,7 +3,8 @@ import Accordion from './Accordion'
 import axios from 'axios'
 import '../VolunteerSchedule.css'
 import swal from 'sweetalert';
-
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 
 
 class Manage extends Component {
@@ -51,18 +52,18 @@ class Manage extends Component {
     }
 
     deleteAll = () => {
-        console.log('btn click');
-        // axios.put(`/api/volunteer-admin/delete-schedule/`)
             swal({
-                title: `Everything will delete`,
+                title: `Everything will be deleted`,
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-            }).then((willDelete) => {
+            }).then(function(willDelete) {
             if (willDelete) {
                 axios.delete(`/api/volunteer-admin/delete-schedule/`)
                 swal("Poof! Your file has been deleted!", {
-                icon: "success",
+                icon: "success"
+                }).then(function() {
+                    window.location.href = '/#/volunteer-schedule'
                 });
                 } else {
                 swal("Your file is safe!");
@@ -83,7 +84,14 @@ class Manage extends Component {
                     </div>
                     : ''}
                     <div className="delteAll">
-                    <button onClick={this.deleteAll}>Delete All</button>
+                        <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.deleteAll}
+                        startIcon={<DeleteIcon />}
+                        >
+                        Delete
+                        </Button>
                     </div>
             </div >
         );
