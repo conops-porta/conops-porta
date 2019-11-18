@@ -1,29 +1,74 @@
 import React, { Component } from 'react';
-import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Dropdown from './Dropdown'
+import DateTime from './DateTime'
 import NameSearch from './NameSearch'
 import PortalCard from './PortalCard'
 import './VolunteerPortal.css'
 import Axios from 'axios';
+import moment from 'moment'
 
 class VolunteerPortal extends Component {
     state = {
-        names: []
+        dateInput: '',
+        timeInput: '',
+        departmentInput: '',
+        nameInput: ''
     }
     componentDidMount() {
         this.getVolunteerNames();
-        this.getShifts();
+        // this.getShifts();
+        this.getDepartments();
     }
-    filterByBadgeNumber = (badgeNumber) => {
-        //
+    //-------populates card data -------//
+    getShifts = () => {
+        Axios.get('/api/volunteer-portal/shifts')
+            .then(response => {
+                console.log(response.data)
+                this.setState({
+                    ...this.state,
+                    shiftData: response.data
+                })
+            }).catch(error => {
+                console.log(error)
+            })
     }
-    filterByDepartment = (department) => {
-        //
+    
+    //-----set state to filter inputs--------//
+    storeNameInState = (name) => {
+        console.log(name)
+        this.setState({
+            ...this.state,
+            nameInput: name
+        })
     }
-    filterByShift = (shift) => {
-        //
+    storeDepartmentInState = (department) => {
+        console.log(department)
+        this.setState({
+            ...this.state,
+            departmentInput: department
+        })
+    }
+    storeShiftDateTimeInState = (d, t) => {
+        if (d){
+            let date = moment(d).calendar()
+            console.log(date)
+            this.setState({
+                ...this.state,
+                dateInput: date
+            })
+        }
+        if (t) {
+            let time = moment(t).format('H:mm') + ':00'
+            console.log(time)
+            this.setState({
+                ...this.state,
+                timeInput: time
+            })
+        }
     }
 
+    // ----- populate dropdowns ----//
     getVolunteerNames = () => {
         Axios.get('/api/volunteer-portal/volunteer-names')
             .then(response => {
@@ -36,8 +81,8 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
-    getShifts = () => {
-        Axios.get('/api/volunteer-portal/shifts')
+    getDepartments = () => {
+        Axios.get('/api/volunteer-portal/departments')
             .then(response => {
                 console.log(response.data)
                 this.setState({
@@ -48,31 +93,51 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
+
+    //-------render------//
     render() {
         return (
             <div className="VolunteerPortal">
-                <Dropdown
-                    title='Department'
-                    options={['Games', 'Tear Down']}
-                    filterByDropdown={this.filterByDepartment}
+                <DateTime
+                    storeShiftDateTimeInState={this.storeShiftDateTimeInState}
                 />
-                <Dropdown
-                    title="Shift Time"
-                    options={['10AM Monday', '5pm Tuesday']}
-                    filterByDropdown={this.filterByShift}
-                />
-                <NameSearch
-                    nameSuggestions={this.state.names}
-                    filterByBadgeNumber={this.filterByBadgeNumber}
-                />
+                <br />
                 {this.state.departments ?
-                    this.state.departments.map(department => {
+                    <Dropdown
+                        title='Department'
+                        options={this.state.departments}
+                        keyName='DepartmentName'
+                        storeDropdownInState={this.storeDepartmentInState}
+                    />
+                    : <Dropdown
+                        title='Department'
+                        options={[{ DepartmentName: 'Loading . . .' }]}
+                        keyName='DepartmentName'
+                        storeDropdownInState={this.storeDepartmentInState}
+                    />}
+                {this.state.names ?
+                    <NameSearch
+                        nameSuggestions={this.state.names}
+                        storeNameInState={this.storeNameInState}
+                    />
+                    :
+                    <NameSearch
+                        nameSuggestions={[{ VolunteerName: 'Loading . . .' }]}
+                        storeNameInState={this.storeNameInState}
+                    />}
+                <br />
+                <div className='filter-buttons'>
+                    <Button variant="outlined" color="inheret">Apply Filters</Button>
+                    <Button color="inheret">Clear Filters</Button>
+                </div>
+                {this.state.shiftData ?
+                    this.state.shiftData.map(department => {
                         let shiftAssignments = department.Shifts
                         shiftAssignments.forEach(shift => {
-                            if (shift.BadgeNumber){
+                            if (shift.BadgeNumber) {
                                 this.state.names.forEach(name => {
-                                    if (name.BadgeNumber === shift.BadgeNumber){
-                                        shift.BadgeNumber = {badgeNumber: shift.BadgeNumber, name: name.VolunteerName}
+                                    if (name.BadgeNumber === shift.BadgeNumber) {
+                                        shift.BadgeNumber = { badgeNumber: shift.BadgeNumber, name: name.VolunteerName }
                                     }
                                 })
                             }
