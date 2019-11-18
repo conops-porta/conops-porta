@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Accordion from './Accordion'
 import axios from 'axios'
+import '../VolunteerSchedule.css'
+import swal from 'sweetalert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 
 
 class Manage extends Component {
@@ -47,10 +51,34 @@ class Manage extends Component {
         return dataToSend;
     }
 
+    deleteAll = () => {
+            swal({
+                title: `Everything will be deleted`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then(function(willDelete) {
+            if (willDelete) {
+                axios.delete(`/api/volunteer-admin/delete-schedule/`)
+                swal("Poof! Your file has been deleted!", {
+                icon: "success"
+                }).then(function() {
+                    window.location.href = '/#/volunteer-schedule'
+                });
+                } else {
+                swal("Your file is safe!");
+                }
+            });
+        }
+
+        previousPage = () => {
+            this.props.history.push('/volunteer-schedule')
+        }
 
     render() {
         return (
             <div className="Manage">
+                <button onClick={this.previousPage}>Back</button>
                 <h1>Manage Volunteer Schedule</h1>
                 {this.state.data ? 
                     <div>
@@ -59,6 +87,16 @@ class Manage extends Component {
                         ))}
                     </div>
                     : ''}
+                    <div className="delteAll">
+                        <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.deleteAll}
+                        startIcon={<DeleteIcon />}
+                        >
+                        Delete
+                        </Button>
+                    </div>
             </div >
         );
     }
