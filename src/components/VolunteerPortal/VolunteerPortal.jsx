@@ -17,7 +17,7 @@ class VolunteerPortal extends Component {
     }
     componentDidMount() {
         this.getVolunteerNames();
-        // this.getShifts();
+        this.getShifts();
         this.getDepartments();
     }
     //-------populates card data -------//
@@ -28,7 +28,7 @@ class VolunteerPortal extends Component {
                 this.setState({
                     ...this.state,
                     displayData: response.data,
-                    alldata: response.data
+                    allData: response.data
                 })
             }).catch(error => {
                 console.log(error)
@@ -52,8 +52,8 @@ class VolunteerPortal extends Component {
     }
     storeShiftDateTimeInState = (d, t) => {
         if (d) {
-            let date = moment(d).calendar()
-            console.log(date)
+            let date = moment(d).format('YYYY-MM-DD')
+            console.log(d, date)
             this.setState({
                 ...this.state,
                 dateInput: date
@@ -97,13 +97,66 @@ class VolunteerPortal extends Component {
 
     //---------apply filters-----//
     applyFilters = (date, time, dept, name) => {
+        const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
             this.setState({
                 ...this.state,
-                displayData: this.state.alldata
+                displayData: this.state.allData
             })
+            console.log('no filters applied')
         }
-        console.log(date, time, dept, name)
+        console.log('Date: ', date, 'Time: ', time, 'Department: ', dept, 'Name ', name)
+        let filteredData = [...allData];
+        if (date) {
+            let filteredByDate = []
+            filteredData.forEach(data => {
+                if (moment(data.ShiftDate).format('YYYY-MM-DD') === date){
+                    console.log('true', date)
+                    filteredByDate.push(data)
+                }
+            })
+                filteredData = filteredByDate;
+            
+        }
+        if (time) {
+            let filteredByTime = []
+            filteredData.forEach(data => {
+                if (moment(data.ShiftTime).format('H:mm') + ':00' === time) {
+                    console.log('true', time)
+                    filteredByTime.push(data)
+                }
+            })
+                filteredData = filteredByTime
+        
+        }
+        if (name) {
+            let filteredByName = []
+            filteredData.forEach(data => {
+                data.Shifts.forEach(shift => {
+                    if (shift.BadgeNumber == name.BadgeNumber){
+                        console.log('true', name)
+                        filteredByName.push(data)
+                    }
+                })
+            })
+                filteredData = filteredByName
+            
+        }
+        if (dept) {
+            let filteredByDept = []
+            filteredData.forEach(data => {
+                if (data.DepartmentName === dept.DepartmentName) {
+                    console.log('true', dept)
+                    filteredByDept.push(data)
+                }
+            })
+                filteredData = filteredByDept
+            
+        } 
+        this.setState({
+            ...this.state,
+            displayData: filteredData
+        })
     }
 
     //-------render------//
@@ -120,33 +173,37 @@ class VolunteerPortal extends Component {
                         options={this.state.departments}
                         keyName='DepartmentName'
                         storeDropdownInState={this.storeDepartmentInState}
+                        departmentInput={this.state.departmentInput}
                     />
                     : <Dropdown
                         title='Department'
                         options={[{ DepartmentName: 'Loading . . .' }]}
                         keyName='DepartmentName'
                         storeDropdownInState={this.storeDepartmentInState}
+                        departmentInput={this.state.departmentInput}
                     />}
                 {this.state.names ?
                     <NameSearch
                         nameSuggestions={this.state.names}
                         storeNameInState={this.storeNameInState}
+                        nameInput={this.state.nameInput}
                     />
                     :
                     <NameSearch
                         nameSuggestions={[{ VolunteerName: 'Loading . . .' }]}
                         storeNameInState={this.storeNameInState}
+                        nameInput={this.state.nameInput}
                     />}
                 <br />
                 <div className='filter-buttons'>
                     <Button
-                        onClick={this.applyFilters(this.state.dateInput, this.state.timeInput, this.state.departmentInput, this.state.nameInput)}
+                        onClick={() => this.applyFilters(this.state.dateInput, this.state.timeInput, this.state.departmentInput, this.state.nameInput)}
                         variant="outlined"
                         color="inheret">
                         Apply Filters
                     </Button>
                     <Button
-                        onClick={this.applyFilters(null, null, null, null)}
+                        onClick={() => this.applyFilters(null, null, null, null)}
                         color="inheret">
                         Clear Filters
                     </Button>
