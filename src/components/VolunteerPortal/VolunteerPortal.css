@@ -2,7 +2,12 @@
     display: inline-block;
     padding: 10px;
     max-width: 180px;
-    margin: 20px 0;
+    margin: 0px 0;
+}
+.filter-buttons{
+    display: inline-block;
+    padding: 10px;;
+    margin: 0px 0;
 }
 .volunteer-portal-department, 
 .volunteer-portal-time {

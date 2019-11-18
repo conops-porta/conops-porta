@@ -47,7 +47,7 @@ function renderSuggestion(suggestionProps) {
             style={{
                 fontWeight: isSelected ? 500 : 400,
             }}
-            onClick={() => filterByBadgeNumber(suggestion.BadgeNumber)}
+            onClick={() => filterByBadgeNumber(suggestion)}
         >
             {suggestion.VolunteerName}
         </MenuItem>
