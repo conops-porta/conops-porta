@@ -17,17 +17,17 @@ function PortalCard(props) {
                         <Table size="small" >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>
-                                        <Typography variant="h5" component="h2">
+                                    <TableCell className="card-header-cell">
+                                        {/* <Typography variant="h5" component="h2"> */}
                                             Department: {props.department}
-                                        </Typography>
+                                        {/* </Typography> */}
                                     </TableCell> 
-                                    <TableCell>
-                                    <Typography variant="h5" component="h2">
+                                    <TableCell className="card-header-cell">
+                                    {/* <Typography variant="h5" component="h2"> */}
                                         <span className='volunteer-portal-time'>
                                             {moment(props.date).format('dddd')}, {props.time.slice(0, -3)}
                                         </span>
-                                    </Typography>
+                                    {/* </Typography> */}
                                 </TableCell> 
                                 </TableRow>
                             </TableHead>
