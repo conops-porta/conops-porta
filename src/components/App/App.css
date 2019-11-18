@@ -138,19 +138,30 @@ body {
     margin-top: 8%;
 }
 
+.Accordion {
+    margin-bottom: 10px;
+}
+
 /* Table improvements on narrow screens */
 
 #react-root table,
 #react-root .MuiTable-root {
+    /* cap width at width of parent container */
     max-width: 100%;
+    /* use block because table can break out at times */
+    display: block;
+    /* use horizontal scrolling  */
     overflow-x: scroll;
+}
+#react-root .MuiExpansionPanelDetails-root {
+    /* make sure the table extends to the edges of the panel */
+    padding: 0;
 }
 #react-root table th,
 #react-root .MuiTable-root th {
     font-weight: 700;
     line-height: 1;
-    word-wrap: none;
-    white-space: nowrap;
+    background-color: #e0e0e0;
 }
 #react-root table td,
 #react-root .MuiTable-root td {
@@ -159,12 +170,14 @@ body {
 
 /* visual indicators of side-scrollable tables */
 #react-root .MuiPaper-root > div + div {
+    /* light gray to transparent gradients at the parent's edges */
     background: linear-gradient(to right, #e0e0e0 0%, transparent 2rem, transparent),
                 linear-gradient(to left,  #e0e0e0 0%, transparent 2rem, transparent);
 }
 #react-root .MuiTableRow-root {
-    background: linear-gradient(to right, #fff 0%, #fff 1rem, transparent 5rem, transparent),
-                linear-gradient(to left,  #fff 0%, #fff 1rem, transparent 5rem, transparent);
+    /* white, wide enough to cover gray background, to transparent gradients at the table's edges */
+    background: linear-gradient(to right, #fff 0%, #fff 2rem, transparent 6rem, transparent),
+                linear-gradient(to left,  #fff 0%, #fff 2rem, transparent 6rem, transparent);
 }
 #react-root .MuiTableRow-root:empty {
     display: none;

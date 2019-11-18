@@ -348,4 +348,21 @@ router.delete('/departments/:id', rejectUnauthenticated, rejectNonAdmin, (req, r
         })
 })
 
+/**
+ * DELETE ENTIRE SCHEDULE ........
+ */
+router.delete('/delete-schedule', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
+    const queryText = 'DELETE FROM "Department";';
+    console.log('in delete entire schedule');
+    pool.query(queryText)
+        .then((result) => {
+            console.log('in Delete department router', result);
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('in Delete department router', error);
+            res.sendStatus(500);
+        })
+})
+
 module.exports = router;
