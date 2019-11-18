@@ -27,7 +27,7 @@ router.get('/badgenumbers', async (req, res) => {
  * GET route for verifying attendee eligibility for shifts
  */
 router.get('/validatebadge/:id', async (req, res) => {
-    // console.log(req.params.id);
+    // console.log('In validate badge GET route: ', req.params.id);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');

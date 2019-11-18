@@ -125,7 +125,7 @@ const postShift = (departments, roles, data) => {
                 })
             }
         })
-        console.log('ID', id)
+        // console.log('ID', id)
         row.shifts.forEach(shift => {
             for (let i = 0; shift.numOfVolunteers > i; i++) {
                 shifts.push({
