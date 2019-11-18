@@ -19,32 +19,40 @@ class WalkUpVerify extends Component {
     });
   } // end handleInputChange
 
-  verifyInfo = () => {
-    console.log(this.state);
-    axios.post(`/api/walkup/info/${this.props.match.params.id}`, this.state)
-      .then(response => {
-        console.log(response)
-      }).catch(error => {
-        console.log(error)
+  submitInfo = () => {
+    // console.log(this.state);
+    if (this.state.volunteerFirstName === '' || this.state.discordName === '' || this.state.phoneNumber === '' || this.state.email === '') {
+      swal({
+        text: 'Please fill out all fields',
+        icon: 'warning'
       })
-    this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.id}`)
+    } else {
+      axios.post(`/api/walkup/info/${this.props.match.params.id}`, this.state)
+        .then(response => {
+          console.log(response)
+        }).catch(error => {
+          console.log(error)
+        })
+      this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.id}`)
+    }
   }
 
   cancelButton = () => {
     console.log('cancel btn click')
-    this.props.history.push(`/volunteer-walk-up/${this.props.match.params.id}`)
+    this.props.history.push(`/volunteer-walk-up`)
   }
 
   render() {
     return (
       <div className="WalkUpConfirm">
-        Verify your info
-                <br />
+        <h1>Contact Info</h1>
+        <br />
         <form>
           <p>Badge #{this.props.match.params.id}</p>
           <p>First Name
             <br />
             <input
+              required
               type="text"
               placeholder="First name"
               value={this.state.volunteerFirstName}
@@ -54,6 +62,7 @@ class WalkUpVerify extends Component {
           <p>Discord Name
               <br />
             <input
+              required
               type="text"
               placeholder="Discord name"
               value={this.state.discordName}
@@ -63,6 +72,7 @@ class WalkUpVerify extends Component {
           <p>Phone Number
             <br />
             <input
+              required
               type="tel"
               placeholder="Phone number"
               value={this.state.phoneNumber}
@@ -72,6 +82,7 @@ class WalkUpVerify extends Component {
           <p>Email
             <br />
             <input
+              required
               type="email"
               placeholder="Email"
               value={this.state.email}
@@ -81,7 +92,7 @@ class WalkUpVerify extends Component {
           <br />
         </form>
         <button onClick={this.cancelButton}>Cancel</button>
-        <button onClick={this.verifyInfo}>Confirm</button>
+        <button onClick={this.submitInfo}>Confirm</button>
       </div>
     )
   }

@@ -72,5 +72,53 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
         })
 })
 
+/**
+ * GET route volunteers for filtering shifts
+ */
+router.get('/volunteer-names', rejectUnauthenticated, (req, res) => {
+    let queryText = `SELECT "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName"
+  FROM "VolunteerContact" 
+  JOIN "Attendee" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
+ GROUP BY "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName";`
+    pool.query(queryText)
+        .then((result) => {
+            console.log('in volunteer/contacts GET router:', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in volunteer/contacts GET router:', error)
+            res.sendStatus(500)
+        })
+})
+
+/**
+ * GET route for all volunteer portal shifts
+ */
+router.get('/shifts', async (req, res) => {
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const getShiftsQuery = `  SELECT 
+        "Shift"."ShiftDate",
+        "Shift"."ShiftTime",
+        json_agg("Shift") AS "Shifts",
+        "Department"."DepartmentName",
+        json_agg(DISTINCT "Role") AS "Roles"
+        FROM "Shift"
+        JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
+        JOIN "Department" ON "Department"."DepartmentID" = "Role"."DepartmentID"
+        GROUP BY "Department"."DepartmentName", "Shift"."ShiftDate", "Shift"."ShiftTime"
+        ORDER BY "Shift"."ShiftDate", "Shift"."ShiftTime";`;
+        const shiftResults = await connection.query(getShiftsQuery);
+        await connection.query('COMMIT');
+        res.send(shiftResults.rows);
+    } catch (error) {
+        await connection.query('ROLLBACK');
+        console.log('error in walkup shifts GET route', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+});
 
 module.exports = router;
