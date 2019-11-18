@@ -34,12 +34,12 @@ class WalkUpConfirm extends Component {
         axios.put(`/api/walkup/selected/${this.props.match.params.id}`, this.selectedShifts)
             .then(response => {
                 console.log(response)
-                // swal({
-                //     title: `Thank You`,
-                //     icon: "success"
-                // }).then(() => {
-                //     this.props.history.push(`/volunteer-walk-up/`)
-                // })
+                swal({
+                    title: `Thank You`,
+                    icon: "success"
+                }).then(() => {
+                    this.props.history.push(`/volunteer-walk-up/`)
+                })
             }).catch(error => {
                 console.log(error)
             })
@@ -72,7 +72,7 @@ class WalkUpConfirm extends Component {
                     </tbody>
                 </table>
                 <h4>Please write this down so you won't forget!</h4>
-                <button onClick={this.confirm}>OKAY</button>
+                <button onClick={this.confirm}>SUBMIT!</button>
             </div>
         )
     }
