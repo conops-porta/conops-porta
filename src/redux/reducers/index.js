@@ -18,6 +18,7 @@ import sponsorReducer from './sponsorReducer';
 import sponsorDetailsReducer from './sponsorDetailsReducer';
 import VolunteerWalkUpReducer from './VolunteerWalkUpReducer';
 import VolunteerHoursReducer from './VolunteerHoursReducer';
+import VolunteerContactReducer from './VolunteerContactReducer';
 import SelectedShiftsReducer from './SelectedShiftsReducer';
 import ExistingBadgesReducer from './ExistingBadgesReducer';
 
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
   sponsorDetailsReducer,
   VolunteerWalkUpReducer,
   VolunteerHoursReducer,
+  VolunteerContactReducer,
   SelectedShiftsReducer,
   ExistingBadgesReducer,
 });

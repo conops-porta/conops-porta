@@ -1,0 +1,4 @@
+/* material-table doesn't render boolean data as content */
+td[value="true"]::after {
+  content: "yes";
+}
