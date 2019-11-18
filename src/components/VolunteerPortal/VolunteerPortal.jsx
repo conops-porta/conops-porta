@@ -39,7 +39,7 @@ class VolunteerPortal extends Component {
         console.log(name)
         this.setState({
             ...this.state,
-            nameInput: time
+            nameInput: name
         })
     }
     storeDepartmentInState = (department) => {
