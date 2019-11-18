@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Accordion from './Accordion'
 import axios from 'axios'
+import '../VolunteerSchedule.css'
+import swal from 'sweetalert';
+
 
 
 class Manage extends Component {
@@ -47,6 +50,26 @@ class Manage extends Component {
         return dataToSend;
     }
 
+    deleteAll = () => {
+        console.log('btn click');
+        // axios.put(`/api/volunteer-admin/delete-schedule/`)
+            swal({
+                title: `Everything will delete`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+            if (willDelete) {
+                axios.delete(`/api/volunteer-admin/delete-schedule/`)
+                swal("Poof! Your file has been deleted!", {
+                icon: "success",
+                });
+                } else {
+                swal("Your file is safe!");
+                }
+            });
+        }
+
 
     render() {
         return (
@@ -59,6 +82,9 @@ class Manage extends Component {
                         ))}
                     </div>
                     : ''}
+                    <div className="delteAll">
+                    <button onClick={this.deleteAll}>Delete All</button>
+                    </div>
             </div >
         );
     }
