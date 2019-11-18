@@ -4,9 +4,13 @@
     max-width: 180px;
     margin: 20px 0;
 }
-.volunteer-portal-time{
+.volunteer-portal-department, 
+.volunteer-portal-time {
+    font-size: 1.5em;
     display: inline-block;
-    width: 100%;
+    width: 50%;
+}
+.volunteer-portal-time{
     text-align: right;
 }
 .card-header-cell{

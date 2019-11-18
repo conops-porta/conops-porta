@@ -19,7 +19,9 @@ function PortalCard(props) {
                                 <TableRow>
                                     <TableCell className="card-header-cell">
                                         {/* <Typography variant="h5" component="h2"> */}
+                                        <span className='volunteer-portal-department'> 
                                             Department: {props.department}
+                                        </span>
                                         {/* </Typography> */}
                                     </TableCell> 
                                     <TableCell className="card-header-cell">
