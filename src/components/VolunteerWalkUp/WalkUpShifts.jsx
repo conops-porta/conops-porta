@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { Button } from '@material-ui/core';
 
 import ShiftCard from './ShiftCard';
+
+import './Volunteer.css';
 
 class WalkUpShifts extends Component {
 
@@ -19,7 +22,7 @@ class WalkUpShifts extends Component {
             type: 'FETCH_EXISTING_BADGES'
         })
         this.props.reduxStore.ExistingBadgesReducer.map(badge => {
-            if ((badge.BadgeNumber) === this.props.match.params.badgenumber) {
+            if ((badge.BadgeNumber) === this.props.match.params.id) {
                 this.setState({
                     existingBadge: true
                 })
@@ -31,13 +34,15 @@ class WalkUpShifts extends Component {
 
     // validate attendee eligibility to pick up walk up shifts
     validateBadgeNumber = () => {
-        axios.get(`/api/walkup/validatebadge/${this.props.match.params.badgenumber}`)
+        // console.log('In match.params: ', this.props.match.params);
+        axios.get(`/api/walkup/validatebadge/${this.props.match.params.id}`)
             .then(response => {
                 // calculate age of attendee
                 let today = new Date();
                 let birthDate = new Date(response.data.DateOfBirth);
                 let age = today.getFullYear() - birthDate.getFullYear();
                 let month = today.getMonth() - birthDate.getMonth()
+                this.walkUpBadgeNumberSubmit();
                 if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
                     age--;
                 }
@@ -86,20 +91,29 @@ class WalkUpShifts extends Component {
         })
         // console.log('In state: ', this.state);
         if (this.state.existingBadge === true) {
-            this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.badgenumber}`)
+            this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.id}`)
         } else {
-            this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.badgenumber}`)
+            this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.id}`)
         }
     }
 
     render() {
         return (
             <div className="WalkUpShifts">
-                <h1>Available shifts:</h1>
-                <button onClick={this.sendSelectedShifts}>Submit</button>
-                {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
-                    <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
-                ))}
+                <div className="WalkUpShifts-header">
+                    <h1>Available shifts:</h1>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.sendSelectedShifts}>
+                        Volunteer for Checked Shifts
+                    </Button>
+                </div>
+                <div className="WalkUpShifts-body">
+                    {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
+                        <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
+                    ))}
+                </div>
             </div>
         )
     }

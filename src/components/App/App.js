@@ -114,7 +114,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/volunteer-walk-up/:badgenumber"
+              path="/volunteer-walk-up/badge/:id"
               component={WalkUpShifts}
             />
             <Route

@@ -1,3 +1,12 @@
 .Contacts {
     margin-top: 200px;
 }
+
+.delteAll {
+    border-color: black;
+    width: 40%;
+    margin-left: 45%;
+    margin-right: 30%
+    /* margin-right: 30%;
+    margin-left: 40%; */
+}

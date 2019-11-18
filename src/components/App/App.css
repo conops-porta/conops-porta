@@ -42,36 +42,21 @@ div.nav + div {
 }
 
 .homeBig{
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
+    margin: 40px auto 0;
+    padding: 10px 20px;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 20px;
 }
-.homePage {
-    display: inline-block;
-    padding: 5px;
-    margin: 10px;
-    height: 450px;
-    width: 450px;
-    border: solid;
-    text-align: center;
-    
+.homeBig > div {
+    padding: 0 16px 8px;
+    border: 2px solid #19375f;
 }
 
-.homeBigger {
+.homeBigger h1 {
     text-align: center;
-}
-
-.homePage1 {
-    contain: strict;
-    float: right;
-    display: inline-block;
-    padding: 5px;
-    margin: 10px;
-    height: 450px;
-    width: 450px;
-    border: solid;
-    text-align: center;
-    
+    color: #19375f;
 }
 
 body {
