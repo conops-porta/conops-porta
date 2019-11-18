@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 
+import './VolunteerContact.css';
+
 class VolunteerContact extends Component {
     state = {
         columns: [
@@ -55,7 +57,7 @@ class VolunteerContact extends Component {
                             searchFieldAlignment: "left",
                             showTitle: false
                         }}
-                        data={this.props.reduxStore.VolunteerHoursReducer}
+                        data={this.props.reduxStore.VolunteerContactReducer}
                     />
                 )}
 
