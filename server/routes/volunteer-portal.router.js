@@ -121,8 +121,31 @@ router.get('/shifts', rejectUnauthenticated, rejectNonVetted, async (req, res) =
 });
 
 /**
- * PUT route for removing a badge number from a shift
+ * GET route for all departments to populate dropdown
  */
+router.get('/departments', async (req, res) => {
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const getShiftsQuery = `SELECT
+        "DepartmentID",
+        "DepartmentName"
+        FROM "Department"
+        ORDER BY "DepartmentName" ASC;`;
+        const shiftResults = await connection.query(getShiftsQuery);
+        await connection.query('COMMIT');
+        res.send(shiftResults.rows);
+    } catch (error) {
+        await connection.query('ROLLBACK');
+        console.log('error in walkup shifts GET route', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+});
+
+//  * PUT route for removing a badge number from a shift
+//  */
 router.put('/remove-volunteer/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
@@ -139,5 +162,6 @@ router.put('/remove-volunteer/:id', rejectUnauthenticated, rejectNonVetted, asyn
         connection.release();
     }
 })
+
 
 module.exports = router;

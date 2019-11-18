@@ -34,20 +34,20 @@ renderInput.propTypes = {
 };
 
 function renderSuggestion(suggestionProps) {
-    const { suggestion, index, itemProps, highlightedIndex, selectedItem, filterByBadgeNumber } = suggestionProps;
+    const { suggestion, index, itemProps, highlightedIndex, selectedItem, storeNameInState } = suggestionProps;
     const isHighlighted = highlightedIndex === index;
     const isSelected = (selectedItem || '').indexOf(suggestion.VolunteerName) > -1;
 
     return (
         <MenuItem
             {...itemProps}
-            key={suggestion.VolunteerName}
+            key={suggestion.VolunteerID}
             selected={isHighlighted}
             component="div"
             style={{
                 fontWeight: isSelected ? 500 : 400,
             }}
-            onClick={() => filterByBadgeNumber(suggestion.BadgeNumber)}
+            onClick={() => storeNameInState(suggestion)}
         >
             {suggestion.VolunteerName}
         </MenuItem>
@@ -140,7 +140,7 @@ export default function IntegrationDownshift(props) {
                             }
                         },
                         onFocus: openMenu,
-                        placeholder: 'Search by Name',
+                        placeholder: 'Filter by Name',
                     });
 
                     return (
@@ -165,7 +165,7 @@ export default function IntegrationDownshift(props) {
                                                 itemProps: getItemProps({ item: suggestion.VolunteerName }),
                                                 highlightedIndex,
                                                 selectedItem,
-                                                filterByBadgeNumber: props.filterByBadgeNumber
+                                                storeNameInState: props.storeNameInState
                                             }),
                                         )}
                                     </Paper>
