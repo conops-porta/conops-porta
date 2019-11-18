@@ -10,11 +10,36 @@ const router = express.Router();
  * GET route for contacts
  */
 router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
-    let queryText = `SELECT "VolunteerID", "VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", count("Shift"."ShiftID") 
-                    FROM "VolunteerContact" 
-                    JOIN "Attendee" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
-                    JOIN "Shift" ON "Attendee"."BadgeNumber" = "Shift"."BadgeNumber"
-                    GROUP BY "VolunteerID";`
+    let queryText = `
+        SELECT
+            "VolunteerContact"."VolunteerID",
+            "VolunteerContact"."VolunteerName",
+            "VolunteerContact"."VolunteerDiscord",
+            "VolunteerContact"."VolunteerEmail",
+            "VolunteerContact"."VolunteerPhone",
+            "VolunteerContact"."VolunteerVetted",
+            "MainDepartment"."DepartmentName" AS "MainDepartment",
+            "SecondaryDepartment"."DepartmentName" AS "SecondaryDepartment",
+            "ShiftsScheduled"."TotalScheduled" AS "ScheduledShifts", 
+            "VolunteerContact"."VolunteerHours",
+            "VolunteerContact"."VolunteerShirtSize",
+            "Attendee"."BadgeNumber",
+            "VolunteerContact"."VolunteerNotes"
+        FROM "VolunteerContact"
+        LEFT OUTER JOIN ( SELECT * FROM "Department" ) AS "MainDepartment"
+            ON "MainDepartment"."DepartmentID" = "VolunteerContact"."MainDepartmentID"
+        LEFT OUTER JOIN ( SELECT * FROM "Department" ) AS "SecondaryDepartment"
+            ON "SecondaryDepartment"."DepartmentID" = "VolunteerContact"."SecondaryDepartmentID"
+        LEFT OUTER JOIN "Attendee"
+            ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
+        LEFT OUTER JOIN (
+                SELECT "BadgeNumber", COUNT("ShiftID") AS "TotalScheduled" FROM "Shift"
+                WHERE "BadgeNumber" IS NOT NULL
+                GROUP BY "BadgeNumber"
+            ) AS "ShiftsScheduled"
+            ON "Attendee"."BadgeNumber" = "ShiftsScheduled"."BadgeNumber"
+        ORDER BY "VolunteerContact"."VolunteerName";
+    `
     pool.query(queryText)
         .then((result) => {
             // console.log('in volunteer/contacts GET router:', result.rows);

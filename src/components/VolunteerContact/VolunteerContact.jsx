@@ -2,15 +2,23 @@ import React, { Component } from 'react';
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 
-class VolunteerHours extends Component {
+import './VolunteerContact.css';
+
+class VolunteerContact extends Component {
     state = {
         columns: [
-            { title: "First Name", field: "FirstName" },
-            { title: "Last Name", field: "LastName" },
+            { title: "Name", field: "VolunteerName" },
             { title: "Discord", field: "VolunteerDiscord" },
-            { title: "Hours Scheduled", field: "HoursScheduled" },
-            { title: "Hours Worked", field: "HoursWorked" },
+            { title: "Email", field: "VolunteerEmail" },
+            { title: "Phone", field: "VolunteerPhone" },
+            { title: "Vetted?", field: "VolunteerVetted" },
+            { title: "Main Department", field: "MainDepartment" },
+            { title: "Secondary Department", field: "SecondaryDepartment" },
+            { title: "Scheduled Shifts", field: "ScheduledHours" },
+            { title: "Additional Hours", field: "VolunteerHours" },
+            { title: "Shirt Size", field: "VolunteerShirtSize" },
             { title: "Badge Number", field: "BadgeNumber" },
+            { title: "Notes", field: "VolunteerNotes" },
         ]
     };
 
@@ -19,26 +27,26 @@ class VolunteerHours extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
-        this.fetchLeaderboard();
+        this.fetchVolunteerContacts();
     }
 
     //Sends a GET request to saga
-    fetchLeaderboard = () => {
+    fetchVolunteerContacts = () => {
         this.props.dispatch({
-            type: "FETCH_VOLUNTEER_HOURS"
+            type: "FETCH_VOLUNTEER_CONTACTS"
         });
     }
 
     render() {
         return (
-            <div className="VolunteerHours">
+            <div className="VolunteerContacts">
                 <h1 style={{ textAlign: "center" }}>Current Convention: {this.props.convention.ConventionName}</h1>
-                <h2 style={{ textAlign: "center" }}>Volunteer Leaderboard</h2>
+                <h2 style={{ textAlign: "center" }}>Volunteer Contacts</h2>
                 {(this.props.reduxStore.user.authorization === 4 ||
                 this.props.reduxStore.user.authorization === 0)
                 && (
                     <MaterialTable
-                        title="Volunteer Hours"
+                        title="Volunteer Contacts"
                         columns={this.state.columns}
                         options={{
                             columnsButton: true,
@@ -49,7 +57,7 @@ class VolunteerHours extends Component {
                             searchFieldAlignment: "left",
                             showTitle: false
                         }}
-                        data={this.props.reduxStore.VolunteerHoursReducer}
+                        data={this.props.reduxStore.VolunteerContactReducer}
                     />
                 )}
 
@@ -64,4 +72,4 @@ const mapStateToProps = reduxStore => {
         convention: reduxStore.ConventionsReducer,
     };
 };
-export default connect(mapStateToProps)(VolunteerHours);
+export default connect(mapStateToProps)(VolunteerContact);
