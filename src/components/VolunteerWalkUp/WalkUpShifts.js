@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { Button } from '@material-ui/core';
 
 import ShiftCard from './ShiftCard';
+
+import './Volunteer.css';
 
 class WalkUpShifts extends Component {
 
@@ -95,11 +98,20 @@ class WalkUpShifts extends Component {
     render() {
         return (
             <div className="WalkUpShifts">
-                <h1>Available shifts:</h1>
-                <button onClick={this.sendSelectedShifts}>Submit</button>
-                {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
-                    <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
-                ))}
+                <div className="WalkUpShifts-header">
+                    <h1>Available shifts:</h1>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.sendSelectedShifts}>
+                        Volunteer for Checked Shifts
+                    </Button>
+                </div>
+                <div className="WalkUpShifts-body">
+                    {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
+                        <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
+                    ))}
+                </div>
             </div>
         )
     }

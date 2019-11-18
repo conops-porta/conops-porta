@@ -21,16 +21,18 @@ class ShiftCard extends Component {
 
     render() {
         return (
-            <div className="ShiftCard" style={{ border: "1px solid black" }}>
-                <h3>{moment(this.props.shift.ShiftDate).format('dddd')}@{(this.props.shift.ShiftTime).slice(0, -3)}</h3>
-                <h3>Department: {this.props.shift.DepartmentName}</h3>
-                <h3>Role: {this.props.shift.RoleName}</h3>
-                {<Checkbox
-                    checked={this.state.checked}
-                    onChange={this.checkBox}
-                    value="checked"
-                    color="primary"
-                />}
+            <div className="ShiftCard" data-weekday={moment(this.props.shift.ShiftDate).format('ddd')}>
+                <h3>{moment(this.props.shift.ShiftDate).format('dddd')}, <strong>{(this.props.shift.ShiftTime).slice(0, -3)}</strong></h3>
+                <h4>Department: <strong>{this.props.shift.DepartmentName}</strong></h4>
+                <label>
+                    {<Checkbox
+                        checked={this.state.checked}
+                        onChange={this.checkBox}
+                        value="checked"
+                        color="primary"
+                    />}
+                Role: <strong>{this.props.shift.RoleName}</strong>
+                </label>
             </div>
         )
     }
