@@ -71,10 +71,14 @@ class Manage extends Component {
             });
         }
 
+        previousPage = () => {
+            this.props.history.push('/volunteer-schedule')
+        }
 
     render() {
         return (
             <div className="Manage">
+                <button onClick={this.previousPage}>Back</button>
                 <h1>Manage Volunteer Schedule</h1>
                 {this.state.data ? 
                     <div>
