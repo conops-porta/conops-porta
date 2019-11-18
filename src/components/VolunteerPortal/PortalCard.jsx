@@ -28,18 +28,20 @@ function PortalCard(props) {
                         <Table size="small" >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>
-                                        <Typography variant="h5" component="h2">
+                                    <TableCell className="card-header-cell">
+                                        {/* <Typography variant="h5" component="h2"> */}
+                                        <span className='volunteer-portal-department'> 
                                             Department: {props.department}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography variant="h5" component="h2">
-                                            <span className='volunteer-portal-time'>
-                                                {moment(props.date).format('dddd')}, {props.time.slice(0, -3)}
-                                            </span>
-                                        </Typography>
-                                    </TableCell>
+                                        </span>
+                                        {/* </Typography> */}
+                                    </TableCell> 
+                                    <TableCell className="card-header-cell">
+                                    {/* <Typography variant="h5" component="h2"> */}
+                                        <span className='volunteer-portal-time'>
+                                            {moment(props.date).format('dddd')}, {props.time.slice(0, -3)}
+                                        </span>
+                                    {/* </Typography> */}
+                                </TableCell> 
                                 </TableRow>
                             </TableHead>
                         </Table>

@@ -28,7 +28,7 @@ export default function SimpleSelect(props) {
 
     const handleChange = event => {
         setValue(event.target.value);
-        props.filterByDropdown();
+        props.storeDropdownInState(event.target.value);
     };
 
     return (
@@ -48,7 +48,7 @@ export default function SimpleSelect(props) {
                         <em>All</em>
                     </MenuItem>
                     {props.options.map(option => (
-                        <MenuItem value={option}>{option}</MenuItem>
+                        <MenuItem value={option}>{option[props.keyName]}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
