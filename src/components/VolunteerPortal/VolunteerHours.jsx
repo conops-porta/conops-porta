@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
-import moment from "moment";
 
 class VolunteerHours extends Component {
     state = {
