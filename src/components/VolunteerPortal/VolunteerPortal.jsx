@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Dropdown from './Dropdown'
 import DateTime from './DateTime'
 import NameSearch from './NameSearch'
 import PortalCard from './PortalCard'
 import './VolunteerPortal.css'
 import Axios from 'axios';
+import moment from 'moment'
 
 class VolunteerPortal extends Component {
     state = {
         dateInput: '',
+        timeInput: '',
         departmentInput: '',
         nameInput: ''
     }
@@ -31,15 +33,39 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
-    //-----filter results--------//
-    filterByBadgeNumber = (badgeNumber) => {
-        console.log(badgeNumber)
+    
+    //-----set state to filter inputs--------//
+    storeNameInState = (name) => {
+        console.log(name)
+        this.setState({
+            ...this.state,
+            nameInput: time
+        })
     }
-    filterByDepartment = (department) => {
+    storeDepartmentInState = (department) => {
         console.log(department)
+        this.setState({
+            ...this.state,
+            departmentInput: department
+        })
     }
-    filterByShift = (datetime) => {
-        console.log(datetime)
+    storeShiftDateTimeInState = (d, t) => {
+        if (d){
+            let date = moment(d).calendar()
+            console.log(date)
+            this.setState({
+                ...this.state,
+                dateInput: date
+            })
+        }
+        if (t) {
+            let time = moment(t).format('H:mm') + ':00'
+            console.log(time)
+            this.setState({
+                ...this.state,
+                timeInput: time
+            })
+        }
     }
 
     // ----- populate dropdowns ----//
@@ -67,12 +93,13 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
+
     //-------render------//
     render() {
         return (
             <div className="VolunteerPortal">
                 <DateTime
-                    filterByShift={this.filterByShift}
+                    storeShiftDateTimeInState={this.storeShiftDateTimeInState}
                 />
                 <br />
                 {this.state.departments ?
@@ -80,23 +107,23 @@ class VolunteerPortal extends Component {
                         title='Department'
                         options={this.state.departments}
                         keyName='DepartmentName'
-                        filterByDropdown={this.filterByDepartment}
+                        storeDropdownInState={this.storeDepartmentInState}
                     />
                     : <Dropdown
                         title='Department'
                         options={[{ DepartmentName: 'Loading . . .' }]}
                         keyName='DepartmentName'
-                        filterByDropdown={this.filterByDepartment}
+                        storeDropdownInState={this.storeDepartmentInState}
                     />}
                 {this.state.names ?
                     <NameSearch
                         nameSuggestions={this.state.names}
-                        filterByBadgeNumber={this.filterByBadgeNumber}
+                        storeNameInState={this.storeNameInState}
                     />
                     :
                     <NameSearch
                         nameSuggestions={[{ VolunteerName: 'Loading . . .' }]}
-                        filterByBadgeNumber={this.filterByBadgeNumber}
+                        storeNameInState={this.storeNameInState}
                     />}
                 <br />
                 <div className='filter-buttons'>

@@ -10,12 +10,19 @@ import {
 
 export default function MaterialUIPickers(props) {
     // The first commit of Material-UI
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [selectedDate, setSelectedDate] = React.useState(null);
+    const [selectedTime, setSelectedTime] = React.useState(null);
 
-    const handleDateChange = date => {
+
+    const handleDateChange = (date) => {
         setSelectedDate(date);
-        props.filterByShift(date);
+        props.storeShiftDateTimeInState(date, null);
         // console.log(date)
+    };
+    const handleTimeChange = (time) => {
+        setSelectedTime(time);
+        props.storeShiftDateTimeInState(null, time);
+        // console.log(time)
     };
 
     return (
@@ -44,8 +51,8 @@ export default function MaterialUIPickers(props) {
                         variant="outlined"
                         id="time-picker"
                         label="Time"
-                        value={selectedDate}
-                        onChange={handleDateChange}
+                        value={selectedTime}
+                        onChange={handleTimeChange}
                         KeyboardButtonProps={{
                             'aria-label': 'change time',
                         }}

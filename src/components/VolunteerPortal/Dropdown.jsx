@@ -28,7 +28,7 @@ export default function SimpleSelect(props) {
 
     const handleChange = event => {
         setValue(event.target.value);
-        props.filterByDropdown(event.target.value);
+        props.storeDropdownInState(event.target.value);
     };
 
     return (
