@@ -12,6 +12,7 @@ class VolunteerContact extends Component {
             { title: "Vetted?", field: "VolunteerVetted" },
             { title: "Main Department", field: "MainDepartment" },
             { title: "Secondary Department", field: "SecondaryDepartment" },
+            { title: "Scheduled Shifts", field: "ScheduledHours" },
             { title: "Additional Hours", field: "VolunteerHours" },
             { title: "Shirt Size", field: "VolunteerShirtSize" },
             { title: "Badge Number", field: "BadgeNumber" },
