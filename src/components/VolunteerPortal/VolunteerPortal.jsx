@@ -17,7 +17,7 @@ class VolunteerPortal extends Component {
     filterByBadgeNumber = (badgeNumber) => {
         //
     }
-    filterDepartment = (department) => {
+    filterByDepartment = (department) => {
         //
     }
     filterByShift = (shift) => {

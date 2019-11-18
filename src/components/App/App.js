@@ -36,13 +36,13 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import VolunteerSchedule from '../VolunteerSchedule/Initial/Initial';
 import VolunteerScheduleCreate from '../VolunteerSchedule/Create/Create';
 import VolunteerScheduleManage from '../VolunteerSchedule/Manage/Manage';
-import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp';
-import WalkUpShifts from '../VolunteerWalkUp/WalkUpShifts';
-import WalkUpVerify from '../VolunteerWalkUp/WalkUpVerify';
-import WalkUpConfirm from '../VolunteerWalkUp/WalkUpConfirm';
+import VolunteerWalkUp from '../VolunteerWalkUp/VolunteerWalkUp.jsx';
+import WalkUpShifts from '../VolunteerWalkUp/WalkUpShifts.jsx';
+import WalkUpVerify from '../VolunteerWalkUp/WalkUpVerify.jsx';
+import WalkUpConfirm from '../VolunteerWalkUp/WalkUpConfirm.jsx';
 
-import VolunteerPortal from '../VolunteerPortal/VolunteerPortal'
-import VolunteerHours from '../VolunteerPortal/VolunteerHours'
+import VolunteerPortal from '../VolunteerPortal/VolunteerPortal';
+import VolunteerHours from '../VolunteerPortal/VolunteerHours';
 
 
 import './App.css';
