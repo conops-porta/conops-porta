@@ -12,11 +12,12 @@ const router = express.Router();
 router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `SELECT "VolunteerID", "VolunteerName", "VolunteerDiscord", "VolunteerEmail", "VolunteerPhone", count("Shift"."ShiftID") 
                     FROM "VolunteerContact" 
-                    JOIN "Shift" ON "VolunteerContact"."BadgeNumber" = "Shift"."BadgeNumber"
+                    JOIN "Attendee" ON "Attendee"."VolunteerID" = "VolunteerContact"."VolunteerID"
+                    JOIN "Shift" ON "Attendee"."BadgeNumber" = "Shift"."BadgeNumber"
                     GROUP BY "VolunteerID";`
     pool.query(queryText)
         .then((result) => {
-            console.log('in volunteer/contacts GET router:', result.rows);
+            // console.log('in volunteer/contacts GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -124,7 +125,7 @@ const postShift = (departments, roles, data) => {
                 })
             }
         })
-        console.log('ID', id)
+        // console.log('ID', id)
         row.shifts.forEach(shift => {
             for (let i = 0; shift.numOfVolunteers > i; i++) {
                 shifts.push({

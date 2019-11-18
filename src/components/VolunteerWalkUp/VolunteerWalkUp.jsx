@@ -14,7 +14,7 @@ class VolunteerWalkUp extends Component {
       buttons: ['Cancel', 'Yes!']
     }).then((value) => {
       if (value === true) {
-        this.props.history.push(`/volunteer-walk-up/${this.state.badgeNumber}`)
+        this.props.history.push(`/volunteer-walk-up/badge/${this.state.badgeNumber}`)
       }
     })
   }
