@@ -7,10 +7,10 @@ import './VolunteerPortal.css'
 import Axios from 'axios';
 
 class VolunteerPortal extends Component {
-    state={
-        nameSuggestions: []
+    state = {
+        names: []
     }
-    componentDidMount(){
+    componentDidMount() {
         this.getVolunteerNames();
         this.getShifts();
     }
@@ -29,7 +29,7 @@ class VolunteerPortal extends Component {
             .then(response => {
                 this.setState({
                     ...this.state,
-                    nameSuggestions: response.data
+                    names: response.data
                 })
                 // console.log(response.data)
             }).catch(error => {
@@ -38,11 +38,15 @@ class VolunteerPortal extends Component {
     }
     getShifts = () => {
         Axios.get('/api/volunteer-portal/shifts')
-        .then(response => {
-            console.log(response.data)
-        }).catch(error => {
-            console.log(error)
-        })
+            .then(response => {
+                console.log(response.data)
+                this.setState({
+                    ...this.state,
+                    departments: response.data
+                })
+            }).catch(error => {
+                console.log(error)
+            })
     }
     render() {
         return (
@@ -57,11 +61,35 @@ class VolunteerPortal extends Component {
                     options={['10AM Monday', '5pm Tuesday']}
                     filterByDropdown={this.filterByShift}
                 />
-                <NameSearch 
-                    nameSuggestions={this.state.nameSuggestions}
+                <NameSearch
+                    nameSuggestions={this.state.names}
                     filterByBadgeNumber={this.filterByBadgeNumber}
                 />
-                <PortalCard />
+                {this.state.departments ?
+                    this.state.departments.map(department => {
+                        let shiftAssignments = department.Shifts
+                        shiftAssignments.forEach(shift => {
+                            if (shift.BadgeNumber){
+                                this.state.names.forEach(name => {
+                                    if (name.BadgeNumber === shift.BadgeNumber){
+                                        shift.BadgeNumber = {badgeNumber: shift.BadgeNumber, name: name.VolunteerName}
+                                    }
+                                })
+                            }
+                            department.Roles.forEach(role => {
+                                if (role.RoleID === shift.RoleID) {
+                                    shift.RoleID = { roleID: shift.RoleID, roleName: role.RoleName }
+                                }
+                            })
+                        })
+                        return <PortalCard
+                            department={department.DepartmentName}
+                            date={department.ShiftDate}
+                            time={department.ShiftTime}
+                            shifts={shiftAssignments}
+
+                        />
+                    }) : null}
             </div>
         );
     }

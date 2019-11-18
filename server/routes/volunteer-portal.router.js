@@ -98,16 +98,16 @@ router.get('/shifts', async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
-        const getShiftsQuery = ` SELECT 
+        const getShiftsQuery = `  SELECT 
         "Shift"."ShiftDate",
         "Shift"."ShiftTime",
-        array_agg("Shift"."BadgeNumber") AS "BadgeNumbers",
+        json_agg("Shift") AS "Shifts",
         "Department"."DepartmentName",
-        "Role"."RoleName"
+        json_agg(DISTINCT "Role") AS "Roles"
         FROM "Shift"
         JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
         JOIN "Department" ON "Department"."DepartmentID" = "Role"."DepartmentID"
-        GROUP BY "Shift"."ShiftDate", "Shift"."ShiftTime", "Department"."DepartmentName", "Role"."RoleName"
+        GROUP BY "Department"."DepartmentName", "Shift"."ShiftDate", "Shift"."ShiftTime"
         ORDER BY "Shift"."ShiftDate", "Shift"."ShiftTime";`;
         const shiftResults = await connection.query(getShiftsQuery);
         await connection.query('COMMIT');
