@@ -82,7 +82,7 @@ router.get('/volunteer-names', rejectUnauthenticated, (req, res) => {
  GROUP BY "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName";`
     pool.query(queryText)
         .then((result) => {
-            console.log('in volunteer/contacts GET router:', result.rows);
+            // console.log('in volunteer/contacts GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -120,5 +120,10 @@ router.get('/shifts', async (req, res) => {
         connection.release();
     }
 });
+
+/**
+ * PUT route for removing a badge number from a shift
+ */
+router.put('/remove-volunteer/:id')
 
 module.exports = router;
