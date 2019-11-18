@@ -10,10 +10,10 @@ import moment from 'moment'
 
 class VolunteerPortal extends Component {
     state = {
-        dateInput: '',
-        timeInput: '',
-        departmentInput: '',
-        nameInput: ''
+        // dateInput: '',
+        // timeInput: '',
+        // departmentInput: '',
+        // nameInput: ''
     }
     componentDidMount() {
         this.getVolunteerNames();
@@ -27,13 +27,14 @@ class VolunteerPortal extends Component {
                 console.log(response.data)
                 this.setState({
                     ...this.state,
-                    shiftData: response.data
+                    displayData: response.data,
+                    alldata: response.data
                 })
             }).catch(error => {
                 console.log(error)
             })
     }
-    
+
     //-----set state to filter inputs--------//
     storeNameInState = (name) => {
         console.log(name)
@@ -50,7 +51,7 @@ class VolunteerPortal extends Component {
         })
     }
     storeShiftDateTimeInState = (d, t) => {
-        if (d){
+        if (d) {
             let date = moment(d).calendar()
             console.log(date)
             this.setState({
@@ -94,6 +95,17 @@ class VolunteerPortal extends Component {
             })
     }
 
+    //---------apply filters-----//
+    applyFilters = (date, time, dept, name) => {
+        if (!date && !time && !dept && !name) {
+            this.setState({
+                ...this.state,
+                displayData: this.state.alldata
+            })
+        }
+        console.log(date, time, dept, name)
+    }
+
     //-------render------//
     render() {
         return (
@@ -127,11 +139,20 @@ class VolunteerPortal extends Component {
                     />}
                 <br />
                 <div className='filter-buttons'>
-                    <Button variant="outlined" color="inheret">Apply Filters</Button>
-                    <Button color="inheret">Clear Filters</Button>
+                    <Button
+                        onClick={this.applyFilters(this.state.dateInput, this.state.timeInput, this.state.departmentInput, this.state.nameInput)}
+                        variant="outlined"
+                        color="inheret">
+                        Apply Filters
+                    </Button>
+                    <Button
+                        onClick={this.applyFilters(null, null, null, null)}
+                        color="inheret">
+                        Clear Filters
+                    </Button>
                 </div>
-                {this.state.shiftData ?
-                    this.state.shiftData.map(department => {
+                {this.state.displayData ?
+                    this.state.displayData.map(department => {
                         let shiftAssignments = department.Shifts
                         shiftAssignments.forEach(shift => {
                             if (shift.BadgeNumber) {
