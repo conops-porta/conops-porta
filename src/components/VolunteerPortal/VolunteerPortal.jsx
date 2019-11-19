@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import Dropdown from './Dropdown'
 import DateTime from './DateTime'
-import NameSearch from './NameSearch'
 import PortalCard from './PortalCard'
 import './VolunteerPortal.css'
 import axios from 'axios';
