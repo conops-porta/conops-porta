@@ -43,6 +43,7 @@ import WalkUpConfirm from '../VolunteerWalkUp/WalkUpConfirm.jsx';
 
 import VolunteerPortal from '../VolunteerPortal/VolunteerPortal';
 import VolunteerHours from '../VolunteerPortal/VolunteerHours';
+import VolunteerContact from '../VolunteerContact/VolunteerContact';
 
 
 import './App.css';
@@ -229,6 +230,11 @@ class App extends Component {
               path="/volunteer-portal/hours"
               component={VolunteerHours}
             /> 
+            <ProtectedRoute
+              exact
+              path="/volunteer-contact"
+              component={VolunteerContact}
+            />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
