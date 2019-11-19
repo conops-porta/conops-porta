@@ -70,7 +70,7 @@ class Accordion extends Component {
                             <TableBody>
                                 <TableRow >
                                     <TableCell>{this.props.data.role}</TableCell>
-                                    <TableCell>{this.props.data.okForWalkUps ? '√' : 'X'}</TableCell>
+                                    <TableCell>{this.props.data.okForWalkUps ? <span title="yes">✅</span> : <span title="no">❌</span>}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
                                         <TableCell>
                                             <EditShiftsModal
