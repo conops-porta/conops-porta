@@ -5,7 +5,7 @@ import DateTime from './DateTime'
 import NameSearch from './NameSearch'
 import PortalCard from './PortalCard'
 import './VolunteerPortal.css'
-import Axios from 'axios';
+import axios from 'axios';
 import moment from 'moment'
 
 class VolunteerPortal extends Component {
@@ -20,14 +20,36 @@ class VolunteerPortal extends Component {
         this.getShifts();
         this.getDepartments();
     }
+
+    removeVolunteer = (shift) => {
+        // console.log('removed volunteer from: ', ShiftID);
+        axios.put(`/api/volunteer-portal/remove-volunteer/${shift.ShiftID}`)
+            .then(response => {
+                console.log(response);
+                this.getShifts();
+            }).catch(error => {
+                console.log(error)
+            })
+    }
+
+    addVolunteer = (shift, name) => {
+        // console.log(`adding ${name.VolunteerName} to shift: ${shift.ShiftID}`);
+        axios.put(`/api/volunteer-portal/add-volunteer/${shift.ShiftID}`, name)
+            .then(response => {
+                console.log(response);
+                this.getShifts();
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     //-------populates card data -------//
     getShifts = () => {
-        Axios.get('/api/volunteer-portal/shifts')
+        axios.get('/api/volunteer-portal/shifts')
             .then(response => {
-                console.log(response.data)
                 this.setState({
                     ...this.state,
-                    displayData: response.data,
+                    // displayData: response.data,
                     allData: response.data
                 })
             }).catch(error => {
@@ -37,14 +59,14 @@ class VolunteerPortal extends Component {
 
     //-----set state to filter inputs--------//
     storeNameInState = (name) => {
-        console.log(name)
+        // console.log(name)
         this.setState({
             ...this.state,
             nameInput: name
         })
     }
     storeDepartmentInState = (department) => {
-        console.log(department)
+        // console.log(department)
         this.setState({
             ...this.state,
             departmentInput: department
@@ -60,7 +82,7 @@ class VolunteerPortal extends Component {
             })
         }
         if (t) {
-            let time = moment(t).format('H:mm') + ':00'
+            let time = moment(t).format('HH:mm') + ':00'
             console.log(time)
             this.setState({
                 ...this.state,
@@ -69,9 +91,10 @@ class VolunteerPortal extends Component {
         }
     }
 
+
     // ----- populate dropdowns ----//
     getVolunteerNames = () => {
-        Axios.get('/api/volunteer-portal/volunteer-names')
+        axios.get('/api/volunteer-portal/volunteer-names')
             .then(response => {
                 this.setState({
                     ...this.state,
@@ -83,9 +106,9 @@ class VolunteerPortal extends Component {
             })
     }
     getDepartments = () => {
-        Axios.get('/api/volunteer-portal/departments')
+        axios.get('/api/volunteer-portal/departments')
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 this.setState({
                     ...this.state,
                     departments: response.data
@@ -99,11 +122,12 @@ class VolunteerPortal extends Component {
     applyFilters = (date, time, dept, name) => {
         const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
-            this.setState({
-                ...this.state,
-                displayData: this.state.allData
-            })
+            // this.setState({
+            //     ...this.state,
+            //     displayData: this.state.allData
+            // })
             console.log('no filters applied')
+            return;
         }
         console.log('Date: ', date, 'Time: ', time, 'Department: ', dept, 'Name ', name)
         let filteredData = [...allData];
@@ -121,13 +145,12 @@ class VolunteerPortal extends Component {
         if (time) {
             let filteredByTime = []
             filteredData.forEach(data => {
-                if (moment(data.ShiftTime).format('H:mm') + ':00' === time) {
+                if (data.ShiftTime  === time) {
                     console.log('true', time)
                     filteredByTime.push(data)
                 }
             })
                 filteredData = filteredByTime
-        
         }
         if (name) {
             let filteredByName = []
@@ -140,7 +163,7 @@ class VolunteerPortal extends Component {
                 })
             })
                 filteredData = filteredByName
-            
+
         }
         if (dept) {
             let filteredByDept = []
@@ -156,6 +179,18 @@ class VolunteerPortal extends Component {
         this.setState({
             ...this.state,
             displayData: filteredData
+        })
+    }
+
+    clearFilters = () => {
+        // console.log('clearFilters', this.state);
+        this.setState({
+            ...this.state,
+            nameInput: null,
+            departmentInput: null,
+            dateInput: null,
+            timeInput: null,
+            displayData: null
         })
     }
 
@@ -203,7 +238,7 @@ class VolunteerPortal extends Component {
                         Apply Filters
                     </Button>
                     <Button
-                        onClick={() => this.applyFilters(null, null, null, null)}
+                        onClick={this.clearFilters}
                         color="inheret">
                         Clear Filters
                     </Button>
@@ -230,9 +265,12 @@ class VolunteerPortal extends Component {
                             date={department.ShiftDate}
                             time={department.ShiftTime}
                             shifts={shiftAssignments}
+                            removeVolunteer={this.removeVolunteer}
+                            addVolunteer={this.addVolunteer}
+                            state={this.state}
 
                         />
-                    }) : null}
+                    }) : <p>Please apply a filter to the volunteer shifts . . .</p>}
             </div>
         );
     }

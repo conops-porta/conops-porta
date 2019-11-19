@@ -6,6 +6,7 @@
     --body-family: 'Roboto Condensed', system-ui, -apple-system, sans-serif;
 }
 
+body,
 #react-root,
 #react-root * {
     font-family: var(--body-family);
@@ -20,6 +21,11 @@
 }
 #react-root .material-icons {
     font-family: 'Material Icons' !important;
+}
+
+.MuiTypography-root,
+.MuiButton-root {
+    font-family: var(--body-family) !important;
 }
 
 /* basic padding, etc */

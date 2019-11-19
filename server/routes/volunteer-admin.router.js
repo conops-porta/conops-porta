@@ -60,8 +60,24 @@ router.get('/shifts', rejectUnauthenticated, rejectNonVetted, (req, res) => {
 "Department"."DepartmentName" AS department,
 "Role"."RoleName" AS role,
 "Role"."RoleForWalkUps" AS ok_for_walk_ups,
-json_agg("Shift") AS shifts
+json_agg("ShiftDetails") AS shifts
 FROM "Shift"
+LEFT OUTER JOIN (
+    SELECT
+    "Shift"."ShiftID",
+    "Shift"."ShiftDate",
+    "Shift"."ShiftTime",
+    "Shift"."RoleID",
+    "Shift"."BadgeNumber",
+    "Shift"."NoShow",
+    COALESCE(
+        "VolunteerContact"."VolunteerName",
+        "Attendee"."FirstName" || ' ' || "Attendee"."LastName"
+    ) AS "VolName"
+    FROM "Shift"
+    LEFT OUTER JOIN "Attendee" ON "Attendee"."BadgeNumber" = "Shift"."BadgeNumber"
+    LEFT OUTER JOIN "VolunteerContact" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
+) AS "ShiftDetails" ON "ShiftDetails"."ShiftID" = "Shift"."ShiftID"
 JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
 JOIN "Department" ON "Department"."DepartmentID" = "Role"."DepartmentID"
 GROUP BY "Department"."DepartmentName", "Role"."RoleID", "Role"."RoleName"
@@ -85,8 +101,14 @@ router.post('/time-slot-shifts', rejectUnauthenticated, rejectNonVetted, (req, r
     let queryText = `SELECT 
 "Shift"."ShiftID",
 "Shift"."BadgeNumber"
+COALESCE(
+    "VolunteerContact"."VolunteerName",
+    "Attendee"."FirstName" || ' ' || "Attendee"."LastName"
+) AS "VolName"
 FROM "Shift"
 JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
+LEFT OUTER JOIN "Attendee" ON "Attendee"."BadgeNumber" = "Shift"."BadgeNumber"
+LEFT OUTER JOIN "VolunteerContact" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
 WHERE "Role"."RoleID" = $1 AND "Shift"."ShiftDate" = $2 AND "Shift"."ShiftTime" = $3
 GROUP BY "Shift"."ShiftID";`
     pool.query(queryText, [req.body.RoleID, req.body.date, req.body.time])

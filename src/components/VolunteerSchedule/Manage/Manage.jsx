@@ -6,6 +6,7 @@ import swal from 'sweetalert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 
+import './Manage.css';
 
 class Manage extends Component {
     state = {}

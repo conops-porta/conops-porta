@@ -144,14 +144,35 @@ router.get('/departments', async (req, res) => {
     }
 });
 
-//  * PUT route for removing a badge number from a shift
-//  */
+/** 
+ * PUT route for removing a badge number from a shift
+*/
 router.put('/remove-volunteer/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
         const queryText = `UPDATE "Shift" SET "BadgeNumber" = NULL WHERE "ShiftID" = $1;`;
         await connection.query(queryText, [req.params.id]);
+        await connection.query('COMMIT');
+        await res.sendStatus(200);
+    } catch (error) {
+        await connection.query('ROLLBACK');
+        console.log('error in volunteer-portal PUT route', error);
+        await res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+})
+
+/** 
+ * PUT route for adding a badge number to a shift
+*/
+router.put('/add-volunteer/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const queryText = `UPDATE "Shift" SET "BadgeNumber" = $1 WHERE "ShiftID" = $2;`;
+        await connection.query(queryText, [req.body.BadgeNumber, req.params.id]);
         await connection.query('COMMIT');
         await res.sendStatus(200);
     } catch (error) {
