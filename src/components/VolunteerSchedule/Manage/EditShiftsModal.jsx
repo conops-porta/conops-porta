@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core/';
+import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import moment from 'moment'
 import axios from 'axios'
 import swal from 'sweetalert'
@@ -87,15 +89,19 @@ class Manage extends Component {
                     <DialogContent>
                         <DialogContentText>
                             Manage Shifts
+                            <pre>{JSON.stringify(this.props.data, null, 2)}</pre>
                         </DialogContentText>
-                        <ul>
+                        <ul className="ShiftList">
                             {this.state.shifts ? 
                                 <div>
                                     {this.state.shifts.map(shift => (
                                         <li>
-                                            {shift.BadgeNumber ? shift.BadgeNumber : 'Unfilled'}
-                                            {/* {JSON.stringify(this.state.shifts)} */}
-                                            <Button onClick={() => this.handleDeleteShift( shift.ShiftID, this.state.shifts.length, this.props.roleInfo.department, this.props.roleInfo.role, moment(this.props.shiftInfo.date).format('dddd'), this.props.shiftInfo.time )}>X</Button>
+                                            {shift.BadgeNumber ? <><span>{shift.VolName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
+                                            <Button
+                                                size="small"
+                                                startIcon={<DeleteOutlinedIcon />}
+                                                onClick={() => this.handleDeleteShift( shift.ShiftID, this.state.shifts.length, this.props.roleInfo.department, this.props.roleInfo.role, moment(this.props.shiftInfo.date).format('dddd'), this.props.shiftInfo.time )}
+                                            >Remove Shift</Button>
                                         </li>
                                     ))}
                                 </div>
@@ -103,9 +109,13 @@ class Manage extends Component {
                                 <div>
                                     {this.props.uniqueShifts.map(shift => (
                                         <li>
-                                            {shift.BadgeNumber ? shift.BadgeNumber : 'Unfilled'}
+                                            {shift.BadgeNumber ? <><span>{shift.VolName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
                                             {/* {JSON.stringify(shift)} */}
-                                            <Button onClick={() => this.handleDeleteShift(shift.ShiftID)}>X</Button>
+                                            <Button
+                                                size="small"
+                                                startIcon={<DeleteOutlinedIcon />}
+                                                onClick={() => this.handleDeleteShift(shift.ShiftID)}
+                                            >Remove Shift</Button>
                                         </li>
                                     ))}
                                 </div>
@@ -113,10 +123,12 @@ class Manage extends Component {
                         </ul>
                         <Button
                             onClick={() => this.handleAddShift(this.props.roleInfo.RoleID, this.props.shiftInfo.date, this.props.shiftInfo.time + ':00')}
-                            variant="outlined">
+                            variant="outlined"
+                            startIcon={<AddBoxOutlinedIcon />}
+                            >
                             Add Shift
                         </Button>
-                    </DialogContent>
+                   </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} variant="contained" color="primary">
                             Close

@@ -1,0 +1,22 @@
+.emoji-icon {
+  vertical-align: bottom;
+  font-size: 150%;
+  line-height: 1;
+  opacity: 0.8;
+}
+.ShiftList {
+  display: block;
+  padding: 0;
+}
+.ShiftList li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.ShiftList li span {
+  padding-right: 8px;
+}
+.ShiftList .subtle {
+  color: #999;
+}
