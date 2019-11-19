@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import axios from 'axios'
+// import axios from 'axios'
 import moment from 'moment'
 import EditShiftsModal from './EditShiftsModal'
 
@@ -61,7 +61,7 @@ class Accordion extends Component {
                                     <TableCell>Role: </TableCell>
                                     <TableCell>Walk Ups?</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
-                                        <TableCell>
+                                        <TableCell key={shift.ShiftID}>
                                             {moment(shift.ShiftDate).format('dddd')}, {shift.ShiftTime}
                                         </TableCell>
                                     ))}
@@ -70,9 +70,9 @@ class Accordion extends Component {
                             <TableBody>
                                 <TableRow >
                                     <TableCell>{this.props.data.role}</TableCell>
-                                    <TableCell>{this.props.data.okForWalkUps ? <span className="emoji-icon" title="yes">✅</span> : <span className="emoji-icon" title="no">❌</span>}</TableCell>
+                                    <TableCell>{this.props.data.okForWalkUps ? <span className="emoji-icon" role="img" aria-label="yes">✅</span> : <span className="emoji-icon" role="img" aria-label="no">❌</span>}</TableCell>
                                     {this.props.data.uniqueShifts.map(shift => (
-                                        <TableCell>
+                                        <TableCell key={shift.ShiftID}>
                                             <EditShiftsModal
                                                 numOfShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).count}
                                                 uniqueShifts={this.numberOfShiftsAt(shift.ShiftDate, shift.ShiftTime).uniqueShifts}

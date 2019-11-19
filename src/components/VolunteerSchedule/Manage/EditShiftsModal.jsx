@@ -89,14 +89,13 @@ class Manage extends Component {
                     <DialogContent>
                         <DialogContentText>
                             Manage Shifts
-                            <pre>{JSON.stringify(this.props.data, null, 2)}</pre>
                         </DialogContentText>
                         <ul className="ShiftList">
                             {this.state.shifts ? 
                                 <div>
                                     {this.state.shifts.map(shift => (
                                         <li>
-                                            {shift.BadgeNumber ? <><span>{shift.VolName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
+                                            {shift.BadgeNumber ? <><span>{shift.VolunteerName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
                                             <Button
                                                 size="small"
                                                 startIcon={<DeleteOutlinedIcon />}
@@ -109,7 +108,7 @@ class Manage extends Component {
                                 <div>
                                     {this.props.uniqueShifts.map(shift => (
                                         <li>
-                                            {shift.BadgeNumber ? <><span>{shift.VolName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
+                                            {shift.BadgeNumber ? <><span>{shift.VolunteerName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
                                             {/* {JSON.stringify(shift)} */}
                                             <Button
                                                 size="small"

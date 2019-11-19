@@ -70,10 +70,7 @@ LEFT OUTER JOIN (
     "Shift"."RoleID",
     "Shift"."BadgeNumber",
     "Shift"."NoShow",
-    COALESCE(
-        "VolunteerContact"."VolunteerName",
-        "Attendee"."FirstName" || ' ' || "Attendee"."LastName"
-    ) AS "VolName"
+    "VolunteerContact"."VolunteerName"
     FROM "Shift"
     LEFT OUTER JOIN "Attendee" ON "Attendee"."BadgeNumber" = "Shift"."BadgeNumber"
     LEFT OUTER JOIN "VolunteerContact" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
@@ -100,17 +97,14 @@ ORDER BY "Role"."RoleID";`
 router.post('/time-slot-shifts', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     let queryText = `SELECT 
 "Shift"."ShiftID",
-"Shift"."BadgeNumber"
-COALESCE(
-    "VolunteerContact"."VolunteerName",
-    "Attendee"."FirstName" || ' ' || "Attendee"."LastName"
-) AS "VolName"
+"Shift"."BadgeNumber",
+"VolunteerContact"."VolunteerName"
 FROM "Shift"
 JOIN "Role" ON "Role"."RoleID" = "Shift"."RoleID"
 LEFT OUTER JOIN "Attendee" ON "Attendee"."BadgeNumber" = "Shift"."BadgeNumber"
 LEFT OUTER JOIN "VolunteerContact" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
 WHERE "Role"."RoleID" = $1 AND "Shift"."ShiftDate" = $2 AND "Shift"."ShiftTime" = $3
-GROUP BY "Shift"."ShiftID";`
+GROUP BY "Shift"."ShiftID", "VolunteerContact"."VolunteerName";`
     pool.query(queryText, [req.body.RoleID, req.body.date, req.body.time])
         .then((result) => {
             // console.log('in volunteer/time-slot-shifts GET router:', result.rows);
