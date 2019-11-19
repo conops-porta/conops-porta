@@ -4,18 +4,29 @@ import { TextField, Button } from '@material-ui/core';
 import swal from 'sweetalert';
 
 class VolunteerWalkUp extends Component {
+
+  componentDidMount() {
+    this.getExistingBadges();
+  }
+
   state = {
     badgeNumber: ''
+  }
+
+  getExistingBadges = () => {
+    this.props.dispatch({
+      type: 'FETCH_EXISTING_BADGES'
+    })
   }
 
   confirmBadge = () => {
     swal({
       title: `Your badge # is ${this.state.badgeNumber}`,
-      text: 'Proceed to shifts?',
+      text: 'Proceed?',
       buttons: ['Cancel', 'Yes!']
     }).then((value) => {
       if (value === true) {
-        this.props.history.push(`/volunteer-walk-up/badge/${this.state.badgeNumber}`)
+        this.props.history.push(`/volunteer-walk-up/verify/${this.state.badgeNumber}`)
       }
     })
   }

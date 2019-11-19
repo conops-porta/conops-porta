@@ -50,8 +50,7 @@ class WalkUpConfirm extends Component {
 
         return (
             <div className="WalkUpConfirm">
-                <h1>Thank You</h1>
-                <h2>You signed up for: </h2>
+                <h1>You are signing up for: </h1>
                 <table>
                     <thead>
                         <tr>
