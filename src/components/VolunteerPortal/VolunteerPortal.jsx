@@ -27,7 +27,7 @@ class VolunteerPortal extends Component {
                 console.log(response.data)
                 this.setState({
                     ...this.state,
-                    displayData: response.data,
+                    // displayData: response.data,
                     allData: response.data
                 })
             }).catch(error => {
@@ -60,7 +60,7 @@ class VolunteerPortal extends Component {
             })
         }
         if (t) {
-            let time = moment(t).format('H:mm') + ':00'
+            let time = moment(t).format('HH:mm') + ':00'
             console.log(time)
             this.setState({
                 ...this.state,
@@ -68,6 +68,7 @@ class VolunteerPortal extends Component {
             })
         }
     }
+
 
     // ----- populate dropdowns ----//
     getVolunteerNames = () => {
@@ -99,11 +100,12 @@ class VolunteerPortal extends Component {
     applyFilters = (date, time, dept, name) => {
         const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
-            this.setState({
-                ...this.state,
-                displayData: this.state.allData
-            })
+            // this.setState({
+            //     ...this.state,
+            //     displayData: this.state.allData
+            // })
             console.log('no filters applied')
+            return;
         }
         console.log('Date: ', date, 'Time: ', time, 'Department: ', dept, 'Name ', name)
         let filteredData = [...allData];
@@ -121,13 +123,12 @@ class VolunteerPortal extends Component {
         if (time) {
             let filteredByTime = []
             filteredData.forEach(data => {
-                if (moment(data.ShiftTime).format('H:mm') + ':00' === time) {
+                if (data.ShiftTime  === time) {
                     console.log('true', time)
                     filteredByTime.push(data)
                 }
             })
                 filteredData = filteredByTime
-        
         }
         if (name) {
             let filteredByName = []
@@ -140,7 +141,7 @@ class VolunteerPortal extends Component {
                 })
             })
                 filteredData = filteredByName
-            
+
         }
         if (dept) {
             let filteredByDept = []
@@ -156,6 +157,18 @@ class VolunteerPortal extends Component {
         this.setState({
             ...this.state,
             displayData: filteredData
+        })
+    }
+
+    clearFilters = () => {
+        // console.log('clearFilters', this.state);
+        this.setState({
+            ...this.state,
+            nameInput: null,
+            departmentInput: null,
+            dateInput: null,
+            timeInput: null,
+            displayData: null
         })
     }
 
@@ -203,7 +216,7 @@ class VolunteerPortal extends Component {
                         Apply Filters
                     </Button>
                     <Button
-                        onClick={() => this.applyFilters(null, null, null, null)}
+                        onClick={this.clearFilters}
                         color="inheret">
                         Clear Filters
                     </Button>
@@ -232,7 +245,7 @@ class VolunteerPortal extends Component {
                             shifts={shiftAssignments}
 
                         />
-                    }) : null}
+                    }) : <p>Please apply a filter to the volunteer shifts . . .</p>}
             </div>
         );
     }
