@@ -4,7 +4,6 @@ const { rejectNonVetted } = require('../modules/isVettedVolunteerAuthentication-
 const pool = require('../modules/pool');
 const router = express.Router();
 
-
 router.get('/', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     let queryText = ``;
     pool.query(queryText)
@@ -75,7 +74,7 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
 /**
  * GET route volunteers for filtering shifts
  */
-router.get('/volunteer-names', rejectUnauthenticated, (req, res) => {
+router.get('/volunteer-names', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     let queryText = `SELECT "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName"
   FROM "VolunteerContact" 
   JOIN "Attendee" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
@@ -94,7 +93,7 @@ router.get('/volunteer-names', rejectUnauthenticated, (req, res) => {
 /**
  * GET route for all volunteer portal shifts
  */
-router.get('/shifts', async (req, res) => {
+router.get('/shifts', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -114,7 +113,7 @@ router.get('/shifts', async (req, res) => {
         res.send(shiftResults.rows);
     } catch (error) {
         await connection.query('ROLLBACK');
-        console.log('error in walkup shifts GET route', error);
+        console.log('error in volunteer-portal shifts GET route', error);
         res.sendStatus(500);
     } finally {
         connection.release();
@@ -144,8 +143,25 @@ router.get('/departments', async (req, res) => {
         connection.release();
     }
 });
+
 //  * PUT route for removing a badge number from a shift
 //  */
-// router.put('/remove-volunteer/:id')
+router.put('/remove-volunteer/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const queryText = `UPDATE "Shift" SET "BadgeNumber" = NULL WHERE "ShiftID" = $1;`;
+        await connection.query(queryText, [req.params.id]);
+        await connection.query('COMMIT');
+        await res.sendStatus(200);
+    } catch (error) {
+        await connection.query('ROLLBACK');
+        console.log('error in volunteer-portal PUT route', error);
+        await res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+})
+
 
 module.exports = router;
