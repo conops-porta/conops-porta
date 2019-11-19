@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button } from '@material-ui/core';
 import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -72,7 +73,7 @@ class WalkUpConfirm extends Component {
                     </tbody>
                 </table>
                 <h4>Please write this down so you won't forget!</h4>
-                <button onClick={this.confirm}>SUBMIT!</button>
+                <Button variant="contained" color="primary" onClick={this.confirm}>SUBMIT!</Button>
             </div>
         )
     }

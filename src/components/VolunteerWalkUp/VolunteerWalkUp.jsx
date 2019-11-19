@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { TextField, Button } from '@material-ui/core';
 import swal from 'sweetalert';
 
 class VolunteerWalkUp extends Component {
@@ -27,22 +28,18 @@ class VolunteerWalkUp extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <h1>Walk-Up Volunteer</h1>
         <h2>Sign In</h2>
-        <form onSubmit={this.confirmBadge}>
-          <p>Badge #
-              <br />
-            <input
-              type="number"
-              placeholder="badge number"
-              value={this.state.badgeNumber}
-              onChange={this.handleInputChange('badgeNumber')}>
-            </input>
-            <button>Go</button>
-            <br />
-          </p>
-        </form>
+        <TextField
+          label="Badge Number"
+          variant="outlined"
+          type="number"
+          value={this.state.badgeNumber}
+          onChange={this.handleInputChange('badgeNumber')}>
+        </TextField>
+        <br />
+        <Button color="primary" variant="contained" onClick={this.confirmBadge}>Go!</Button>
       </div>
     );
   }

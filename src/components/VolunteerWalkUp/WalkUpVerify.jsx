@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
 import swal from 'sweetalert';
 
@@ -44,55 +44,52 @@ class WalkUpVerify extends Component {
 
   render() {
     return (
-      <div className="WalkUpConfirm">
+      <div className="WalkUpConfirm" style={{ textAlign: "center" }}>
         <h1>Contact Info</h1>
         <br />
-        <form>
-          <p>Badge #{this.props.match.params.id}</p>
-          <p>First Name
-            <br />
-            <input
-              required
-              type="text"
-              placeholder="First name"
-              value={this.state.volunteerFirstName}
-              onChange={this.handleInputChange('volunteerFirstName')}>
-            </input>
-          </p>
-          <p>Discord Name
-              <br />
-            <input
-              required
-              type="text"
-              placeholder="Discord name"
-              value={this.state.discordName}
-              onChange={this.handleInputChange('discordName')}>
-            </input>
-          </p>
-          <p>Phone Number
-            <br />
-            <input
-              required
-              type="tel"
-              placeholder="Phone number"
-              value={this.state.phoneNumber}
-              onChange={this.handleInputChange('phoneNumber')}>
-            </input>
-          </p>
-          <p>Email
-            <br />
-            <input
-              required
-              type="email"
-              placeholder="Email"
-              value={this.state.email}
-              onChange={this.handleInputChange('email')}>
-            </input>
-          </p>
+        <p>Badge #{this.props.match.params.id}</p>
+          <TextField
+            required
+            style={{ margin: "5px" }}
+            type="text"
+            variant="outlined"
+            label="First name"
+            value={this.state.volunteerFirstName}
+            onChange={this.handleInputChange('volunteerFirstName')}>
+          </TextField>
           <br />
-        </form>
-        <button onClick={this.cancelButton}>Cancel</button>
-        <button onClick={this.submitInfo}>Confirm</button>
+          <TextField
+            required
+            style={{ margin: "5px" }}
+            type="text"
+            variant="outlined"
+            label="Discord name"
+            value={this.state.discordName}
+            onChange={this.handleInputChange('discordName')}>
+          </TextField>
+          <br />
+          <TextField
+            required
+            style={{ margin: "5px" }}
+            type="tel"
+            variant="outlined"
+            label="Phone number"
+            value={this.state.phoneNumber}
+            onChange={this.handleInputChange('phoneNumber')}>
+          </TextField>
+          <br />
+          <TextField
+            required
+            style={{ margin: "5px" }}
+            type="email"
+            variant="outlined"
+            label="Email"
+            value={this.state.email}
+            onChange={this.handleInputChange('email')}>
+          </TextField>
+          <br />
+        <Button color="secondary" variant="contained" onClick={this.cancelButton}>Cancel</Button>
+        <Button color="primary" variant="contained" onClick={this.submitInfo}>Confirm</Button>
       </div>
     )
   }
