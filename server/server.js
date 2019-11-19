@@ -22,8 +22,8 @@ const sponsorRouter = require('./routes/sponsor.router');
 const homeRouter = require('./routes/home.router');
 
 // Body parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '1000MB'}));
+app.use(bodyParser.urlencoded({ limit: '1000MB', extended: true }));
 
 // Passport Session Configuration //
 app.use(sessionMiddleware);
