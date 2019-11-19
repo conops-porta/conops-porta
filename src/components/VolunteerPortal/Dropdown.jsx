@@ -47,9 +47,13 @@ export default function SimpleSelect(props) {
                     <MenuItem value="">
                         <em>All</em>
                     </MenuItem>
-                    {props.options.map(option => (
-                        <MenuItem value={option}>{option[props.keyName]}</MenuItem>
-                    ))}
+                    {props.options.map(option => {
+                        if (props.idKeyName){
+                            return <MenuItem value={option}>{option[props.keyName]} ({option[props.idKeyName]})</MenuItem>
+                        } else {
+                            return <MenuItem value={option}>{option[props.keyName]}</MenuItem>
+                        }
+                    })}
                 </Select>
             </FormControl>
         
