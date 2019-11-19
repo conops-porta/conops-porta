@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import VolunteerContacts from './Contacts.jsx'
+// import VolunteerContacts from './Contacts.jsx'
 
 class Initial extends Component {
 
     componentDidMount() {
         // dispatch call for all volunteer contact info
     }
+
+    // manageExistingSchedule = () => {
+    //     this.props.history.push('/volunteer-schedule/manage')
+    // }
+
+    // createNewShedule = () => {
+    //     this.props.history.push('/volunteer-schedule/create')
+    // }
 
     render() {
         return (
@@ -18,7 +26,7 @@ class Initial extends Component {
                 <Link to='/volunteer-schedule/create'>
                     <button>Create New Schedule</button>
                 </Link>
-                <VolunteerContacts />
+                {/* <VolunteerContacts /> */}
             </div>
         );
     }

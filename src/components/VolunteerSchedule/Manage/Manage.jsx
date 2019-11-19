@@ -86,7 +86,7 @@ class Manage extends Component {
                             <Accordion data={row}/>
                         ))}
                     </div>
-                    : ''}
+                    : 'loading...'}
                     <div className="delteAll">
                         <Button
                         variant="contained"
