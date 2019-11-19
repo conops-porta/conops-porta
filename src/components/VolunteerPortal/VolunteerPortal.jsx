@@ -5,7 +5,7 @@ import DateTime from './DateTime'
 import NameSearch from './NameSearch'
 import PortalCard from './PortalCard'
 import './VolunteerPortal.css'
-import Axios from 'axios';
+import axios from 'axios';
 import moment from 'moment'
 
 class VolunteerPortal extends Component {
@@ -17,14 +17,36 @@ class VolunteerPortal extends Component {
     }
     componentDidMount() {
         this.getVolunteerNames();
-        // this.getShifts();
+        this.getShifts();
         this.getDepartments();
     }
+
+    removeVolunteer = (shift) => {
+        // console.log('removed volunteer from: ', ShiftID);
+        axios.put(`/api/volunteer-portal/remove-volunteer/${shift.ShiftID}`)
+            .then(response => {
+                console.log(response);
+                this.getShifts();
+            }).catch(error => {
+                console.log(error)
+            })
+    }
+
+    addVolunteer = (shift, name) => {
+        // console.log(`adding ${name.VolunteerName} to shift: ${shift.ShiftID}`);
+        axios.put(`/api/volunteer-portal/add-volunteer/${shift.ShiftID}`, name)
+            .then(response => {
+                console.log(response);
+                this.getShifts();
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     //-------populates card data -------//
     getShifts = () => {
-        Axios.get('/api/volunteer-portal/shifts')
+        axios.get('/api/volunteer-portal/shifts')
             .then(response => {
-                console.log(response.data)
                 this.setState({
                     ...this.state,
                     shiftData: response.data
@@ -33,26 +55,26 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
-    
+
     //-----set state to filter inputs--------//
     storeNameInState = (name) => {
-        console.log(name)
+        // console.log(name)
         this.setState({
             ...this.state,
             nameInput: name
         })
     }
     storeDepartmentInState = (department) => {
-        console.log(department)
+        // console.log(department)
         this.setState({
             ...this.state,
             departmentInput: department
         })
     }
     storeShiftDateTimeInState = (d, t) => {
-        if (d){
+        if (d) {
             let date = moment(d).calendar()
-            console.log(date)
+            // console.log(date)
             this.setState({
                 ...this.state,
                 dateInput: date
@@ -60,7 +82,7 @@ class VolunteerPortal extends Component {
         }
         if (t) {
             let time = moment(t).format('H:mm') + ':00'
-            console.log(time)
+            // console.log(time)
             this.setState({
                 ...this.state,
                 timeInput: time
@@ -70,7 +92,7 @@ class VolunteerPortal extends Component {
 
     // ----- populate dropdowns ----//
     getVolunteerNames = () => {
-        Axios.get('/api/volunteer-portal/volunteer-names')
+        axios.get('/api/volunteer-portal/volunteer-names')
             .then(response => {
                 this.setState({
                     ...this.state,
@@ -82,9 +104,9 @@ class VolunteerPortal extends Component {
             })
     }
     getDepartments = () => {
-        Axios.get('/api/volunteer-portal/departments')
+        axios.get('/api/volunteer-portal/departments')
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 this.setState({
                     ...this.state,
                     departments: response.data
@@ -152,6 +174,9 @@ class VolunteerPortal extends Component {
                             date={department.ShiftDate}
                             time={department.ShiftTime}
                             shifts={shiftAssignments}
+                            removeVolunteer={this.removeVolunteer}
+                            addVolunteer={this.addVolunteer}
+                            state={this.state}
 
                         />
                     }) : null}

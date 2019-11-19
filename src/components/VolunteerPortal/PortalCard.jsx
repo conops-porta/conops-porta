@@ -1,41 +1,16 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PortalCardCheckbox from './PortalCardCheckbox';
+import AddVolunteerModal from './AddVolunteerModal';
 import {
-    Card, CardActions, CardContent, Button, Typography,
+    Card, CardContent, Typography,
     TableBody, Table, TableCell, TableHead, TableRow, Paper,
-    Checkbox, IconButton
+    IconButton
 } from '@material-ui/core';
-import { Remove, Add } from '@material-ui/icons';
+import { Remove } from '@material-ui/icons';
 import moment from 'moment'
 import './VolunteerPortal.css'
 
 class PortalCard extends Component {
-
-    state = {
-        noShow: false
-    }
-
-    noShow = (ShiftID) => {
-        this.setState({
-            ShiftID: ShiftID,
-            noShow: !this.state.noShow
-        })
-        console.log(ShiftID);
-    }
-
-    removeVolunteer = (ShiftID) => {
-        console.log('removed volunteer from: ', ShiftID);
-        axios.put(`/api/volunteer-portal/remove-volunteer/${ShiftID}`)
-            .then(response => {
-                console.log(response);
-            }).catch(error => {
-                console.log(error)
-            })
-    }
-
-    addVolunteer = (ShiftID) => {
-        console.log('adding volunteer to shift: ', ShiftID);
-    }
 
     render() {
 
@@ -92,7 +67,7 @@ class PortalCard extends Component {
                                             <TableCell>
                                                 {shift.BadgeNumber ?
                                                     <span>
-                                                        <IconButton color="primary" aria-label="assign" size="small" onClick={() => this.removeVolunteer(shift.ShiftID)}>
+                                                        <IconButton color="primary" aria-label="assign" size="small" onClick={() => this.props.removeVolunteer(shift)}>
                                                             <Remove />
                                                         </IconButton> {shift.BadgeNumber.name ?
                                                             shift.BadgeNumber.name
@@ -100,24 +75,28 @@ class PortalCard extends Component {
                                                     </span>
                                                     :
                                                     <span>
-                                                        <IconButton aria-label="assign" size="small" onClick={() => this.addVolunteer(shift.ShiftID)}>
-                                                            <Add />
-                                                        </IconButton> Unclaimed
-                                                </span>
+                                                        <AddVolunteerModal 
+                                                            addVolunteer={this.props.addVolunteer}
+                                                            shift={shift}
+                                                            names={this.props.state.names}
+                                                            key={shift.ShiftID}
+                                                        />
+                                                    </span>
                                                 }
                                             </TableCell>
                                             <TableCell>
                                                 {shift.RoleID.roleName}
                                             </TableCell>
                                             <TableCell>
-                                                <Checkbox
-                                                    checked={this.state.noShow}
-                                                    onChange={() => this.noShow(shift.ShiftID)}
-                                                    value="checkedA"
-                                                    inputProps={{
-                                                        'aria-label': 'checkbox',
-                                                    }}
-                                                />
+                                                {shift.BadgeNumber === null ?
+                                                    '' :
+                                                    <PortalCardCheckbox
+                                                        shift={shift}
+                                                        state={this.props.state}
+                                                        removeVolunteer={this.props.removeVolunteer}
+                                                        key={shift.ShiftID}
+                                                    />
+                                                }
                                             </TableCell>
                                         </TableRow>
                                     })}
