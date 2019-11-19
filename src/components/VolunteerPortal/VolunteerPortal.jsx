@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import Dropdown from './Dropdown'
 import DateTime from './DateTime'
-import NameSearch from './NameSearch'
 import PortalCard from './PortalCard'
 import './VolunteerPortal.css'
 import axios from 'axios';
@@ -122,10 +121,6 @@ class VolunteerPortal extends Component {
     applyFilters = (date, time, dept, name) => {
         const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
-            // this.setState({
-            //     ...this.state,
-            //     displayData: this.state.allData
-            // })
             console.log('no filters applied')
             return;
         }
@@ -135,7 +130,7 @@ class VolunteerPortal extends Component {
             let filteredByDate = []
             filteredData.forEach(data => {
                 if (moment(data.ShiftDate).format('YYYY-MM-DD') === date){
-                    console.log('true', date)
+                    // console.log('true', date)
                     filteredByDate.push(data)
                 }
             })
@@ -146,7 +141,7 @@ class VolunteerPortal extends Component {
             let filteredByTime = []
             filteredData.forEach(data => {
                 if (data.ShiftTime  === time) {
-                    console.log('true', time)
+                    // console.log('true', time)
                     filteredByTime.push(data)
                 }
             })
@@ -157,7 +152,7 @@ class VolunteerPortal extends Component {
             filteredData.forEach(data => {
                 data.Shifts.forEach(shift => {
                     if (shift.BadgeNumber == name.BadgeNumber){
-                        console.log('true', name)
+                        // console.log('true', name)
                         filteredByName.push(data)
                     }
                 })
@@ -169,7 +164,7 @@ class VolunteerPortal extends Component {
             let filteredByDept = []
             filteredData.forEach(data => {
                 if (data.DepartmentName === dept.DepartmentName) {
-                    console.log('true', dept)
+                    // console.log('true', dept)
                     filteredByDept.push(data)
                 }
             })
@@ -208,26 +203,31 @@ class VolunteerPortal extends Component {
                         options={this.state.departments}
                         keyName='DepartmentName'
                         storeDropdownInState={this.storeDepartmentInState}
-                        departmentInput={this.state.departmentInput}
+                        input={this.state.departmentInput}
                     />
                     : <Dropdown
                         title='Department'
                         options={[{ DepartmentName: 'Loading . . .' }]}
                         keyName='DepartmentName'
                         storeDropdownInState={this.storeDepartmentInState}
-                        departmentInput={this.state.departmentInput}
+                        input={this.state.departmentInput}
                     />}
                 {this.state.names ?
-                    <NameSearch
-                        nameSuggestions={this.state.names}
-                        storeNameInState={this.storeNameInState}
-                        nameInput={this.state.nameInput}
+                    <Dropdown
+                        title='Name'
+                        options={this.state.names}
+                        keyName='VolunteerName'
+                        storeDropdownInState={this.storeNameInState}
+                        idKeyName='BadgeNumber'
+                        input={this.state.nameInput}
                     />
-                    :
-                    <NameSearch
-                        nameSuggestions={[{ VolunteerName: 'Loading . . .' }]}
-                        storeNameInState={this.storeNameInState}
-                        nameInput={this.state.nameInput}
+                    : <Dropdown
+                        title='Name'
+                        options={[{ DepartmentName: 'Loading . . .' }]}
+                        keyName='VolunteerName'
+                        storeDropdownInState={this.storeNameInState}
+                        idKeyName='BadgeNumber'
+                        input={this.state.nameInput}
                     />}
                 <br />
                 <div className='filter-buttons'>

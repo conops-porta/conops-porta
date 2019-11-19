@@ -78,7 +78,8 @@ router.get('/volunteer-names', rejectUnauthenticated, rejectNonVetted, (req, res
     let queryText = `SELECT "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName"
   FROM "VolunteerContact" 
   JOIN "Attendee" ON "VolunteerContact"."VolunteerID" = "Attendee"."VolunteerID"
- GROUP BY "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName";`
+ GROUP BY "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName"
+  ORDER BY "VolunteerName" ASC;`
     pool.query(queryText)
         .then((result) => {
             // console.log('in volunteer/contacts GET router:', result.rows);
