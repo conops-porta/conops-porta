@@ -8,14 +8,6 @@ class Initial extends Component {
         // dispatch call for all volunteer contact info
     }
 
-    // manageExistingSchedule = () => {
-    //     this.props.history.push('/volunteer-schedule/manage')
-    // }
-
-    // createNewShedule = () => {
-    //     this.props.history.push('/volunteer-schedule/create')
-    // }
-
     render() {
         return (
             <div className="Initial">
@@ -26,7 +18,6 @@ class Initial extends Component {
                 <Link to='/volunteer-schedule/create'>
                     <button>Create New Schedule</button>
                 </Link>
-                {/* <VolunteerContacts /> */}
             </div>
         );
     }

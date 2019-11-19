@@ -54,7 +54,7 @@ class Manage extends Component {
 
     deleteAll = () => {
             swal({
-                title: `Everything will be deleted`,
+                title: `Shedule and Volunteer hours will be deleted`,
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -64,7 +64,7 @@ class Manage extends Component {
                 swal("Poof! Your file has been deleted!", {
                 icon: "success"
                 }).then(function() {
-                    window.location.href = '/#/volunteer-schedule'
+                    window.location.href = '/?#/volunteer-schedule'
                 });
                 } else {
                 swal("Your file is safe!");
