@@ -84,10 +84,13 @@ class Manage extends Component {
                 {this.state.data ? 
                     <div>
                         {this.state.data.map(row => (
-                            <Accordion data={row}/>
+                            <Accordion
+                                data={row}
+                                key={row.allShifts[0].RoleID}
+                            />
                         ))}
                     </div>
-                    : ''}
+                    : 'loading…'}
                     <div className="delteAll">
                         <Button
                         variant="contained"
