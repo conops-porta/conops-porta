@@ -139,7 +139,7 @@ router.get('/single-shift/:id', rejectUnauthenticated, rejectNonVetted, async (r
 /**
  * GET route for all departments to populate dropdown
  */
-router.get('/departments', async (req, res) => {
+router.get('/departments', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
