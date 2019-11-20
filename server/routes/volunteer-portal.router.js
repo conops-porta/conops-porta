@@ -98,7 +98,7 @@ router.get('/shifts', rejectUnauthenticated, rejectNonVetted, async (req, res) =
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
-        const getShiftsQuery = `  SELECT 
+        const getShiftsQuery = `SELECT 
         "Shift"."ShiftDate",
         "Shift"."ShiftTime",
         json_agg("Shift") AS "Shifts",
@@ -120,7 +120,22 @@ router.get('/shifts', rejectUnauthenticated, rejectNonVetted, async (req, res) =
         connection.release();
     }
 });
-
+router.get('/single-shift/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const getShiftsQuery = `SELECT * FROM "Shift" WHERE "ShiftID" = $1;`;
+        const shiftResults = await connection.query(getShiftsQuery, [req.params.id]);
+        await connection.query('COMMIT');
+        res.send(shiftResults.rows);
+    } catch (error) {
+        await connection.query('ROLLBACK');
+        console.log('error in volunteer-portal shifts GET route', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+});
 /**
  * GET route for all departments to populate dropdown
  */

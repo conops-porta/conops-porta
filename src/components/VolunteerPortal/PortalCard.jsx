@@ -75,7 +75,7 @@ class PortalCard extends Component {
                                                     </span>
                                                     :
                                                     <span>
-                                                        <AddVolunteerModal 
+                                                        <AddVolunteerModal
                                                             addVolunteer={this.props.addVolunteer}
                                                             shift={shift}
                                                             names={this.props.state.names}
