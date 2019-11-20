@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import Button from '@material-ui/core/Button'; 
+import Button from '@material-ui/core/Button';
 import AttendessNav from './AttendessNav';
 import EventsNav from './EventsNav';
 import AdminNav from './AdminNav';
-import VolunteersNav from'./VolunteersNav'
+import VolunteersNav from './VolunteersNav'
 // import VolunteerWalkUp from './VolunteerWalkUp';
 
 const Nav = (props) => (
@@ -16,32 +16,32 @@ const Nav = (props) => (
       <img src="https://raw.githubusercontent.com/ConOps/conops/master/Logo-White.png" alt="2D Con Logo" height="100px" className="nav-title" ></img>
     </Link>
     <div className="nav-right">
-      
-      <Link className="nav-link" to="/home">
-        {/* Show this link if they are logged in or not,
-        but call this link 'Home' if they are logged in,
-        and call this link 'Login / Register' if they are not */}
-        {props.user.id ? <Button style={{ color: 'white', padding: '12px', fontSize: '20px' }}>Home</Button> : <Button style= {{color: 'white', padding: '12px', fontSize: '20px'}}></Button>}
-      </Link>
 
-      
-        {/* Show this link if they are logged in or not,
+      {/* Show this link if they are logged in or not,
         but call this link 'Home' if they are logged in,
         and call this link 'Login / Register' if they are not */}
-        {props.user.id ? '' : <Link className="nav-link" to="/volunteer-walk-up">
-          <Button style={{ color: 'white', padding: '12px', fontSize: '20px' }}>volunteer</Button></Link> }
-      
+      {props.user.id ? '' : <Link className="nav-link" to="/volunteer-walk-up">
+        <Button style={{ color: 'white', padding: '12px', fontSize: '20px' }}>volunteer</Button></Link>}
+
 
       {/* Show the link to the info page and the logout button if the user is logged in */}
-      {props.user.id && (
+      {props.user.id && props.user.authorization > 0 ?
         <>
-          <AttendessNav className="nav-link"/>
+          <AttendessNav className="nav-link" />
           <EventsNav className="button" />
           <VolunteersNav className="button" />
-          <AdminNav className="button"/>
+          <AdminNav className="button" />
           <LogOutButton />
-        </>
-      )}
+        </> :
+        ''
+      }
+      {props.user.id && props.user.authorization === 0 ?
+        <>
+          <VolunteersNav className="button" />
+          <LogOutButton />
+        </> :
+        ''
+      }
     </div>
   </div>
 );
