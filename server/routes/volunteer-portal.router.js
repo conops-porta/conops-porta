@@ -143,12 +143,12 @@ router.get('/departments', rejectUnauthenticated, rejectNonVetted, async (req, r
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
-        const getShiftsQuery = `SELECT
+        const getDepartmentsQuery = `SELECT
         "DepartmentID",
         "DepartmentName"
         FROM "Department"
         ORDER BY "DepartmentName" ASC;`;
-        const shiftResults = await connection.query(getShiftsQuery);
+        const shiftResults = await connection.query(getDepartmentsQuery);
         await connection.query('COMMIT');
         res.send(shiftResults.rows);
     } catch (error) {

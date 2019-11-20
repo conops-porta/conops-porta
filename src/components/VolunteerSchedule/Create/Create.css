@@ -1,0 +1,19 @@
+.button-container-create {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+.upload {
+    border: 1px solid black;
+    width: 172px;
+    padding: 10px;
+    margin: 10px auto;
+}
+.preview {
+    border-top: 1px solid black;
+}
+
+.upload-text{
+    width: 100%;
+    text-align: center;
+}

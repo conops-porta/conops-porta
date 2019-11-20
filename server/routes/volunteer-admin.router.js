@@ -1,6 +1,5 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
-const { rejectNonVetted } = require('../modules/isVettedVolunteerAuthentication-middleware');
 const { rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
@@ -54,7 +53,7 @@ router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
 /**
  * GET route for all open shifts
  */
-router.get('/shifts', rejectUnauthenticated, rejectNonVetted, (req, res) => {
+router.get('/shifts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `SELECT 
 "Role"."RoleID",
 "Department"."DepartmentName" AS department,
@@ -90,11 +89,31 @@ ORDER BY "Role"."RoleID";`
         })
 });
 
+// this checks if a schedule exists for conditional rendering in the 
+// schedule manage home screen
+router.get('/departments', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
+    let queryText = `SELECT
+    "DepartmentID",
+        "DepartmentName"
+    FROM "Department"
+    LIMIT 1;`
+    pool.query(queryText)
+        .then((result) => {
+            // console.log('in volunteer/shifts GET router:', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in admin department GET router:', error)
+            res.sendStatus(500)
+        })
+});
+//
+
 /**
  * GET route to get all shifts of a particular time slot 
  * written as a post to allow sending req.body with time slot info
  */
-router.post('/time-slot-shifts', rejectUnauthenticated, rejectNonVetted, (req, res) => {
+router.post('/time-slot-shifts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `SELECT 
 "Shift"."ShiftID",
 "Shift"."BadgeNumber",

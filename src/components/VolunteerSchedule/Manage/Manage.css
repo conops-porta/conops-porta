@@ -20,3 +20,10 @@
 .ShiftList .subtle {
   color: #999;
 }
+.back-button {
+  margin: 10px;
+}
+.deleteAll {
+  width: 216px;
+  margin: 60px auto 90px auto;
+}

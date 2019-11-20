@@ -54,20 +54,26 @@ class Manage extends Component {
 
     deleteAll = () => {
             swal({
-                title: `Shedule and Volunteer hours will be deleted`,
+                title: `Are you sure? This will delete all shifts and associated volunteer hours.`,
+                text: `After deletion you will be able to create a new schedule by uploading a CSV file. If you are resetting after an event, you may want to create a separate record of total volunteer hours. These can be found under Volunteer Contacts.`,
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
             }).then(function(willDelete) {
             if (willDelete) {
                 axios.delete(`/api/volunteer-admin/delete-schedule/`)
-                swal("Poof! Your file has been deleted!", {
-                icon: "success"
-                }).then(function() {
-                    window.location.href = '/?#/volunteer-schedule'
-                });
+                    .then(response => {
+                        // console.log(response)
+                        swal("Your schedule has been deleted!", {
+                            icon: "success"
+                        }).then(function () {
+                            this.props.history.push('/volunteer-schedule')
+                        });
+                    }).catch(error => {
+                        console.log(error)
+                    })
                 } else {
-                swal("Your file is safe!");
+                swal("Your schedule is safe!");
                 }
             });
         }
@@ -79,7 +85,9 @@ class Manage extends Component {
     render() {
         return (
             <div className="Manage">
-                <button onClick={this.previousPage}>Back</button>
+                <div className="back-button">
+                <Button variant="contained" onClick={this.previousPage}>Back</Button>
+                </div>
                 <h1>Manage Volunteer Schedule</h1>
                 {this.state.data ? 
                     <div>
@@ -91,14 +99,14 @@ class Manage extends Component {
                         ))}
                     </div>
                     : 'loading…'}
-                    <div className="delteAll">
+                    <div className="deleteAll">
                         <Button
                         variant="contained"
                         color="secondary"
                         onClick={this.deleteAll}
                         startIcon={<DeleteIcon />}
                         >
-                        Delete
+                        Delete Entire Schedule
                         </Button>
                     </div>
             </div >
