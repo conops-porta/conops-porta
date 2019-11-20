@@ -258,7 +258,7 @@ class VolunteerPortal extends Component {
                         Clear Filters
                     </Button>
                 </div>
-                {this.state.displayData && this.state.displayData.length === 0 ? <p>No results . . .</p> : null}
+                {this.state.displayData && this.state.displayData.length === 0 ? <p>No results</p> : null}
                 {this.state.displayData ?
                     this.state.displayData.map(department => {
                         let shiftAssignments = department.Shifts
@@ -291,7 +291,7 @@ class VolunteerPortal extends Component {
                             state={this.state}
                             updatedShifts={this.state.updatedShifts}
                         />
-                    }) : <p>Please apply a filter to view volunteer shifts . . .</p>}
+                    }) : <p>Please apply at least one filter</p>}
             </div>
         );
     }
