@@ -79,7 +79,9 @@ class Manage extends Component {
     render() {
         return (
             <div className="Manage">
-                <button onClick={this.previousPage}>Back</button>
+                <div className="back-button">
+                <Button variant="contained" onClick={this.previousPage}>Back</Button>
+                </div>
                 <h1>Manage Volunteer Schedule</h1>
                 {this.state.data ? 
                     <div>
