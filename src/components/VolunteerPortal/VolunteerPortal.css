@@ -22,6 +22,29 @@
     width: 50%;
 
 }
+
+.VolunteerPortal {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+}
+.PortalCard {
+    margin: 10px 0;
+}
+.PortalCard .cardDepartment,
+.PortalCard .cardDateTime {
+    margin: 0;
+    font-weight: 500;
+}
+.PortalCard .cardDepartment strong,
+.PortalCard .cardDateTime strong {
+    font-weight: 700;
+}
+.PortalCard .cardHeading + table {
+    margin: 20px auto 10px;
+    display: table !important;
+}
+
 @media screen and (max-width: 1024px){
     img.bg {
         left: 50%;
