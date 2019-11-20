@@ -22,7 +22,7 @@ class CreateNewSchedule extends Component {
             axios.post('/api/volunteer-admin/schedule', {data: this.state.data})
                 .then(response => {
                     console.log(response.data)
-                    this.props.history.push('/volunteer-schedule')
+                    this.props.history.push('/volunteer-schedule/manage')
                 }).catch(error => {
                     console.log(error)
                 })

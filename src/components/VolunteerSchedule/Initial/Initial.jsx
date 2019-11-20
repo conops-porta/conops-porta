@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import VolunteerContacts from './Contacts.jsx'
+// import VolunteerContacts from './Contacts.jsx'
 
 class Initial extends Component {
 
@@ -18,7 +18,6 @@ class Initial extends Component {
                 <Link to='/volunteer-schedule/create'>
                     <button>Create New Schedule</button>
                 </Link>
-                <VolunteerContacts />
             </div>
         );
     }

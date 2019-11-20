@@ -11,58 +11,13 @@ import './Volunteer.css';
 class WalkUpShifts extends Component {
 
     componentDidMount() {
-        this.validateBadgeNumber();
-        this.getExistingBadges();
-    }
-
-    state = {}
-
-    getExistingBadges = () => {
-        this.props.dispatch({
-            type: 'FETCH_EXISTING_BADGES'
-        })
-        this.props.reduxStore.ExistingBadgesReducer.map(badge => {
-            if ((badge.BadgeNumber) === this.props.match.params.id) {
-                this.setState({
-                    existingBadge: true
-                })
-            }
-        })
+        this.getWalkUpShifts();
     }
 
     currentSelection = []
 
-    // validate attendee eligibility to pick up walk up shifts
-    validateBadgeNumber = () => {
-        // console.log('In match.params: ', this.props.match.params);
-        axios.get(`/api/walkup/validatebadge/${this.props.match.params.id}`)
-            .then(response => {
-                // calculate age of attendee
-                let today = new Date();
-                let birthDate = new Date(response.data.DateOfBirth);
-                let age = today.getFullYear() - birthDate.getFullYear();
-                let month = today.getMonth() - birthDate.getMonth()
-                this.walkUpBadgeNumberSubmit();
-                if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-                    age--;
-                }
-                // make sure attendee is over 16 and NOT flagged as no volunteer
-                if (response.data.FlaggedNoVolunteer === false && age >= 16) {
-                    this.walkUpBadgeNumberSubmit();
-                } else {
-                    swal({
-                        title: `No shifts available at this time`,
-                        text: 'Please check with registration if you have questions',
-                    })
-                    this.props.history.push('/volunteer-walk-up');
-                }
-            }).catch(error => {
-                console.log(error)
-            })
-    }
-
     // fetches walk up shifts once attendee is validated
-    walkUpBadgeNumberSubmit = () => {
+    getWalkUpShifts = () => {
         this.props.dispatch({
             type: 'FETCH_WALKUP_SHIFTS',
             payload: this.props.match.params
@@ -90,11 +45,7 @@ class WalkUpShifts extends Component {
             payload: this.currentSelection
         })
         // console.log('In state: ', this.state);
-        if (this.state.existingBadge === true) {
-            this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.id}`)
-        } else {
-            this.props.history.push(`/volunteer-walk-up/verify/${this.props.match.params.id}`)
-        }
+        this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.id}`)
     }
 
     render() {
