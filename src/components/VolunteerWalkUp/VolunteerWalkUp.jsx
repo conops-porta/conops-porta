@@ -50,7 +50,9 @@ class VolunteerWalkUp extends Component {
           onChange={this.handleInputChange('badgeNumber')}>
         </TextField>
         <br />
-        <Button color="primary" variant="contained" onClick={this.confirmBadge}>Go!</Button>
+        <Button color="primary" variant="contained" onClick={this.confirmBadge} style={{ margin: "5px" }}>
+          Go!
+        </Button>
       </div>
     );
   }

@@ -86,7 +86,6 @@ class WalkUpVerify extends Component {
     return (
       <div className="WalkUpConfirm" style={{ textAlign: "center" }}>
         <h1>Contact Info</h1>
-        <br />
         <p>Badge #{this.props.match.params.id}</p>
         <TextField
           required
@@ -128,8 +127,12 @@ class WalkUpVerify extends Component {
           onChange={this.handleInputChange('email')}>
         </TextField>
         <br />
-        <Button color="secondary" variant="contained" onClick={this.cancelButton}>Cancel</Button>
-        <Button color="primary" variant="contained" onClick={this.submitInfo}>Confirm</Button>
+        <Button color="secondary" variant="contained" onClick={this.cancelButton} style={{ margin: "5px" }}>
+          Cancel
+        </Button>
+        <Button color="primary" variant="contained" onClick={this.submitInfo} style={{ margin: "5px" }}>
+          Confirm
+        </Button>
       </div>
     )
   }
