@@ -1,4 +1,7 @@
 .Contacts {
     margin-top: 200px;
 }
-
+.center {
+    width: fit-content;
+    margin: 60px auto;
+}
