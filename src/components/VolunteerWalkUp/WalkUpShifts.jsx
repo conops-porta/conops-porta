@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
 import ShiftCard from './ShiftCard';
 
@@ -64,22 +64,28 @@ class WalkUpShifts extends Component {
                     </Button>
                 </div>
                 <div>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell> </TableCell>
-                                <TableCell>Day</TableCell>
-                                <TableCell>Time</TableCell>
-                                <TableCell>Department</TableCell>
-                                <TableCell>Role</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
-                                <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
-                            ))}
-                        </TableBody>
-                    </Table>
+                    <Grid container spacing={1}>
+                        <Grid item xs={3}></Grid>
+                        <Grid item xs={6}>
+                            <Table style={{width: "100%"}}>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell> </TableCell>
+                                        <TableCell>Day</TableCell>
+                                        <TableCell>Time</TableCell>
+                                        <TableCell>Department</TableCell>
+                                        <TableCell>Role</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
+                                        <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Grid>
+                        <Grid item xs={3}></Grid>
+                    </Grid>
                 </div>
             </div>
         )
