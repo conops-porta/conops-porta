@@ -32,9 +32,13 @@ body,
 
 div.nav {
     padding: 0 5px;
+    /* wider for presentation */
+    padding: 0 12px;
 }
 div.nav + div {
-    padding: 0 10px
+    padding: 0 10px;
+    /* wider for presentation */
+    padding: 0 24px;
 }
 
 /* Polybius styles */
@@ -164,6 +168,9 @@ body {
     /* light gray to transparent gradients at the parent's edges */
     background: linear-gradient(to right, #e0e0e0 0%, transparent 2rem, transparent),
                 linear-gradient(to left,  #e0e0e0 0%, transparent 2rem, transparent);
+    /* darker gray just for washed-out projection */
+    background: linear-gradient(to right, #999 0%, transparent 2rem, transparent),
+                linear-gradient(to left,  #999 0%, transparent 2rem, transparent);
 }
 #react-root .MuiTableRow-root {
     /* white, wide enough to cover gray background, to transparent gradients at the table's edges */

@@ -19,34 +19,10 @@ class PortalCard extends Component {
                 <Paper>
                     <Card >
                         <CardContent>
-                            <Table size="small" >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>
-                                            <Typography variant="h5" component="h2">
-                                                Department: {this.props.department}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography variant="h5" component="h2">
-                                                <span className='volunteer-portal-time'>
-                                                    {moment(this.props.date).format('dddd')}, {this.props.time.slice(0, -3)}
-                                                </span>
-                                            </Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                            {/* <Typography variant="h5" component="h2">
-                        <span className='.volunteer-portal-title'>
-                            <span className="volunteer-portal-department">
-                                Department: {this.props.department}
-                            </span>
-                            <span className="volunteer-portal-time">
-                                {moment(this.props.date).format('dddd')}, {this.props.time.slice(0, -3)}
-                            </span>
-                        </span>
-                    </Typography> */}
+                            <div className="cardHeading">
+                                <h3 className="cardDepartment">Department: <strong>{this.props.department}</strong></h3>
+                                <h2 className="cardDateTime">{moment(this.props.date).format('dddd')}, <strong>{this.props.time.slice(0, -3)}</strong></h2>
+                            </div>
                             <Table size="small" >
                                 <TableHead>
                                     <TableRow>

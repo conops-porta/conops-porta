@@ -66,8 +66,8 @@ class Manage extends Component {
                         // console.log(response)
                         swal("Your schedule has been deleted!", {
                             icon: "success"
-                        }).then(function () {
-                            this.props.history.push('/volunteer-schedule')
+                        }).then(() => {
+                            window.location.href = '/#/volunteer-schedule'
                         });
                     }).catch(error => {
                         console.log(error)

@@ -41,23 +41,24 @@
   font-weight: 500;
 }
 .ShiftCard[data-weekday="Sun"] {
-  background-color: hsl(0, 50%, 95%);
+  background-color: hsl(0, 50%, 85%);
 }
 .ShiftCard[data-weekday="Fri"] {
-  background-color: hsl(51, 50%, 95%);
+  background-color: hsl(51, 50%, 85%);
 }
 .ShiftCard[data-weekday="Wed"] {
-  background-color: hsl(103, 50%, 95%);
+  background-color: hsl(103, 50%, 85%);
 }
 .ShiftCard[data-weekday="Mon"] {
-  background-color: hsl(154, 50%, 95%);
+  background-color: hsl(154, 50%, 85%);
 }
 .ShiftCard[data-weekday="Sat"] {
-  background-color: hsl(206, 50%, 95%);
+  background-color: hsl(206, 50%, 85%);
 }
 .ShiftCard[data-weekday="Thu"] {
-  background-color: hsl(257, 50%, 95%);
+  background-color: hsl(257, 50%, 85%);
 }
 .ShiftCard[data-weekday="Tue"] {
-  background-color: hsl(309, 50%, 95%);
-} */
+  background-color: hsl(309, 50%, 85%);
+}
+

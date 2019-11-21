@@ -38,9 +38,9 @@ class Initial extends Component {
     render() {
         return (
             <div className="Initial">
-                <h1>Volunteer Schedule</h1>
+                <h1 className="center">Volunteer Schedule</h1>
                 {this.state.loaded ?
-                    <div>
+                    <div className="center">
                         {this.state.existingSchedule ?
                             <Button color="inherit" variant="outlined" onClick={this.linkToManage}>
                                 Manage Schedule
