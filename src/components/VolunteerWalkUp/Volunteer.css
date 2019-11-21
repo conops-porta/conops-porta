@@ -8,6 +8,7 @@
   overflow-y: scroll;
   position: relative;
 } */
+
 .WalkUpShifts-header {
   position: sticky;
   top: 0;
@@ -20,6 +21,7 @@
 .WalkUpShifts-header h1 {
   margin: 0;
 }
+
 /* .WalkUpShifts-body {
   margin: 0 auto;
   padding: 10px;
@@ -60,5 +62,5 @@
 }
 .ShiftCard[data-weekday="Tue"] {
   background-color: hsl(309, 50%, 85%);
-}*/
-
+}
+ */
