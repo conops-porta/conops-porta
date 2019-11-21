@@ -7,7 +7,7 @@ import axios from 'axios'
 import swal from 'sweetalert'
 
 
-class Manage extends Component {
+class EditShiftsModal extends Component {
     state = {
         open: false
     }
@@ -78,7 +78,7 @@ class Manage extends Component {
     }
     render() {
         return (
-            <div className="Manage">
+            <div className="EditShiftsModal">
                 <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
                     {this.state.shifts ? this.state.shifts.length : this.props.numOfShifts}
                 </Button>
@@ -139,4 +139,4 @@ class Manage extends Component {
     }
 }
 
-export default Manage;
+export default EditShiftsModal;
