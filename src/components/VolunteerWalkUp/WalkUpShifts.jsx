@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import swal from 'sweetalert';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { Button } from '@material-ui/core';
 
 import ShiftCard from './ShiftCard';
@@ -60,10 +63,23 @@ class WalkUpShifts extends Component {
                         Volunteer for Checked Shifts
                     </Button>
                 </div>
-                <div className="WalkUpShifts-body">
-                    {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
-                        <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
-                    ))}
+                <div>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell> </TableCell>
+                                <TableCell>Day</TableCell>
+                                <TableCell>Time</TableCell>
+                                <TableCell>Department</TableCell>
+                                <TableCell>Role</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.reduxStore.VolunteerWalkUpReducer.map(shift => (
+                                <ShiftCard shift={shift} handleSelect={this.handleSelect} handleRemove={this.handleRemove} key={shift.ShiftID} />
+                            ))}
+                        </TableBody>
+                    </Table>
                 </div>
             </div>
         )

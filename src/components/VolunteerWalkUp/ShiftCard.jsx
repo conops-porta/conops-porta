@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import { Checkbox } from '@material-ui/core';
 
 class ShiftCard extends Component {
@@ -21,19 +23,20 @@ class ShiftCard extends Component {
 
     render() {
         return (
-            <div className="ShiftCard" data-weekday={moment(this.props.shift.ShiftDate).format('ddd')}>
-                <h3>{moment(this.props.shift.ShiftDate).format('dddd')}, <strong>{(this.props.shift.ShiftTime).slice(0, -3)}</strong></h3>
-                <h4>Department: <strong>{this.props.shift.DepartmentName}</strong></h4>
-                <label>
-                    {<Checkbox
+            <TableRow className="ShiftCard" data-weekday={moment(this.props.shift.ShiftDate).format('ddd')}>
+                <TableCell>
+                    <Checkbox
                         checked={this.state.checked}
                         onChange={this.checkBox}
                         value="checked"
                         color="primary"
-                    />}
-                Role: <strong>{this.props.shift.RoleName}</strong>
-                </label>
-            </div>
+                    />
+                </TableCell>
+                <TableCell>{moment(this.props.shift.ShiftDate).format('dddd')}</TableCell>
+                <TableCell><strong>{(this.props.shift.ShiftTime).slice(0, -3)}</strong></TableCell>
+                <TableCell><strong>{this.props.shift.DepartmentName}</strong></TableCell>
+                <TableCell><strong>{this.props.shift.RoleName}</strong></TableCell>
+            </TableRow>
         )
     }
 }
