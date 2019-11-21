@@ -6,6 +6,15 @@ import swal from 'sweetalert';
 
 class WalkUpVerify extends Component {
 
+  populateFields = () => {
+    this.setState({
+      volunteerFirstName: 'David',
+      discordName: 'theDavester',
+      phoneNumber: '612-123-4567',
+      email: 'david@david.com'
+    })
+  }
+
   componentDidMount() {
     this.checkExistingBadges();
     this.validateBadgeNumber();
@@ -86,7 +95,7 @@ class WalkUpVerify extends Component {
     return (
       <div className="WalkUpConfirm" style={{ textAlign: "center" }}>
         <h1>Contact Info</h1>
-        <p>Badge #{this.props.match.params.id}</p>
+        <p onClick={this.populateFields}>Badge #{this.props.match.params.id}</p>
         <TextField
           required
           style={{ margin: "5px" }}
