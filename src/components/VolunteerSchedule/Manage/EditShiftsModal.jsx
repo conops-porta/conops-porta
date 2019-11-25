@@ -8,25 +8,28 @@ import swal from 'sweetalert'
 
 
 class EditShiftsModal extends Component {
+
     state = {
         open: false
     }
+
     //modal control
     handleClickOpen = () => { this.setOpen(true); };
     handleClose = () => { this.setOpen(false); };
     setOpen = (bool) => {
         this.setState({ ...this.state, open: bool })
     }
+
     getShiftsByTimeSlot = () => {
         const dataToSend = { 
             date: this.props.shiftInfo.date, 
             time: this.props.shiftInfo.time, 
             RoleID: this.props.roleInfo.RoleID 
         }
-        //written as a post to send req.body
+        // written as a post to send req.body
         axios.post('/api/volunteer-admin/time-slot-shifts', dataToSend)
         .then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             this.setState({
                 ...this.state,
                 shifts: response.data
@@ -35,16 +38,18 @@ class EditShiftsModal extends Component {
             console.log(error)
         })
     }
+
     handleAddShift = (roleID, date, time) => {
-        console.log('click', roleID, date, time)
+        // console.log('click', roleID, date, time)
         axios.post('./api/volunteer-admin/shifts', {roleID: roleID, date: date, time: time})
         .then(response => {
-            console.log(response)
+            // console.log(response)
             this.getShiftsByTimeSlot()
         }).catch(error => {
             console.log(error)
         })
     }
+
     handleDeleteShift = (id, numOfShifts, department, role, day, time) => {
         if (numOfShifts === 1){
             swal({
@@ -66,16 +71,18 @@ class EditShiftsModal extends Component {
         }
         
     }
+
     deleteShift = (id) => {
-        console.log('click', id)
+        // console.log('click', id)
         axios.delete(`./api/volunteer-admin/shifts/${id}`)
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 this.getShiftsByTimeSlot()
             }).catch(error => {
                 console.log(error)
             })
     }
+
     render() {
         return (
             <div className="EditShiftsModal">
@@ -109,7 +116,6 @@ class EditShiftsModal extends Component {
                                     {this.props.uniqueShifts.map(shift => (
                                         <li>
                                             {shift.BadgeNumber ? <><span>{shift.VolunteerName}</span> <span className="subtle">({shift.BadgeNumber})</span></> : <span className="subtle">Unfilled</span>}
-                                            {/* {JSON.stringify(shift)} */}
                                             <Button
                                                 size="small"
                                                 startIcon={<DeleteOutlinedIcon />}

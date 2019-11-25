@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom'
 import './Create.css'
 
 class CreateNewSchedule extends Component {
+
     state = {};
+    
     splat = (data) => {
         this.setState({
             ...this.state,
@@ -23,13 +25,14 @@ class CreateNewSchedule extends Component {
             // console.log(this.state.data)
             axios.post('/api/volunteer-admin/schedule', { data: this.state.data })
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.props.history.push('/volunteer-schedule/manage')
                 }).catch(error => {
                     console.log(error)
                 })
         }
     }
+
     buildDataStructure = (csvAsArr) => {
         let data = [];
         for (let i = 2; i < csvAsArr.length; i++) {
@@ -50,9 +53,11 @@ class CreateNewSchedule extends Component {
         }
         return data;
     }
+
     linkToVolHome = () => {
         this.props.history.push('/volunteer-schedule')
     }
+
     render() {
         return (
             <div className="CreateNewSchedule">
@@ -60,7 +65,7 @@ class CreateNewSchedule extends Component {
                     <Button variant="outlined" onClick={this.linkToVolHome}>Cancel</Button>
                     <Button variant="contained" color="primary" onClick={this.submitSchedule}>Submit</Button>
                 </div>
-                    <p className="upload-text">Please upload a CSV file</p><br/>
+                <p className="upload-text">Please upload a CSV file</p><br />
                 <div className="upload">
                     <CSVReader
                         onFileLoaded={data => this.splat(data)}
@@ -70,8 +75,6 @@ class CreateNewSchedule extends Component {
                 <div className="preview">
                     {this.state.data ?
                         <div>
-                            {/* {JSON.stringify(this.state.data)} */}
-
                             < Table size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>

@@ -4,19 +4,8 @@ const { rejectNonVetted } = require('../modules/isVettedVolunteerAuthentication-
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.get('/', rejectUnauthenticated, rejectNonVetted, (req, res) => {
-    let queryText = ``;
-    pool.query(queryText)
-        .then((result) => {
-            console.log('in volunteer GET router:', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('error in volunteer GET router:', error)
-            res.sendStatus(500)
-        })
-})
-
+// GET routes
+// GET route for total volunteer hours
 router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     let queryText = `
         SELECT
@@ -62,7 +51,7 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     `;
     pool.query(queryText)
         .then((result) => {
-            console.log('in volunteer hours GET router:', result.rows);
+            // console.log('in volunteer hours GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -71,9 +60,7 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
         })
 })
 
-/**
- * GET route volunteers for filtering shifts
- */
+// GET route for filtering shifts by volunteer name
 router.get('/volunteer-names', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     let queryText = `SELECT "VolunteerContact"."VolunteerID", "Attendee"."BadgeNumber", "VolunteerContact"."VolunteerName"
   FROM "VolunteerContact" 
@@ -91,9 +78,7 @@ router.get('/volunteer-names', rejectUnauthenticated, rejectNonVetted, (req, res
         })
 })
 
-/**
- * GET route for all volunteer portal shifts
- */
+// GET route for all volunteer portal shifts
 router.get('/shifts', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
@@ -120,6 +105,8 @@ router.get('/shifts', rejectUnauthenticated, rejectNonVetted, async (req, res) =
         connection.release();
     }
 });
+
+// GET route for single shifts so page can re-render on assigning/removing volunteer from shift
 router.get('/single-shift/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
@@ -136,9 +123,8 @@ router.get('/single-shift/:id', rejectUnauthenticated, rejectNonVetted, async (r
         connection.release();
     }
 });
-/**
- * GET route for all departments to populate dropdown
- */
+
+// GET route for all departments to populate dropdown
 router.get('/departments', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
@@ -160,9 +146,7 @@ router.get('/departments', rejectUnauthenticated, rejectNonVetted, async (req, r
     }
 });
 
-/** 
- * PUT route for removing a badge number from a shift
-*/
+// PUT route for removing a badge number from a shift
 router.put('/remove-volunteer/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {
@@ -180,9 +164,7 @@ router.put('/remove-volunteer/:id', rejectUnauthenticated, rejectNonVetted, asyn
     }
 })
 
-/** 
- * PUT route for adding a badge number to a shift
-*/
+// PUT route for adding a badge number to a shift
 router.put('/add-volunteer/:id', rejectUnauthenticated, rejectNonVetted, async (req, res) => {
     const connection = await pool.connect();
     try {

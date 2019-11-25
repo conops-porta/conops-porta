@@ -55,7 +55,7 @@ class AttendeesNav extends React.Component {
         const { open } = this.state;
         return (
             <div >
-       
+
                 <div>
                     <Button
                         className={classes.root}
@@ -67,7 +67,7 @@ class AttendeesNav extends React.Component {
                         onClick={this.handleToggle}
                     >
                         Attendees
-          </Button>
+                    </Button>
                     <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
                         {({ TransitionProps, placement }) => (
                             <Grow
@@ -77,7 +77,7 @@ class AttendeesNav extends React.Component {
                             >
                                 <Paper>
                                     <ClickAwayListener onClickAway={this.handleClose}>
-                                        <MenuList className ="onTop">
+                                        <MenuList className="onTop">
                                             <MenuItem onClick={(event) => this.handleClick('check-in', event)}>CHECK-IN</MenuItem>
                                             <MenuItem onClick={(event) => this.handleClick('pre-register', event)}>PRE-REGISTER</MenuItem>
                                         </MenuList>

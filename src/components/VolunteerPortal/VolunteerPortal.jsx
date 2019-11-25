@@ -19,7 +19,6 @@ class VolunteerPortal extends Component {
         // console.log('removed volunteer from: ', ShiftID);
         axios.put(`/api/volunteer-portal/remove-volunteer/${shift.ShiftID}`)
             .then(response => {
-                console.log(response);
                 this.getSingleShift(shift.ShiftID);
             }).catch(error => {
                 console.log(error)
@@ -30,20 +29,18 @@ class VolunteerPortal extends Component {
         // console.log(`adding ${name.VolunteerName} to shift: ${shift.ShiftID}`);
         axios.put(`/api/volunteer-portal/add-volunteer/${shift.ShiftID}`, name)
             .then(response => {
-                console.log(response);
                 this.getSingleShift(shift.ShiftID);
             }).catch(error => {
                 console.log(error);
             })
     }
 
-    //-------populates card data -------//
+    // populates card data 
     getShifts = () => {
         axios.get('/api/volunteer-portal/shifts')
             .then(response => {
                 this.setState({
                     ...this.state,
-                    // displayData: response.data,
                     allData: response.data
                 })
             }).catch(error => {
@@ -51,7 +48,7 @@ class VolunteerPortal extends Component {
             })
     }
 
-    //-----set state to filter inputs--------//
+    // set state to filter inputs
     storeNameInState = (name) => {
         // console.log(name)
         this.setState({
@@ -85,8 +82,7 @@ class VolunteerPortal extends Component {
         }
     }
 
-
-    // ----- populate dropdowns ----//
+    // populate dropdowns 
     getVolunteerNames = () => {
         axios.get('/api/volunteer-portal/volunteer-names')
             .then(response => {
@@ -114,7 +110,7 @@ class VolunteerPortal extends Component {
     getSingleShift = (id) => {
         axios.get('/api/volunteer-portal/single-shift/' + id)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 this.setState({
                     ...this.state,
                     updatedShifts: [...this.state.updatedShifts, response.data[0]]
@@ -123,18 +119,19 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
-    //---------apply filters-----//
+
+    // apply filters
     applyFilters = (date, time, dept, name) => {
         const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
-            console.log('no filters applied')
+            // console.log('no filters applied')
             this.setState({
                 ...this.state,
                 displayData: null
             })
             return;
         }
-        console.log('Date: ', date, 'Time: ', time, 'Department: ', dept, 'Name ', name)
+        // console.log('Date: ', date, 'Time: ', time, 'Department: ', dept, 'Name ', name)
         let filteredData = [...allData];
         if (date) {
             let filteredByDate = []
@@ -159,16 +156,16 @@ class VolunteerPortal extends Component {
         }
         if (name) {
             let filteredByName = []
-            console.log(name)
+            // console.log(name)
             filteredData.forEach(data => {
                 data.Shifts.forEach(shift => {
                     // console.log(shift.BadgeNumber)
                     if (shift.BadgeNumber == name.BadgeNumber) {
-                        console.log('true', name, shift)
+                        // console.log('true', name, shift)
                         filteredByName.push(data)
                     }
                     if (shift.BadgeNumber && shift.BadgeNumber.badgeNumber == name.BadgeNumber) {
-                        console.log('true', name, shift)
+                        // console.log('true', name, shift)
                         filteredByName.push(data)
                     }
                 })
@@ -204,7 +201,6 @@ class VolunteerPortal extends Component {
         })
     }
 
-    //-------render------//
     render() {
         return (
             <div className="VolunteerPortal">

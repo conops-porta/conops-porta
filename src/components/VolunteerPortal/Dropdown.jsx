@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -36,7 +35,7 @@ export default function SimpleSelect(props) {
             <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
                     {props.title}
-        </InputLabel>
+                </InputLabel>
                 <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
@@ -48,7 +47,7 @@ export default function SimpleSelect(props) {
                         <em>All</em>
                     </MenuItem>
                     {props.options.map(option => {
-                        if (props.idKeyName){
+                        if (props.idKeyName) {
                             return <MenuItem value={option}>{option[props.keyName]} ({option[props.idKeyName]})</MenuItem>
                         } else {
                             return <MenuItem value={option}>{option[props.keyName]}</MenuItem>
@@ -56,7 +55,6 @@ export default function SimpleSelect(props) {
                     })}
                 </Select>
             </FormControl>
-        
         </div>
     );
 }

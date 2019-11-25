@@ -5,9 +5,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // GET routes
-/**
- * GET route for contacts
- */
+// GET route for volunteer contacts
 router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `
         SELECT
@@ -37,8 +35,7 @@ router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
                 GROUP BY "BadgeNumber"
             ) AS "ShiftsScheduled"
             ON "Attendee"."BadgeNumber" = "ShiftsScheduled"."BadgeNumber"
-        ORDER BY "VolunteerContact"."VolunteerName";
-    `
+        ORDER BY "VolunteerContact"."VolunteerName";`
     pool.query(queryText)
         .then((result) => {
             // console.log('in volunteer/contacts GET router:', result.rows);
@@ -50,9 +47,7 @@ router.get('/contacts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
         })
 })
 
-/**
- * GET route for all open shifts
- */
+// GET route for all open shifts
 router.get('/shifts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `SELECT 
 "Role"."RoleID",
@@ -109,10 +104,8 @@ router.get('/departments', rejectUnauthenticated, rejectNonAdmin, (req, res) => 
 });
 //
 
-/**
- * GET route to get all shifts of a particular time slot 
- * written as a post to allow sending req.body with time slot info
- */
+// GET route to get all shifts of a particular time slot 
+// written as a post to allow sending req.body with time slot info
 router.post('/time-slot-shifts', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     let queryText = `SELECT 
 "Shift"."ShiftID",
@@ -134,6 +127,7 @@ GROUP BY "Shift"."ShiftID", "VolunteerContact"."VolunteerName";`
             res.sendStatus(500)
         })
 });
+
 // Functions for new schedule POST
 // create query and data for role post
 const postRole = (departments, data) => {
@@ -178,7 +172,6 @@ const postShift = (departments, roles, data) => {
         departments.forEach(dept => {
             if (dept.DepartmentName === row.department) {
                 roles.forEach(role => {
-                    // if (role.RoleName === row.role && dept.DepartmentName === row.department) {
                     if (role.DepartmentID == dept.DepartmentID && role.RoleName === row.role) {
                         id = role.RoleID
                     }
@@ -207,12 +200,10 @@ const postShift = (departments, roles, data) => {
     }
     // console.log('Role', shifts);
     return queryText;
-}
+} // end functions for new schedule POST route
 
 // POST routes
-/**
- * POST route for new schedule
- */
+// POST route for new schedule
 router.post('/schedule', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     // console.log(req.body.data);
     let totalDepartmentList = []
@@ -251,9 +242,7 @@ router.post('/schedule', rejectUnauthenticated, rejectNonAdmin, async (req, res)
     }
 });
 
-/**
- * POST route for new shifts
- */
+// POST route for new shifts
 router.post('/shifts', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     let postShiftQuery = `INSERT INTO "Shift" ("ShiftDate", "ShiftTime", "RoleID") VALUES ($1, $2, $3);`
     const connection = await pool.connect();
@@ -271,9 +260,7 @@ router.post('/shifts', rejectUnauthenticated, rejectNonAdmin, async (req, res) =
     }
 })
 
-/**
- * POST route for new roles
- */
+// POST route for new roles
 router.post('/roles', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     let postRoleQuery = ``
     const connection = await pool.connect();
@@ -291,9 +278,7 @@ router.post('/roles', rejectUnauthenticated, rejectNonAdmin, async (req, res) =>
     }
 })
 
-/**
- * POST route for new departments
- */
+// POST route for new departments
 router.post('/departments', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     let postDeptQuery = ``
     const connection = await pool.connect();
@@ -311,12 +296,10 @@ router.post('/departments', rejectUnauthenticated, rejectNonAdmin, async (req, r
     }
 })
 
-// PUT routes
-/**
- * UPDATE route for edit roles
- */
+// PUT routes 
+// *** PLACEHOLDER *** UPDATE route for edit roles
 router.put('/roles', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
-    console.log('in edit roles route', req.body);
+    // console.log('in edit roles route', req.body);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -333,11 +316,9 @@ router.put('/roles', rejectUnauthenticated, rejectNonAdmin, async (req, res) => 
     }
 });
 
-/**
- * UPDATE route for edit departments
- */
+// *** PLACEHOLDER *** UPDATE route for edit departments
 router.put('/departments', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
-    console.log('in edit departments route', req.body);
+    // console.log('in edit departments route', req.body);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -355,16 +336,14 @@ router.put('/departments', rejectUnauthenticated, rejectNonAdmin, async (req, re
 });
 
 // DELETE routes
-/**
- * DELETE shift route
- */
+// DELETE shift route
 router.delete('/shifts/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     const queryText = 'DELETE FROM "Shift" WHERE "ShiftID" = $1;';
-    console.log('in delete shift id', id);
+    // console.log('in delete shift id', id);
     pool.query(queryText, [id])
         .then((result) => {
-            console.log('in Delete shift router', result);
+            // console.log('in Delete shift router', result);
             res.sendStatus(200);
         })
         .catch((error) => {
@@ -373,16 +352,14 @@ router.delete('/shifts/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) =
         })
 })
 
-/**
- * DELETE role route
- */
+// DELETE role route
 router.delete('/roles/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     const queryText = 'DELETE FROM "Role" WHERE "RoleID" = $1;';
-    console.log('in delete role id', id);
+    // console.log('in delete role id', id);
     pool.query(queryText, [id])
         .then((result) => {
-            console.log('in Delete role router', result);
+            // console.log('in Delete role router', result);
             res.sendStatus(200);
         })
         .catch((error) => {
@@ -391,16 +368,14 @@ router.delete('/roles/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) =>
         })
 })
 
-/**
- * DELETE department route
- */
+// DELETE department route
 router.delete('/departments/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     const queryText = 'DELETE FROM "Department" WHERE "DepartmentID" = $1;';
-    console.log('in delete department id', id);
+    // console.log('in delete department id', id);
     pool.query(queryText, [id])
         .then((result) => {
-            console.log('in Delete department router', result);
+            // console.log('in Delete department router', result);
             res.sendStatus(200);
         })
         .catch((error) => {
@@ -409,15 +384,13 @@ router.delete('/departments/:id', rejectUnauthenticated, rejectNonAdmin, (req, r
         })
 })
 
-/**
- * DELETE ENTIRE SCHEDULE ........
- */
+// DELETE ENTIRE SCHEDULE ........
 router.delete('/delete-schedule', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const queryText = 'DELETE FROM "Department";';
-    console.log('in delete entire schedule');
+    // console.log('in delete entire schedule');
     pool.query(queryText)
         .then((result) => {
-            console.log('in Delete department router', result);
+            // console.log('in Delete department router', result);
             res.sendStatus(200);
         })
         .catch((error) => {

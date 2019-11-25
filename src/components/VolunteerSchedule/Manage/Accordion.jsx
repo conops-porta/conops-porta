@@ -9,11 +9,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import axios from 'axios'
 import moment from 'moment'
 import EditShiftsModal from './EditShiftsModal'
 
 class Accordion extends Component {
+
     state = {
         expanded: false
     }
@@ -38,11 +38,13 @@ class Accordion extends Component {
             shiftInfo: shiftInfo
         };
     }
+
     handleExpand = () => {
         this.setState({
             expanded: !this.state.expanded
         })
     }
+
     render() {
         return (
             <div className="Accordion">
@@ -84,7 +86,6 @@ class Accordion extends Component {
                                 </TableRow>
                             </TableBody>
                         </Table>
-
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             </div >
