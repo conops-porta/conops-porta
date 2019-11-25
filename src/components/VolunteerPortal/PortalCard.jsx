@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PortalCardCheckbox from './PortalCardCheckbox';
 import AddVolunteerModal from './AddVolunteerModal';
 import {
-    Card, CardContent, Typography,
+    Card, CardContent,
     TableBody, Table, TableCell, TableHead, TableRow, Paper,
     IconButton
 } from '@material-ui/core';
@@ -13,7 +13,6 @@ import './VolunteerPortal.css'
 class PortalCard extends Component {
 
     render() {
-
         return (
             <div className="PortalCard">
                 <Paper>

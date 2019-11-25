@@ -5,7 +5,6 @@ import '../VolunteerSchedule.css'
 import swal from 'sweetalert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-
 import './Manage.css';
 
 class Manage extends Component {
@@ -15,7 +14,6 @@ class Manage extends Component {
     componentDidMount() {
         axios.get('/api/volunteer-admin/shifts')
             .then(response => {
-                // console.log(response.data)
                 this.setState({
                     data: this.processDataToSend(response.data)
                 })
@@ -36,10 +34,9 @@ class Manage extends Component {
             let time = arr[1].slice(0, -3) // removes "seconds" section from the time formatting
             arrayOfTimesToReturn.push({ ShiftDate: arr[0], ShiftTime: time })
         })
-        // console.log(arrayOfTimesToReturn)
         return arrayOfTimesToReturn
     }
-
+    
     processDataToSend = (data) => {
         let dataToSend = [];
         data.forEach(row => {
@@ -52,7 +49,6 @@ class Manage extends Component {
                 RoleID: row.RoleID
             })
         })
-        // console.log(dataToSend)
         return dataToSend;
     }
 
@@ -63,21 +59,20 @@ class Manage extends Component {
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        }).then(function (willDelete) {
-            if (willDelete) {
-                axios.delete(`/api/volunteer-admin/delete-schedule/`)
-                    .then(response => {
-                        // console.log(response)
-                        swal("Your schedule has been deleted!", {
-                            icon: "success"
-                        }).then(() => {
-                            window.location.href = '/#/volunteer-schedule'
-                        });
-                    }).catch(error => {
-                        console.log(error)
-                    })
+        }).then(function(willDelete) {
+        if (willDelete) {
+            axios.delete(`/api/volunteer-admin/delete-schedule/`)
+                .then(response => {
+                    swal("Your schedule has been deleted!", {
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = '/#/volunteer-schedule'
+                    });
+                }).catch(error => {
+                    console.log(error)
+                })
             } else {
-                swal("Your schedule is safe!");
+            swal("Your schedule is safe!");
             }
         });
     }

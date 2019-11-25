@@ -25,6 +25,7 @@ class WalkUpConfirm extends Component {
                 if (selected === shift.ShiftID) {
                     this.selectedShifts.push(shift)
                 }
+                return true;
             })
         ))
     }

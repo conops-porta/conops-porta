@@ -1,6 +1,5 @@
 import 'date-fns';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
@@ -13,16 +12,13 @@ export default function MaterialUIPickers(props) {
     const [selectedDate, setSelectedDate] = React.useState(null);
     const [selectedTime, setSelectedTime] = React.useState(null);
 
-
     const handleDateChange = (date) => {
         setSelectedDate(date);
         props.storeShiftDateTimeInState(date, null);
-        // console.log(date)
     };
     const handleTimeChange = (time) => {
         setSelectedTime(time);
         props.storeShiftDateTimeInState(null, time);
-        // console.log(time)
     };
 
     return (

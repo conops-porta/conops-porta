@@ -6,7 +6,6 @@ import moment from 'moment'
 import axios from 'axios'
 import swal from 'sweetalert'
 
-
 class EditShiftsModal extends Component {
 
     state = {
@@ -14,8 +13,14 @@ class EditShiftsModal extends Component {
     }
 
     //modal control
-    handleClickOpen = () => { this.setOpen(true); };
-    handleClose = () => { this.setOpen(false); };
+    handleClickOpen = () => { 
+        this.setOpen(true); 
+    };
+
+    handleClose = () => { 
+        this.setOpen(false); 
+    };
+
     setOpen = (bool) => {
         this.setState({ ...this.state, open: bool })
     }
@@ -29,7 +34,6 @@ class EditShiftsModal extends Component {
         // written as a post to send req.body
         axios.post('/api/volunteer-admin/time-slot-shifts', dataToSend)
         .then(response => {
-            // console.log(response.data)
             this.setState({
                 ...this.state,
                 shifts: response.data
@@ -40,10 +44,8 @@ class EditShiftsModal extends Component {
     }
 
     handleAddShift = (roleID, date, time) => {
-        // console.log('click', roleID, date, time)
         axios.post('./api/volunteer-admin/shifts', {roleID: roleID, date: date, time: time})
         .then(response => {
-            // console.log(response)
             this.getShiftsByTimeSlot()
         }).catch(error => {
             console.log(error)
@@ -73,16 +75,14 @@ class EditShiftsModal extends Component {
     }
 
     deleteShift = (id) => {
-        // console.log('click', id)
         axios.delete(`./api/volunteer-admin/shifts/${id}`)
             .then(response => {
-                // console.log(response)
                 this.getShiftsByTimeSlot()
             }).catch(error => {
                 console.log(error)
             })
     }
-
+    
     render() {
         return (
             <div className="EditShiftsModal">

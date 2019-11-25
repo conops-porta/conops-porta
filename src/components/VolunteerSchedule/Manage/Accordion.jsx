@@ -44,7 +44,7 @@ class Accordion extends Component {
             expanded: !this.state.expanded
         })
     }
-
+    
     render() {
         return (
             <div className="Accordion">

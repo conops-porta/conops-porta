@@ -50,7 +50,6 @@ class VolunteerContact extends Component {
                         columns={this.state.columns}
                         options={{
                             columnsButton: true,
-                            // headerStyle: { backgroundColor: 'blue', color: 'white' },
                             pageSize: 10,
                             pageSizeOptions: [10, 20, 50],
                             toolbarButtonAlignment: "right",

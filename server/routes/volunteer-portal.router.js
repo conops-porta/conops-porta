@@ -51,7 +51,6 @@ router.get('/hours', rejectUnauthenticated, rejectNonVetted, (req, res) => {
     `;
     pool.query(queryText)
         .then((result) => {
-            // console.log('in volunteer hours GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -69,7 +68,6 @@ router.get('/volunteer-names', rejectUnauthenticated, rejectNonVetted, (req, res
   ORDER BY "VolunteerName" ASC;`
     pool.query(queryText)
         .then((result) => {
-            // console.log('in volunteer/contacts GET router:', result.rows);
             res.send(result.rows);
         })
         .catch((error) => {

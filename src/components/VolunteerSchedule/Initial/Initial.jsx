@@ -3,9 +3,10 @@ import { Button } from '@material-ui/core';
 import Axios from 'axios';
 
 class Initial extends Component {
-
-    state = { loaded: false }
-
+    state = { 
+        loaded: false 
+    }
+    
     componentDidMount = () => {
         Axios.get('/api/volunteer-admin/departments')
             .then(response => {

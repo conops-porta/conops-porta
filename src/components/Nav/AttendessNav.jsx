@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 import './Nav.css';
 
-
 const styles = theme => ({
     root: {
         margin: '30px',

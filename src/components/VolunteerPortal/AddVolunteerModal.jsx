@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@material-ui/core/';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@material-ui/core/';
 import { Add } from '@material-ui/icons';
 import Dropdown from '../VolunteerPortal/Dropdown';
 
@@ -41,7 +41,6 @@ class AddVolunteerModal extends Component {
                             options={this.props.names}
                             keyName='VolunteerName'
                             storeDropdownInState={this.storeNameInState}
-
                         />
                     </DialogContent>
                     <DialogActions>

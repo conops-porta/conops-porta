@@ -6,7 +6,6 @@ const router = express.Router();
 // GET route to grab all badge numbers associated with volunteers to route user to correct page based on whether they
 // exist in the VolunteerContact table
 router.get('/badgenumbers', async (req, res) => {
-    // console.log(req.params.id);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -25,7 +24,6 @@ router.get('/badgenumbers', async (req, res) => {
 
 // GET route for verifying attendee eligibility for shifts
 router.get('/validatebadge/:id', async (req, res) => {
-    // console.log('In validate badge GET route: ', req.params.id);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -75,7 +73,6 @@ router.get('/shifts/:id', async (req, res) => {
 // POST routes
 // POST route to add attendee to volunteer table and tag volunteer ID to attendee in Attendee table
 router.post('/info/:id', async (req, res) => {
-    // console.log('in walk up info POST route', req.body, req.params.id);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
@@ -104,7 +101,6 @@ router.put('/selected/:id', async (req, res) => {
     // create variable as array to push selected shifts into
     let shiftID = []
     req.body.forEach(id => (shiftID.push(id.ShiftID)))
-    // console.log('in shiftID array:', shiftID);
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
