@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 import './Nav.css';
 
-
 const styles = theme => ({
     root: {
         margin: '30px',
@@ -67,7 +66,7 @@ class AttendeesNav extends React.Component {
                         onClick={this.handleToggle}
                     >
                         Attendees
-          </Button>
+                    </Button>
                     <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
                         {({ TransitionProps, placement }) => (
                             <Grow

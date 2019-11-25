@@ -8,7 +8,10 @@ import axios from 'axios';
 import moment from 'moment'
 
 class VolunteerPortal extends Component {
-    state = { updatedShifts: [] }
+    state = { 
+        updatedShifts: [] 
+    }
+
     componentDidMount() {
         this.getVolunteerNames();
         this.getShifts();
@@ -16,10 +19,8 @@ class VolunteerPortal extends Component {
     }
 
     removeVolunteer = (shift) => {
-        // console.log('removed volunteer from: ', ShiftID);
         axios.put(`/api/volunteer-portal/remove-volunteer/${shift.ShiftID}`)
             .then(response => {
-                console.log(response);
                 this.getSingleShift(shift.ShiftID);
             }).catch(error => {
                 console.log(error)
@@ -27,10 +28,8 @@ class VolunteerPortal extends Component {
     }
 
     addVolunteer = (shift, name) => {
-        // console.log(`adding ${name.VolunteerName} to shift: ${shift.ShiftID}`);
         axios.put(`/api/volunteer-portal/add-volunteer/${shift.ShiftID}`, name)
             .then(response => {
-                console.log(response);
                 this.getSingleShift(shift.ShiftID);
             }).catch(error => {
                 console.log(error);
@@ -43,7 +42,6 @@ class VolunteerPortal extends Component {
             .then(response => {
                 this.setState({
                     ...this.state,
-                    // displayData: response.data,
                     allData: response.data
                 })
             }).catch(error => {
@@ -53,23 +51,22 @@ class VolunteerPortal extends Component {
 
     //-----set state to filter inputs--------//
     storeNameInState = (name) => {
-        // console.log(name)
         this.setState({
             ...this.state,
             nameInput: name
         })
     }
+
     storeDepartmentInState = (department) => {
-        // console.log(department)
         this.setState({
             ...this.state,
             departmentInput: department
         })
     }
+
     storeShiftDateTimeInState = (d, t) => {
         if (d) {
             let date = moment(d).format('YYYY-MM-DD')
-            console.log(d, date)
             this.setState({
                 ...this.state,
                 dateInput: date
@@ -77,14 +74,12 @@ class VolunteerPortal extends Component {
         }
         if (t) {
             let time = moment(t).format('HH:mm') + ':00'
-            console.log(time)
             this.setState({
                 ...this.state,
                 timeInput: time
             })
         }
     }
-
 
     // ----- populate dropdowns ----//
     getVolunteerNames = () => {
@@ -94,15 +89,14 @@ class VolunteerPortal extends Component {
                     ...this.state,
                     names: response.data
                 })
-                // console.log(response.data)
             }).catch(error => {
                 console.log(error)
             })
     }
+
     getDepartments = () => {
         axios.get('/api/volunteer-portal/departments')
             .then(response => {
-                // console.log(response.data)
                 this.setState({
                     ...this.state,
                     departments: response.data
@@ -111,10 +105,10 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
+    
     getSingleShift = (id) => {
         axios.get('/api/volunteer-portal/single-shift/' + id)
             .then(response => {
-                console.log(response.data)
                 this.setState({
                     ...this.state,
                     updatedShifts: [...this.state.updatedShifts, response.data[0]]
@@ -127,20 +121,17 @@ class VolunteerPortal extends Component {
     applyFilters = (date, time, dept, name) => {
         const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
-            console.log('no filters applied')
             this.setState({
                 ...this.state,
                 displayData: null
             })
             return;
         }
-        console.log('Date: ', date, 'Time: ', time, 'Department: ', dept, 'Name ', name)
         let filteredData = [...allData];
         if (date) {
             let filteredByDate = []
             filteredData.forEach(data => {
                 if (moment(data.ShiftDate).format('YYYY-MM-DD') === date) {
-                    // console.log('true', date)
                     filteredByDate.push(data)
                 }
             })
@@ -151,7 +142,6 @@ class VolunteerPortal extends Component {
             let filteredByTime = []
             filteredData.forEach(data => {
                 if (data.ShiftTime === time) {
-                    // console.log('true', time)
                     filteredByTime.push(data)
                 }
             })
@@ -159,16 +149,12 @@ class VolunteerPortal extends Component {
         }
         if (name) {
             let filteredByName = []
-            console.log(name)
             filteredData.forEach(data => {
                 data.Shifts.forEach(shift => {
-                    // console.log(shift.BadgeNumber)
                     if (shift.BadgeNumber == name.BadgeNumber) {
-                        console.log('true', name, shift)
                         filteredByName.push(data)
                     }
                     if (shift.BadgeNumber && shift.BadgeNumber.badgeNumber == name.BadgeNumber) {
-                        console.log('true', name, shift)
                         filteredByName.push(data)
                     }
                 })
@@ -179,7 +165,6 @@ class VolunteerPortal extends Component {
             let filteredByDept = []
             filteredData.forEach(data => {
                 if (data.DepartmentName === dept.DepartmentName) {
-                    // console.log('true', dept)
                     filteredByDept.push(data)
                 }
             })
@@ -193,7 +178,6 @@ class VolunteerPortal extends Component {
     }
 
     clearFilters = () => {
-        // console.log('clearFilters', this.state);
         this.setState({
             ...this.state,
             nameInput: null,

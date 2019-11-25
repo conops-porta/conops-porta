@@ -24,90 +24,90 @@ const styles = theme => ({
 });
 
 class VolunteersNav extends Component {
-    state = {
-        open: false,
-    };
+  state = {
+      open: false,
+  };
 
-    handleToggle = () => {
-        this.setState(state => ({ open: !state.open }));
-    };
+  handleToggle = () => {
+      this.setState(state => ({ open: !state.open }));
+  };
 
-    handleClose = event => {
-        if (this.anchorEl.contains(event.target)) {
-            return;
-        }
-        this.setState({ open: false });
-    };
+  handleClose = event => {
+      if (this.anchorEl.contains(event.target)) {
+          return;
+      }
+      this.setState({ open: false });
+  };
 
-    handleClick = (propertyName) => {
-        if (propertyName === 'portal') {
-            this.props.history.push('/volunteer-portal')
-            this.setState({ open: false});
-        } else if (propertyName === 'hours') {
-            this.props.history.push('/volunteer-portal/hours')
-            this.setState({ open: false });
-        } 
-    }
+  handleClick = (propertyName) => {
+      if (propertyName === 'portal') {
+          this.props.history.push('/volunteer-portal')
+          this.setState({ open: false});
+      } else if (propertyName === 'hours') {
+          this.props.history.push('/volunteer-portal/hours')
+          this.setState({ open: false });
+      } 
+  }
 
-    render() {
-        const { classes } = this.props;
-        const { open } = this.state;
-        return (
+  render() {
+    const { classes } = this.props;
+    const { open } = this.state;
+      return (
+        <div>
           <div>
-            <div>
-              <Button
-                className={classes.root}
-                buttonRef={node => {
-                  this.anchorEl = node;
-                }}
-                aria-owns={open ? "menu-list-grow" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleToggle}
-              >
-                Volunteers
-              </Button>
-              <Popper
-                open={open}
-                anchorEl={this.anchorEl}
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    id="menu-list-grow"
-                    style={{
-                      transformOrigin:
-                        placement === "bottom" ? "center top" : "center bottom"
-                    }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={this.handleClose}>
-                        <MenuList className="onTop">
-                          <MenuItem
-                            className="onTop"
-                            onClick={event => this.handleClick("portal")}
-                          >
-                            VOLUNTEER PORTAL
-                          </MenuItem>
-                          <MenuItem
-                            className="onTop"
-                            onClick={event =>
-                              this.handleClick("hours")
-                            }
-                          >
-                            TOTAL HOURS
-                          </MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-            </div>
+            <Button
+              className={classes.root}
+              buttonRef={node => {
+                this.anchorEl = node;
+              }}
+              aria-owns={open ? "menu-list-grow" : undefined}
+              aria-haspopup="true"
+              onClick={this.handleToggle}
+            >
+              Volunteers
+            </Button>
+            <Popper
+              open={open}
+              anchorEl={this.anchorEl}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  id="menu-list-grow"
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom"
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={this.handleClose}>
+                      <MenuList className="onTop">
+                        <MenuItem
+                          className="onTop"
+                          onClick={event => this.handleClick("portal")}
+                        >
+                          VOLUNTEER PORTAL
+                        </MenuItem>
+                        <MenuItem
+                          className="onTop"
+                          onClick={event =>
+                            this.handleClick("hours")
+                          }
+                        >
+                          TOTAL HOURS
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
           </div>
-        );
-    }
+        </div>
+      );
+  }
 }
 
 VolunteersNav.propTypes = {

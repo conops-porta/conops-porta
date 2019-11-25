@@ -13,7 +13,6 @@ import './VolunteerPortal.css'
 class PortalCard extends Component {
 
     render() {
-
         return (
             <div className="PortalCard">
                 <Paper>

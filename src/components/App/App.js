@@ -45,7 +45,6 @@ import VolunteerPortal from '../VolunteerPortal/VolunteerPortal';
 import VolunteerHours from '../VolunteerPortal/VolunteerHours';
 import VolunteerContact from '../VolunteerContact/VolunteerContact';
 
-
 import './App.css';
 
 class App extends Component {
