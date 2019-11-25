@@ -4,7 +4,10 @@ import { Button } from '@material-ui/core';
 import Axios from 'axios';
 
 class Initial extends Component {
-    state = { loaded: false }
+    state = { 
+        loaded: false 
+    }
+    
     componentDidMount = () => {
         Axios.get('/api/volunteer-admin/departments')
             .then(response => {
@@ -14,23 +17,23 @@ class Initial extends Component {
                         existingSchedule: true,
                         loaded: true
                     })
-                    console.log('TRUETRUETRUE')
                 } else {
                     this.setState({
                         ...this.state,
                         existingSchedule: false,
                         loaded: true
                     })
-                    console.log('FALSEFALSEFALSE')
                     return
                 }
             }).catch(error => {
                 console.log(error)
             })
     }
+
     linkToManage = () => {
         this.props.history.push('/volunteer-schedule/manage')
     }
+
     linkToCreate = () => {
         this.props.history.push('/volunteer-schedule/create')
     }

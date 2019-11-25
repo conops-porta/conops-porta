@@ -6,9 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Button, Grid } from '@material-ui/core';
-
 import ShiftCard from './ShiftCard';
-
 import './Volunteer.css';
 
 class WalkUpShifts extends Component {
@@ -47,7 +45,6 @@ class WalkUpShifts extends Component {
             type: 'SET_SELECTED_SHIFTS',
             payload: this.currentSelection
         })
-        // console.log('In state: ', this.state);
         this.props.history.push(`/volunteer-walk-up/submit/${this.props.match.params.id}`)
     }
 
