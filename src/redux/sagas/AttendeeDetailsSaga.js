@@ -9,7 +9,7 @@ function* fetchAttendeePersonalInfo(action) {
             withCredentials: true,
         };
         //logging to make sure we're getting ID from click
-        yield console.log('in fetchAttendeePersonalInfo:', action.payload);
+        // yield console.log('in fetchAttendeePersonalInfo:', action.payload);
         const response = yield axios.get(`/api/attendee/details/${action.payload}`, config);
         yield put({
             type: 'SET_ATTENDEE_DETAILS',
@@ -28,9 +28,8 @@ function* updateAttendeePersonalInfo(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload.AttendeeID);
-        
-        yield console.log('in updateAttendee', action.payload);
+        // console.log(action.payload.AttendeeID);
+        // yield console.log('in updateAttendee', action.payload);
         yield axios.put(`/api/attendee/details/${action.payload.AttendeeID}`, action.payload, config);
         yield put ({
             type: 'SET_ATTENDEE_DETAILS',
@@ -48,7 +47,7 @@ function * deleteAttendeeInfo(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log('in delete attendee info, action.payload:', action.payload);
+        // console.log('in delete attendee info, action.payload:', action.payload);
         
         yield axios.delete (`api/attendee/delete/${action.payload}`, config);
         yield put ({

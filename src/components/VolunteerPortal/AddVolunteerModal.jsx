@@ -20,6 +20,7 @@ class AddVolunteerModal extends Component {
         this.setState({ ...this.state, open: bool })
     }
 
+    // passes shift and volunteer info to parent component
     addVolunteer = (shift, name) => {
         this.props.addVolunteer(shift, name);
         this.handleClose();

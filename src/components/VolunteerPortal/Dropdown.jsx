@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+// a reusable function component that takes in props to populate a dropdown menu
 export default function SimpleSelect(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState('');

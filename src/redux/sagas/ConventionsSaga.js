@@ -9,7 +9,7 @@ function* postNewConvention(action) {  // find all the personal information of a
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload);
+        // console.log(action.payload);
         
         yield axios.post('/api/convention', action.payload, config)
         yield put({ type: 'FETCH_CONVENTION'})

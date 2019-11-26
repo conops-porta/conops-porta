@@ -13,12 +13,14 @@ class VolunteerWalkUp extends Component {
     badgeNumber: ''
   }
 
+  // gets all badge numbers associated with volunteers
   getExistingBadges = () => {
     this.props.dispatch({
       type: 'FETCH_EXISTING_BADGES'
     })
   }
 
+  // confirm correct badge number was entered
   confirmBadge = () => {
     swal({
       title: `Your badge # is ${this.state.badgeNumber}`,

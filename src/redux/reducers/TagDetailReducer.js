@@ -2,7 +2,7 @@
 const TagDetailReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_TAG':
-            console.log('tag details ', action.payload);
+            // console.log('tag details ', action.payload);
             return action.payload;
         case 'UPDATE_PROPERTY':
             return {
