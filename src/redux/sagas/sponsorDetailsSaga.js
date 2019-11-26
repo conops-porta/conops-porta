@@ -9,7 +9,7 @@ function* fetchSponsorDetails(action) {
             withCredentials: true,
         };
         //logging to make sure we're getting ID from click
-        yield console.log('in fetchSponsorDetails:', action.payload);
+        // yield console.log('in fetchSponsorDetails:', action.payload);
         const response = yield axios.get(`/api/sponsor/details/${action.payload}`, config);
         yield put({
             type: 'SET_SPONSOR_DETAILS',
@@ -28,7 +28,7 @@ function* updateSponsorDetails(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log('in update sponsor details saga:', action.payload.SponsorID);
+        // console.log('in update sponsor details saga:', action.payload.SponsorID);
         yield axios.put(`/api/sponsor/details/${action.payload.SponsorID}`, action.payload, config);
         yield put({
             type: 'SET_SPONSOR_DETAILS'

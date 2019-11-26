@@ -10,6 +10,7 @@ class ShiftCard extends Component {
         checked: false
     }
 
+    // updates selected shifts array on checking and unchecking of shifts
     checkBox = () => {
         if (this.state.checked === false) {
             this.props.handleSelect(this.props.shift.ShiftID)

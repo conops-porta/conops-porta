@@ -432,7 +432,7 @@ class Details extends Component {
           <h1> 2D Con 2020: Remaster</h1>
         </div>
         <div>
-          {console.log("info is", this.props.info)}
+          {/* {console.log("info is", this.props.info)} */}
           {this.props.info.orderID === null && <p>Walk-in</p>}
           {this.props.info.orderID != null && (
             <p>Find All Attendees With Order ID: {this.props.info.orderID} </p>

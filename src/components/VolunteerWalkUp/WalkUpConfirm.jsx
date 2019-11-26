@@ -15,11 +15,13 @@ class WalkUpConfirm extends Component {
 
     selectedShifts = []
 
+    // fetches all shifts marked ok for walk-up 
     loadSelectedShifts = () => {
         this.props.dispatch({
             type: 'FETCH_WALKUP_SHIFTS',
             payload: this.props.match.params
         });
+        // checks selected shift id's against all walk-up shifts to push shifts objects to array to be sent with update call on confirm
         this.props.reduxStore.SelectedShiftsReducer.map((selected) => (
             this.props.reduxStore.VolunteerWalkUpReducer.map((shift) => {
                 if (selected === shift.ShiftID) {
@@ -30,12 +32,11 @@ class WalkUpConfirm extends Component {
         ))
     }
 
-
+    // send array of selected shift objects to db along with badge number of attendee
     confirm = () => {
-        console.log(this.selectedShifts);
+        // console.log(this.selectedShifts);
         axios.put(`/api/walkup/selected/${this.props.match.params.id}`, this.selectedShifts)
             .then(response => {
-                console.log(response)
                 swal({
                     title: `Thank You`,
                     icon: "success"

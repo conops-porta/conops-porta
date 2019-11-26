@@ -23,7 +23,7 @@ function* addLocation(action) {
             withCredentials: true,
         };
         yield axios.post(`/api/location`, action.payload, config)
-        console.log('in addLocationSaga:', action.payload)
+        // console.log('in addLocationSaga:', action.payload)
         yield put({ type: 'FETCH_LOCATIONS' })
     } catch (error) {
         console.log('error in addLocation saga:', error)

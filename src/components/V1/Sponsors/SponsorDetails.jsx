@@ -99,7 +99,7 @@ class SponsorDetails extends Component {
     }
 
     render() {
-        console.log('SPONSOR NAME:', this.props.details.SponsorName)
+        // console.log('SPONSOR NAME:', this.props.details.SponsorName)
         return (
             <div style={{margin: '20px'}}>
 

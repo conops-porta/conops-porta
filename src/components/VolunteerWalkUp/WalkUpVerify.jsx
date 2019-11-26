@@ -6,15 +6,6 @@ import swal from 'sweetalert';
 
 class WalkUpVerify extends Component {
 
-  populateFields = () => {
-    this.setState({
-      volunteerFirstName: 'David',
-      discordName: 'theDavester',
-      phoneNumber: '612-123-4567',
-      email: 'david@david.com'
-    })
-  }
-
   componentDidMount() {
     this.checkExistingBadges();
     this.validateBadgeNumber();
@@ -54,6 +45,7 @@ class WalkUpVerify extends Component {
       })
   }
 
+  // check badge number against all badges associated with volunteers to route attendee to shifts page if already in volunteer table
   checkExistingBadges = () => {
     this.props.reduxStore.ExistingBadgesReducer.map(badge => {
       if ((badge.BadgeNumber) === this.props.match.params.id) {
@@ -69,6 +61,7 @@ class WalkUpVerify extends Component {
     });
   } // end handleInputChange
 
+  // posts attendee info to volunteer table and routes to shift selection page
   submitInfo = () => {
     // console.log(this.state);
     if (this.state.volunteerFirstName === '' || this.state.discordName === '' || this.state.phoneNumber === '' || this.state.email === '') {
@@ -79,7 +72,7 @@ class WalkUpVerify extends Component {
     } else {
       axios.post(`/api/walkup/info/${this.props.match.params.id}`, this.state)
         .then(response => {
-          console.log(response)
+          // console.log(response)
         }).catch(error => {
           console.log(error)
         })
@@ -88,7 +81,7 @@ class WalkUpVerify extends Component {
   }
 
   cancelButton = () => {
-    console.log('cancel btn click')
+    // console.log('cancel btn click')
     this.props.history.push(`/volunteer-walk-up`)
   }
 
@@ -96,7 +89,7 @@ class WalkUpVerify extends Component {
     return (
       <div className="WalkUpConfirm" style={{ textAlign: "center" }}>
         <h1>Contact Info</h1>
-        <p onClick={this.populateFields}>Badge #{this.props.match.params.id}</p>
+        <p>Badge #{this.props.match.params.id}</p>
         <TextField
           required
           style={{ margin: "5px" }}
