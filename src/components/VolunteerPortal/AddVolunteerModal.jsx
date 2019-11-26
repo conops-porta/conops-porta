@@ -24,7 +24,6 @@ class AddVolunteerModal extends Component {
         this.props.addVolunteer(shift, name);
         this.handleClose();
     }
-    // onClick={() => this.props.addVolunteer(this.props.shift)}
 
     render() {
         return (
@@ -42,7 +41,6 @@ class AddVolunteerModal extends Component {
                             options={this.props.names}
                             keyName='VolunteerName'
                             storeDropdownInState={this.storeNameInState}
-
                         />
                     </DialogContent>
                     <DialogActions>

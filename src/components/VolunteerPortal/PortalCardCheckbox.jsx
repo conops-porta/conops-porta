@@ -12,11 +12,9 @@ class PortalCard extends Component {
         this.setState({
             noShow: !this.state.noShow
         })
-        // console.log(shift.ShiftID, shift.BadgeNumber.badgeNumber);
     }
 
     render() {
-
         return (
             <div className="PortalCardCheckbox">
                 <Checkbox
