@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mater
 import './Create.css'
 
 class CreateNewSchedule extends Component {
+
     state = {};
     
     splat = (data) => {
@@ -61,7 +62,7 @@ class CreateNewSchedule extends Component {
                     <Button variant="outlined" onClick={this.linkToVolHome}>Cancel</Button>
                     <Button variant="contained" color="primary" onClick={this.submitSchedule}>Submit</Button>
                 </div>
-                    <p className="upload-text">Please upload a CSV file</p><br/>
+                <p className="upload-text">Please upload a CSV file</p><br />
                 <div className="upload">
                     <CSVReader
                         onFileLoaded={data => this.splat(data)}

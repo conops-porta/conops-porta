@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import './Manage.css';
 
 class Manage extends Component {
+
     state = {}
 
     componentDidMount() {
@@ -42,7 +43,7 @@ class Manage extends Component {
             dataToSend.push({
                 department: row.department,
                 role: row.role,
-                okForWalkUps: row.ok_for_walk_ups, 
+                okForWalkUps: row.ok_for_walk_ups,
                 allShifts: row.shifts,
                 uniqueShifts: this.findUniqueShifts(row.shifts),
                 RoleID: row.RoleID
@@ -84,10 +85,10 @@ class Manage extends Component {
         return (
             <div className="Manage">
                 <div className="back-button">
-                <Button variant="contained" onClick={this.previousPage}>Back</Button>
+                    <Button variant="contained" onClick={this.previousPage}>Back</Button>
                 </div>
                 <h1>Manage Volunteer Schedule</h1>
-                {this.state.data ? 
+                {this.state.data ?
                     <div>
                         {this.state.data.map(row => (
                             <Accordion
@@ -97,16 +98,16 @@ class Manage extends Component {
                         ))}
                     </div>
                     : 'loading…'}
-                    <div className="deleteAll">
-                        <Button
+                <div className="deleteAll">
+                    <Button
                         variant="contained"
                         color="secondary"
                         onClick={this.deleteAll}
                         startIcon={<DeleteIcon />}
-                        >
+                    >
                         Delete Entire Schedule
                         </Button>
-                    </div>
+                </div>
             </div >
         );
     }

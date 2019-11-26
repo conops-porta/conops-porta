@@ -59,6 +59,7 @@ class WalkUpVerify extends Component {
       if ((badge.BadgeNumber) === this.props.match.params.id) {
         this.props.history.push(`/volunteer-walk-up/badge/${this.props.match.params.id}`)
       }
+      return true;
     })
   }
 

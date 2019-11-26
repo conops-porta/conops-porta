@@ -13,6 +13,7 @@ import moment from 'moment'
 import EditShiftsModal from './EditShiftsModal'
 
 class Accordion extends Component {
+
     state = {
         expanded: false
     }

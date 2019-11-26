@@ -44,7 +44,7 @@ export default function SimpleSelect(props) {
                         <em>All</em>
                     </MenuItem>
                     {props.options.map(option => {
-                        if (props.idKeyName){
+                        if (props.idKeyName) {
                             return <MenuItem value={option}>{option[props.keyName]} ({option[props.idKeyName]})</MenuItem>
                         } else {
                             return <MenuItem value={option}>{option[props.keyName]}</MenuItem>

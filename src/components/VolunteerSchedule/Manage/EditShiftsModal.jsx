@@ -7,9 +7,11 @@ import axios from 'axios'
 import swal from 'sweetalert'
 
 class EditShiftsModal extends Component {
+
     state = {
         open: false
     }
+
     //modal control
     handleClickOpen = () => { 
         this.setOpen(true); 
@@ -29,7 +31,7 @@ class EditShiftsModal extends Component {
             time: this.props.shiftInfo.time, 
             RoleID: this.props.roleInfo.RoleID 
         }
-        //written as a post to send req.body
+        // written as a post to send req.body
         axios.post('/api/volunteer-admin/time-slot-shifts', dataToSend)
         .then(response => {
             this.setState({

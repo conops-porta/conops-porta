@@ -36,7 +36,7 @@ class VolunteerPortal extends Component {
             })
     }
 
-    //-------populates card data -------//
+    // populates card data 
     getShifts = () => {
         axios.get('/api/volunteer-portal/shifts')
             .then(response => {
@@ -49,7 +49,7 @@ class VolunteerPortal extends Component {
             })
     }
 
-    //-----set state to filter inputs--------//
+    // set state to filter inputs
     storeNameInState = (name) => {
         this.setState({
             ...this.state,
@@ -81,7 +81,7 @@ class VolunteerPortal extends Component {
         }
     }
 
-    // ----- populate dropdowns ----//
+    // populate dropdowns 
     getVolunteerNames = () => {
         axios.get('/api/volunteer-portal/volunteer-names')
             .then(response => {
@@ -109,6 +109,7 @@ class VolunteerPortal extends Component {
     getSingleShift = (id) => {
         axios.get('/api/volunteer-portal/single-shift/' + id)
             .then(response => {
+                // console.log(response.data)
                 this.setState({
                     ...this.state,
                     updatedShifts: [...this.state.updatedShifts, response.data[0]]
@@ -117,7 +118,8 @@ class VolunteerPortal extends Component {
                 console.log(error)
             })
     }
-    //---------apply filters-----//
+
+    // apply filters
     applyFilters = (date, time, dept, name) => {
         const allData = this.state.allData;
         if (!date && !time && !dept && !name) {
@@ -151,10 +153,10 @@ class VolunteerPortal extends Component {
             let filteredByName = []
             filteredData.forEach(data => {
                 data.Shifts.forEach(shift => {
-                    if (shift.BadgeNumber == name.BadgeNumber) {
+                    if (shift.BadgeNumber === name.BadgeNumber) {
                         filteredByName.push(data)
                     }
-                    if (shift.BadgeNumber && shift.BadgeNumber.badgeNumber == name.BadgeNumber) {
+                    if (shift.BadgeNumber && shift.BadgeNumber.badgeNumber === name.BadgeNumber) {
                         filteredByName.push(data)
                     }
                 })
@@ -188,7 +190,6 @@ class VolunteerPortal extends Component {
         })
     }
 
-    //-------render------//
     render() {
         return (
             <div className="VolunteerPortal">
@@ -248,7 +249,7 @@ class VolunteerPortal extends Component {
                         let shiftAssignments = department.Shifts
                         shiftAssignments.forEach(shift => {
                             this.state.updatedShifts.forEach(updatedShift => {
-                                if (updatedShift.ShiftID == shift.ShiftID) {
+                                if (updatedShift.ShiftID === shift.ShiftID) {
                                     shift.BadgeNumber = updatedShift.BadgeNumber;
                                 }
                             })
