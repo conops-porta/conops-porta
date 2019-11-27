@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 
+// volunteer hours page
+
 class VolunteerHours extends Component {
     state = {
         columns: [

@@ -12,6 +12,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
 import EditShiftsModal from './EditShiftsModal'
 
+// This is the expandable tab
+// It is a child component of Manage.jsx
+
 class Accordion extends Component {
 
     state = {

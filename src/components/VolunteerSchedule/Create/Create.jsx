@@ -4,6 +4,8 @@ import CSVReader from 'react-csv-reader';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
 import './Create.css'
 
+// This is the page where the admin can upload the volunteer schedule CSV
+
 class CreateNewSchedule extends Component {
 
     state = {};

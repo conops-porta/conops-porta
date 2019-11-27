@@ -5,6 +5,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+// child of volunteer portal
+// used for the filtering by names 
+// and for filtering by department
+
 const useStyles = makeStyles(theme => ({
     formControl: {
         minWidth: 140,

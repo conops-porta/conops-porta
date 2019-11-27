@@ -6,6 +6,10 @@ import moment from 'moment'
 import axios from 'axios'
 import swal from 'sweetalert'
 
+//This is the button within the expandable tab where the admin can adjust
+//how many shifts are in each time slot
+//It is a child of Accordion.jsx
+
 class EditShiftsModal extends Component {
 
     state = {
