@@ -3,6 +3,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton }
 import { Add } from '@material-ui/icons';
 import Dropdown from '../VolunteerPortal/Dropdown';
 
+// child of portal card
+
 class AddVolunteerModal extends Component {
     state = {
         open: false,

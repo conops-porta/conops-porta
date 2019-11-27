@@ -7,6 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import './Manage.css';
 
+// Parent component for the page where the admin can see/manage the existing schedule
+
 class Manage extends Component {
 
     state = {}

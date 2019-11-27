@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
 import Axios from 'axios';
 
+//parent component for the route /#/volunteer-schedule
+//the first thing a user sees after clicking volunteer schedule under the admin tab
+
 class Initial extends Component {
     state = { 
         loaded: false 

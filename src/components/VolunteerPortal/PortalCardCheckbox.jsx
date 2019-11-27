@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Checkbox } from '@material-ui/core';
-
+// child of portal card
 class PortalCard extends Component {
 
     state = {

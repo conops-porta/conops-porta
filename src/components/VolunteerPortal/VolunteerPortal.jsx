@@ -7,6 +7,8 @@ import './VolunteerPortal.css'
 import axios from 'axios';
 import moment from 'moment'
 
+// parent component for volunteer portal page
+
 class VolunteerPortal extends Component {
     state = { 
         updatedShifts: [] 

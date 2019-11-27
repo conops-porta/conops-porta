@@ -7,6 +7,7 @@ ConOps is the behind the scenes application of 2D Con. It allows the staff and v
 - React 
 - Redux 
 - Express
+- Node
 - Passport 
 - PostgreSQL 
 - Material-UI 
