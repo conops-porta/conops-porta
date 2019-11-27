@@ -32,6 +32,7 @@ These instructions will get you a copy of the project up and running on your loc
 2. `npm install`
 3. While it is installing, copy and paste the database SQL file into Postgres, and execute all of the statements. 
 
+You may have to `npm install` some specific Material-UI components to get the application to work if npm install dosent get them all. 
 
 ### Completed Features
 
@@ -48,13 +49,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 - [ ] Allow Admin to add or remove a department after schedule upload
 - [ ] Allow Admin to add or remove a role after schedule upload
+- [ ] Pipeline from 2D Con Volunteers database to bring in volunteers' data as they sign up
 - [ ] Create and add games to a game library
 - [ ] Pre-register for upcoming convention
 
 
 ## Deployment 
 
-You may have to `npm install` some specific Material-UI components to get the application to work if npm install dosent get them all. 
+Code pushed to the **deployment** branch will be automatically built and deployed through Heroku. 
+The deployed version of the app can be found [here](https://conops-porta.herokuapp.com/).
 
 
 ## ConOps Version 2 was created in November 2019 by: 
