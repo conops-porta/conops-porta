@@ -9,7 +9,7 @@ function* fetchDetails(action) {
             withCredentials: true,
         };
         //logging to make sure we're getting ID from click
-        yield console.log('in fetchDetails:', action.payload);
+        // yield console.log('in fetchDetails:', action.payload);
         const response = yield axios.get(`/api/location/details/${action.payload}`, config);
         yield put({
             type: 'SET_LOCATION_DETAILS',
@@ -28,7 +28,7 @@ function* updateDetails (action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log('in update location details saga:', action.payload.LocationID);
+        // console.log('in update location details saga:', action.payload.LocationID);
         yield axios.put(`/api/location/details/${action.payload.LocationID}`, action.payload, config);
         yield put ({
             type: 'SET_LOCATION_DETAILS'

@@ -139,7 +139,7 @@ class OrderID extends Component {
                   if(data) {
                     let attendeesToCheckIn = [];
                     for (let i = 0; i < data.length; i++) {
-                      console.log("i am in the loop");
+                      // console.log("i am in the loop");
                       attendeesToCheckIn.push(data[i].AttendeeID);
                     }
                     this.setState({

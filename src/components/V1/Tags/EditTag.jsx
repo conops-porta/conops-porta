@@ -65,7 +65,7 @@ class EditTag extends Component {
       TagIsActive: this.props.info.TagIsActive
     };
     //send the edit state back to the saga
-    console.log("edit", edit);
+    // console.log("edit", edit);
     this.props.dispatch({
       type: "EDIT_TAG",
       payload: edit

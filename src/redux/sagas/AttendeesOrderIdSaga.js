@@ -21,7 +21,7 @@ function * oneCheckInToRuleThemAll(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload);
+        // console.log(action.payload);
          yield axios.put('/api/attendee/checkIn', {attendeesToCheckIn: action.payload}, config)
        
          yield put ({
@@ -39,7 +39,7 @@ function * checkInFromDetails(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log(action.payload);
+        // console.log(action.payload);
         yield axios.put('/api/attendee/checkIn', { attendeesToCheckIn: action.payload }, config)
     yield put({
         type: 'FETCH_ATTENDEE_PERSONAL_INFO',
@@ -82,7 +82,7 @@ function * checkOutWalkIn(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        console.log('action.payload in checkoutwalkin is', action.payload);
+        // console.log('action.payload in checkoutwalkin is', action.payload);
         yield axios.put('/api/attendee/checkOutWalkIn', {attendeeToCheckOut: action.payload}, config)
         yield put({
             type: 'FETCH_ATTENDEE_PERSONAL_INFO',

@@ -20,6 +20,7 @@ class VolunteerPortal extends Component {
         this.getDepartments();
     }
 
+    // update call to db to remove badge number from shift
     removeVolunteer = (shift) => {
         axios.put(`/api/volunteer-portal/remove-volunteer/${shift.ShiftID}`)
             .then(response => {
@@ -29,6 +30,7 @@ class VolunteerPortal extends Component {
             })
     }
 
+    // update call to db to add badge number to shift
     addVolunteer = (shift, name) => {
         axios.put(`/api/volunteer-portal/add-volunteer/${shift.ShiftID}`, name)
             .then(response => {
@@ -59,6 +61,7 @@ class VolunteerPortal extends Component {
         })
     }
 
+    // sets selected department in state
     storeDepartmentInState = (department) => {
         this.setState({
             ...this.state,
@@ -66,6 +69,7 @@ class VolunteerPortal extends Component {
         })
     }
 
+    // sets selected date and time in state
     storeShiftDateTimeInState = (d, t) => {
         if (d) {
             let date = moment(d).format('YYYY-MM-DD')
@@ -96,6 +100,7 @@ class VolunteerPortal extends Component {
             })
     }
 
+    // gets list of departments and stores in local state
     getDepartments = () => {
         axios.get('/api/volunteer-portal/departments')
             .then(response => {
@@ -108,6 +113,7 @@ class VolunteerPortal extends Component {
             })
     }
     
+    // gets selected shift info from db to update shifts
     getSingleShift = (id) => {
         axios.get('/api/volunteer-portal/single-shift/' + id)
             .then(response => {
@@ -181,6 +187,7 @@ class VolunteerPortal extends Component {
         })
     }
 
+    // clear filters
     clearFilters = () => {
         this.setState({
             ...this.state,

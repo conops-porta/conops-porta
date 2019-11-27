@@ -26,7 +26,7 @@ function * saveConventionNews(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        yield console.log('in saveConventionNews, action.payload :', action.payload);
+        // yield console.log('in saveConventionNews, action.payload :', action.payload);
         yield axios.put(`/api/home/edit`, action.payload, config)
         yield put({
            type: 'FETCH_NEWS'
