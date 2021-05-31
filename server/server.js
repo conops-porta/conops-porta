@@ -20,6 +20,7 @@ const locationRouter = require('./routes/location.router');
 const tagRouter = require('./routes/tag.router');
 const sponsorRouter = require('./routes/sponsor.router');
 const homeRouter = require('./routes/home.router');
+const webHooksRouter = require('./routes/webhooks.router');
 
 // Body parser middleware
 
@@ -45,6 +46,7 @@ app.use('/api/home', homeRouter);
 app.use('/api/volunteer-admin', volunteerAdminRouter);
 app.use('/api/volunteer-portal', volunteerPortalRouter);
 app.use('/api/walkup', walkupRouter);
+app.use('/api/hooks', webHooksRouter);
 
 // Serve static files
 app.use(express.static('build'));
