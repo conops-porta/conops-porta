@@ -16,7 +16,8 @@ router.get('/order-created', (req, res) => {
 router.post('/order-created', async (req, res) => {
     //pull data from the request body and send it over to the database pool
     const { line_items, id, billing } = req.body;
-    const { phone, email } = billing;
+    const phone = billing?.phone;
+    const email = billing?.email;
     const registerProductId = 32675;// the WP Post ID of the registration product
 
     const newRows = line_items?.filter(i => i.id === registerProductId).map( registration => {
