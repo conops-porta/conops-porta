@@ -38,7 +38,6 @@ router.post('/order-created', async (req, res) => {
                     break;
                 default: break;
             }
-
             return acc;
         }, { id, phone, email });
 
