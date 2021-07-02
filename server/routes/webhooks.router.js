@@ -19,7 +19,7 @@ router.post('/order-created', async (req, res) => {
     const { phone, email } = billing;
     const registerProductId = 32675;// the WP Post ID of the registration product
 
-    const newRows = line_items.filter(i => i.id === registerProductId).map( registration => {
+    const newRows = line_items?.filter(i => i.id === registerProductId).map( registration => {
         return registration?.meta_data?.reduce((acc, current) => {
             const {key, value} = current;
             switch (key.toLowerCase()){
@@ -54,7 +54,7 @@ router.post('/order-created', async (req, res) => {
     }
 
     //if there are any actual registration orders in this order created webhook...
-    if( newRows.length ){
+    if( newRows && newRows.length ){
         const connection = await pool.connect();
 
         const addRow = async row => {
